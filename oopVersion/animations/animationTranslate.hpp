@@ -4,8 +4,6 @@
 #include "oopVersion/geometry/point.hpp"
 #include "oopVersion/interfaces/rectHaverInterface.hpp"
 
-#include <iostream>
-
 class AnimationTranslate : public Animation
 {
 public:
