@@ -1,5 +1,6 @@
 #include "app.hpp"
 
+#include "oopVersion/animations/animationDeform.hpp"
 #include "oopVersion/animations/animationTranslate.hpp"
 #include "oopVersion/easing/easingFunction.hpp"
 #include "oopVersion/enemies/enemyWithHealth.hpp"
@@ -86,7 +87,7 @@ void Application::update(int deltaTimeMs)
                         if (enemy1 && enemy2)
                         {
                             animation1 = std::make_unique<AnimationTranslate>(3000, Point{120,150}, Point{120,400}, *enemy1.get(), std::make_unique<NoEase>());
-                            animation2 = std::make_unique<AnimationTranslate>(3000, Point{140,150}, Point{140,400}, *enemy2.get(), std::make_unique<EaseIn2Out2>());
+                            animation2 = std::make_unique<AnimationDeform>(2000, Vector{20,20}, Vector{30,40}, *enemy2.get(), std::make_unique<EaseIn2Out2>());
                         }
                         break;
                     }
