@@ -1,6 +1,6 @@
 #pragma once
 
-#include "colour.hpp"
+#include "oopVersion/colour.hpp"
 #include "oopVersion/interfaces/rectHaverInterface.hpp"
 
 #include <SDL2/SDL.h>
