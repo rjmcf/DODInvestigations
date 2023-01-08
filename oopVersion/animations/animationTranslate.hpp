@@ -5,29 +5,41 @@
 #include "oopVersion/geometry/vector.hpp"
 #include "oopVersion/interfaces/rectHaverInterface.hpp"
 
+#include <vector>
+
 class AnimationTranslate : public Animation
 {
 public:
-    AnimationTranslate(int durationMs, const Vector& inDisplacement, RectHaverInterface& inTarget, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
+    AnimationTranslate(int durationMs, const Vector& inDisplacement, const std::vector<RectHaverInterface*>& inTargets, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
         : Animation(durationMs, std::move(inEasingFunction))
-        , initial(Point{inTarget.getRect().x, inTarget.getRect().y})
         , displacement(inDisplacement)
-        , target(inTarget)
-    {}
+    {
+        for (RectHaverInterface* target : inTargets)
+        {
+            targets.emplace_back(TargetWithInitialPosition{target, Point{target->getRect().x, target->getRect().y}});
+        }
+    }
 
 private:
     virtual void interpolate(float fraction) override
     {
         const Vector scaledDisplacement = displacement.scale(fraction);
-        const Point currentPosition = initial.translate(scaledDisplacement);
-        SDL_Rect currentRect = target.getRect();
-        currentRect.x = static_cast<int>(currentPosition.x);
-        currentRect.y = static_cast<int>(currentPosition.y);
-        target.setRect(currentRect);
+        for (const TargetWithInitialPosition& target : targets)
+        {
+            const Point currentPosition = target.initial.translate(scaledDisplacement);
+            SDL_Rect currentRect = target.target->getRect();
+            currentRect.x = static_cast<int>(currentPosition.x);
+            currentRect.y = static_cast<int>(currentPosition.y);
+            target.target->setRect(currentRect);
+        }
     }
 
-    const Point initial;
-    const Vector displacement;
+    struct TargetWithInitialPosition
+    {
+        RectHaverInterface* target = nullptr;
+        Point initial;
+    };
+    std::vector<TargetWithInitialPosition> targets;
 
-    RectHaverInterface& target;
+    const Vector displacement;
 };
