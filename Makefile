@@ -5,4 +5,4 @@ LIBS := -L sdl/lib
 TARGET := main
 
 all:
-	$(CC) $(INCS) $(LIBS) -o $(TARGET) *.cpp oopVersion/animations/*.cpp oopVersion/enemies/*.cpp $(CFLAGS)
+	$(CC) $(INCS) $(LIBS) -o $(TARGET) *.cpp oopVersion/animations/*.cpp oopVersion/enemies/*.cpp oopVersion/scene/*.cpp $(CFLAGS)

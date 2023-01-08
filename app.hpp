@@ -1,7 +1,6 @@
 #pragma once
 
-#include "oopVersion/animations/animation.hpp"
-#include "oopVersion/enemies/enemy.hpp"
+#include "oopVersion/enemies/enemyController.hpp"
 
 #include <memory>
 #include <SDL2/SDL.h>
@@ -26,11 +25,7 @@ private:
     SDL_Renderer* renderer = nullptr;
     SDL_Event windowEvent;
 
-    std::unique_ptr<Enemy> enemy1;
-    std::unique_ptr<Enemy> enemy2;
-    std::unique_ptr<Animation> animation1;
-    std::unique_ptr<Animation> animation2;
-    std::unique_ptr<Animation> animation22;
+    EnemyController enemyController;
 
     bool bShouldQuit = false;
 };

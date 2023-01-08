@@ -1,10 +1,6 @@
 #include "app.hpp"
 
-#include "oopVersion/animations/animationColour.hpp"
-#include "oopVersion/animations/animationDeform.hpp"
-#include "oopVersion/animations/animationTranslate.hpp"
-#include "oopVersion/easing/easingFunction.hpp"
-#include "oopVersion/enemies/enemyWithHealth.hpp"
+#include "oopVersion/scene/scene.hpp"
 
 #include <iostream>
 
@@ -43,8 +39,8 @@ bool Application::setup()
         return false;
     }
 
-    enemy1 = std::make_unique<EnemyWithHealth>(120,150, 20,20, Colour{255,0,0,255}, 100);
-    enemy2 = std::make_unique<EnemyWithHealth>(140,150, 20,20, Colour{255,0,0,255}, 100);
+    Scene scene;
+    scene.setUp(enemyController);
 
     return true;
 }
@@ -81,64 +77,13 @@ void Application::update(int deltaTimeMs)
                 break;
             case SDL_KEYUP:
             {
-                switch (windowEvent.key.keysym.sym)
-                {
-                    case SDLK_s:
-                    {
-                        if (enemy1 && enemy2)
-                        {
-                            animation1 = std::make_unique<AnimationTranslate>(3000, Point{120,150}, Point{120,400}, *enemy1.get(), std::make_unique<NoEase>());
-                            animation2 = std::make_unique<AnimationDeform>(2000, Vector{20,20}, Vector{30,40}, *enemy2.get(), std::make_unique<EaseIn2Out2>());
-                            animation22 = std::make_unique<AnimationColour>(2000, Colour{255,0,0,255}, Colour{0,255,255,255}, *enemy2.get(), std::make_unique<EaseIn2Out2>());
-                        }
-                        break;
-                    }
-                    case SDLK_p:
-                    {
-                        if (animation1 && animation2 && animation22)
-                        {
-                            animation1->pause();
-                            animation2->pause();
-                            animation22->pause();
-                        }
-                        break;
-                    }
-                    case SDLK_u:
-                    {
-                        if (animation1 && animation2 && animation22)
-                        {
-                            animation1->unpause();
-                            animation2->unpause();
-                            animation22->unpause();
-                        }
-                        break;
-                    }
-                }
+                // Handle key events with case SDLK_x for example
                 break;
             }
         }
     }
 
-    if (animation1 && animation2 && animation22)
-    {
-        animation1->update(deltaTimeMs);
-        if (animation1->isComplete())
-        {
-            animation1->reset();
-        }
-
-        animation2->update(deltaTimeMs);
-        if (animation2->isComplete())
-        {
-            animation2->reset();
-        }
-
-        animation22->update(deltaTimeMs);
-        if (animation22->isComplete())
-        {
-            animation22->reset();
-        }
-    }
+    enemyController.update(deltaTimeMs);
 }
 
 void Application::draw()
@@ -146,11 +91,7 @@ void Application::draw()
     if (renderer)
     {
         SDL_RenderClear(renderer);
-        if (enemy1 && enemy2)
-        {
-            enemy1->draw(*renderer);
-            enemy2->draw(*renderer);
-        }
+        enemyController.drawAllEnemies(*renderer);
         SDL_RenderPresent(renderer);
     }
 }
