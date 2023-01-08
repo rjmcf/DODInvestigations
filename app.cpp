@@ -1,6 +1,7 @@
 #include "app.hpp"
 
-#include "oopVersion/animations/animationHealth.hpp"
+#include "oopVersion/animations/animationTranslate.hpp"
+#include "oopVersion/easing/easingFunction.hpp"
 #include "oopVersion/enemies/enemyWithHealth.hpp"
 
 #include <iostream>
@@ -40,7 +41,8 @@ bool Application::setup()
         return false;
     }
 
-    enemy = std::make_unique<EnemyWithHealth>(120,150, 20,20, Colour{255,0,0,255}, 100);
+    enemy1 = std::make_unique<EnemyWithHealth>(120,150, 20,20, Colour{255,0,0,255}, 100);
+    enemy2 = std::make_unique<EnemyWithHealth>(140,150, 20,20, Colour{255,0,0,255}, 100);
 
     return true;
 }
@@ -81,25 +83,28 @@ void Application::update(int deltaTimeMs)
                 {
                     case SDLK_s:
                     {
-                        if (enemy)
+                        if (enemy1 && enemy2)
                         {
-                            animation = std::make_unique<AnimationHealth>(1000, 100, 0, *static_cast<EnemyWithHealth*>(enemy.get()));
+                            animation1 = std::make_unique<AnimationTranslate>(3000, Point{120,150}, Point{120,400}, *enemy1.get(), std::make_unique<NoEase>());
+                            animation2 = std::make_unique<AnimationTranslate>(3000, Point{140,150}, Point{140,400}, *enemy2.get(), std::make_unique<EaseIn2Out2>());
                         }
                         break;
                     }
                     case SDLK_p:
                     {
-                        if (animation)
+                        if (animation1 && animation2)
                         {
-                            animation->pause();
+                            animation1->pause();
+                            animation2->pause();
                         }
                         break;
                     }
                     case SDLK_u:
                     {
-                        if (animation)
+                        if (animation1 && animation2)
                         {
-                            animation->unpause();
+                            animation1->unpause();
+                            animation2->unpause();
                         }
                         break;
                     }
@@ -109,12 +114,18 @@ void Application::update(int deltaTimeMs)
         }
     }
 
-    if (animation)
+    if (animation1 && animation2)
     {
-        animation->update(deltaTimeMs);
-        if (animation->isComplete())
+        animation1->update(deltaTimeMs);
+        if (animation1->isComplete())
         {
-            animation->reset();
+            animation1->reset();
+        }
+
+        animation2->update(deltaTimeMs);
+        if (animation2->isComplete())
+        {
+            animation2->reset();
         }
     }
 }
@@ -124,9 +135,10 @@ void Application::draw()
     if (renderer)
     {
         SDL_RenderClear(renderer);
-        if (enemy)
+        if (enemy1 && enemy2)
         {
-            enemy->draw(*renderer);
+            enemy1->draw(*renderer);
+            enemy2->draw(*renderer);
         }
         SDL_RenderPresent(renderer);
     }

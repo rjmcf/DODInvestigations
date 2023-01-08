@@ -26,8 +26,10 @@ private:
     SDL_Renderer* renderer = nullptr;
     SDL_Event windowEvent;
 
-    std::unique_ptr<Enemy> enemy;
-    std::unique_ptr<Animation> animation;
+    std::unique_ptr<Enemy> enemy1;
+    std::unique_ptr<Enemy> enemy2;
+    std::unique_ptr<Animation> animation1;
+    std::unique_ptr<Animation> animation2;
 
     bool bShouldQuit = false;
 };
