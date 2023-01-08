@@ -1,10 +1,14 @@
 #pragma once
 
+#include "oopVersion/easing/easingFunction.hpp"
+
+#include <memory>
+
 class Animation
 {
 public:
     // Duration in ms
-    Animation(int durationMs);
+    Animation(int durationMs, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr);
 
     void update(int deltaTimeMs);
 
@@ -22,4 +26,5 @@ private:
     const float duration;
     float currentTime;
     bool bIsPaused = false;
+    std::unique_ptr<EasingFunction> easingFunction;
 };

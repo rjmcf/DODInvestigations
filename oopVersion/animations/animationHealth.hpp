@@ -6,8 +6,8 @@
 class AnimationHealth : public Animation
 {
 public:
-    AnimationHealth(int durationMs, int inInitial, int inFinal, HealthHaverInterface& inTarget)
-        : Animation(durationMs)
+    AnimationHealth(int durationMs, int inInitial, int inFinal, HealthHaverInterface& inTarget, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
+        : Animation(durationMs, std::move(inEasingFunction))
         , initial(inInitial)
         , difference(inFinal - inInitial)
         , target(inTarget)

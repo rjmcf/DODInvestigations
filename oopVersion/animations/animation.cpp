@@ -3,9 +3,10 @@
 #include <algorithm>
 #include <SDL2/SDL.h>
 
-Animation::Animation(int durationMs)
+Animation::Animation(int durationMs, std::unique_ptr<EasingFunction>&& inEasingFunction)
     : duration(durationMs)
     , currentTime(0)
+    , easingFunction(inEasingFunction ? std::move(inEasingFunction) : std::make_unique<NoEase>())
 {}
 
 void Animation::update(int deltaTimeMs)
@@ -19,5 +20,5 @@ void Animation::update(int deltaTimeMs)
     // Clamp to duration
     currentTime = std::min(currentTime, duration);
 
-    interpolate(currentTime / duration);
+    interpolate(easingFunction->ease(currentTime / duration));
 }
