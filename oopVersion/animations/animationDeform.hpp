@@ -7,10 +7,10 @@
 class AnimationDeform : public Animation
 {
 public:
-    AnimationDeform(int durationMs, const Vector& inInitialSize, const Vector& inFinalSize, RectHaverInterface& inTarget, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
+    AnimationDeform(int durationMs, const Vector& inFinalSize, RectHaverInterface& inTarget, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
         : Animation(durationMs, std::move(inEasingFunction))
-        , initialSize(inInitialSize)
-        , difference(inFinalSize.add(inInitialSize.scale(-1)))
+        , initialSize(Vector{inTarget.getRect().w, inTarget.getRect().h})
+        , difference(inFinalSize.add(initialSize.scale(-1)))
         , target(inTarget)
     {}
 

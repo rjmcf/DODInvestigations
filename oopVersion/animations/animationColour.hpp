@@ -7,13 +7,13 @@
 class AnimationColour : public Animation
 {
 public:
-    AnimationColour(int durationMs, const Colour& inInitialColour, const Colour& inFinalColour, ColourHaverInterface& inTarget, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
+    AnimationColour(int durationMs, const Colour& inFinalColour, ColourHaverInterface& inTarget, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
         : Animation(durationMs, std::move(inEasingFunction))
-        , initialColour(inInitialColour)
-        , redDifference(inFinalColour.red - inInitialColour.red)
-        , greenDifference(inFinalColour.green - inInitialColour.green)
-        , blueDifference(inFinalColour.blue - inInitialColour.blue)
-        , alphaDifference(inFinalColour.alpha - inInitialColour.alpha)
+        , initialColour(inTarget.getColour())
+        , redDifference(inFinalColour.red - initialColour.red)
+        , greenDifference(inFinalColour.green - initialColour.green)
+        , blueDifference(inFinalColour.blue - initialColour.blue)
+        , alphaDifference(inFinalColour.alpha - initialColour.alpha)
         , target(inTarget)
     {}
 
