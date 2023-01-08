@@ -1,8 +1,8 @@
 #pragma once
 
+#include "oopVersion/animations/animationController.hpp"
 #include "oopVersion/enemies/enemyController.hpp"
 
-#include <memory>
 #include <SDL2/SDL.h>
 
 class Enemy;
@@ -26,6 +26,7 @@ private:
     SDL_Event windowEvent;
 
     EnemyController enemyController;
+    AnimationController animationController;
 
     bool bShouldQuit = false;
 };

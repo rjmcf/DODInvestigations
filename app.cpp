@@ -40,7 +40,7 @@ bool Application::setup()
     }
 
     Scene scene;
-    scene.setUp(enemyController);
+    scene.setUp(enemyController, animationController);
 
     return true;
 }
@@ -77,13 +77,22 @@ void Application::update(int deltaTimeMs)
                 break;
             case SDL_KEYUP:
             {
-                // Handle key events with case SDLK_x for example
+                switch (windowEvent.key.keysym.sym)
+                {
+                    case SDLK_p:
+                        animationController.pauseAllAnimations();
+                        break;
+                    case SDLK_u:
+                        animationController.unpauseAllAnimations();
+                        break;
+                }
                 break;
             }
         }
     }
 
     enemyController.update(deltaTimeMs);
+    animationController.updateAllAnimations(deltaTimeMs);
 }
 
 void Application::draw()

@@ -1,9 +1,10 @@
 #pragma once
 
-#include "oopVersion/enemies/enemyController.hpp"
+class AnimationController;
+class EnemyController;
 
 class Scene
 {
 public:
-    void setUp(EnemyController& enemyController);
+    void setUp(EnemyController& enemyController, AnimationController& AnimationController);
 };
