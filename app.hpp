@@ -30,6 +30,7 @@ private:
     std::unique_ptr<Enemy> enemy2;
     std::unique_ptr<Animation> animation1;
     std::unique_ptr<Animation> animation2;
+    std::unique_ptr<Animation> animation22;
 
     bool bShouldQuit = false;
 };

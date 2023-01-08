@@ -1,5 +1,6 @@
 #include "app.hpp"
 
+#include "oopVersion/animations/animationColour.hpp"
 #include "oopVersion/animations/animationDeform.hpp"
 #include "oopVersion/animations/animationTranslate.hpp"
 #include "oopVersion/easing/easingFunction.hpp"
@@ -88,24 +89,27 @@ void Application::update(int deltaTimeMs)
                         {
                             animation1 = std::make_unique<AnimationTranslate>(3000, Point{120,150}, Point{120,400}, *enemy1.get(), std::make_unique<NoEase>());
                             animation2 = std::make_unique<AnimationDeform>(2000, Vector{20,20}, Vector{30,40}, *enemy2.get(), std::make_unique<EaseIn2Out2>());
+                            animation22 = std::make_unique<AnimationColour>(2000, Colour{255,0,0,255}, Colour{0,255,255,255}, *enemy2.get(), std::make_unique<EaseIn2Out2>());
                         }
                         break;
                     }
                     case SDLK_p:
                     {
-                        if (animation1 && animation2)
+                        if (animation1 && animation2 && animation22)
                         {
                             animation1->pause();
                             animation2->pause();
+                            animation22->pause();
                         }
                         break;
                     }
                     case SDLK_u:
                     {
-                        if (animation1 && animation2)
+                        if (animation1 && animation2 && animation22)
                         {
                             animation1->unpause();
                             animation2->unpause();
+                            animation22->unpause();
                         }
                         break;
                     }
@@ -115,7 +119,7 @@ void Application::update(int deltaTimeMs)
         }
     }
 
-    if (animation1 && animation2)
+    if (animation1 && animation2 && animation22)
     {
         animation1->update(deltaTimeMs);
         if (animation1->isComplete())
@@ -127,6 +131,12 @@ void Application::update(int deltaTimeMs)
         if (animation2->isComplete())
         {
             animation2->reset();
+        }
+
+        animation22->update(deltaTimeMs);
+        if (animation22->isComplete())
+        {
+            animation22->reset();
         }
     }
 }
