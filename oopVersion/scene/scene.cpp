@@ -14,6 +14,7 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
     std::unique_ptr<Enemy> normalEnemy3 = std::make_unique<Enemy>(90,100, 20,20, Colour{0, 0, 255, 255});
     
     std::unique_ptr<Animation> normalEnemyAnimation = std::make_unique<AnimationTranslate>(3000, Vector{0,100}, std::vector<RectHaverInterface*>{normalEnemy1.get(), normalEnemy2.get(), normalEnemy3.get()}, std::make_unique<EaseIn2Out2>());
+    normalEnemyAnimation->addEvent(TimedEvent{1500, "normalEnemiesMovedHalfWay"});
     animationController.addAnimation(std::move(normalEnemyAnimation));
 
     enemyController.addEnemy(std::move(normalEnemy1));

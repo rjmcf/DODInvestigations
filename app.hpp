@@ -2,6 +2,7 @@
 
 #include "oopVersion/animations/animationController.hpp"
 #include "oopVersion/enemies/enemyController.hpp"
+#include "oopVersion/events/dummyEventListener.hpp"
 
 #include <SDL2/SDL.h>
 
@@ -27,6 +28,8 @@ private:
 
     EnemyController enemyController;
     AnimationController animationController;
+
+    DummyEventListener dummyEventListener;
 
     bool bShouldQuit = false;
 };

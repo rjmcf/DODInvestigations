@@ -42,6 +42,8 @@ bool Application::setup()
     Scene scene;
     scene.setUp(enemyController, animationController);
 
+    dummyEventListener.setUp();
+
     return true;
 }
 
