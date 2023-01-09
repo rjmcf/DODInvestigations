@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-const int WIDTH = 800, HEIGHT = 600;
+const int WIDTH = 1600, HEIGHT = 900;
 
 Application::~Application()
 {
