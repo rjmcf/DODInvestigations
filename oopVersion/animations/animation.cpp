@@ -21,4 +21,11 @@ void Animation::update(int deltaTimeMs)
     currentTime = std::min(currentTime, duration);
 
     interpolate(easingFunction->ease(currentTime / duration));
+    fireEventsForTime(currentTime);
+}
+
+void Animation::reset()
+{ 
+    currentTime = 0; 
+    resetAllEvents(); 
 }

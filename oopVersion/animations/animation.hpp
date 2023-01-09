@@ -1,10 +1,11 @@
 #pragma once
 
 #include "oopVersion/easing/easingFunction.hpp"
+#include "oopVersion/events/timedEventFirer.hpp"
 
 #include <memory>
 
-class Animation
+class Animation : public TimedEventFirer
 {
 public:
     // Duration in ms
@@ -14,7 +15,7 @@ public:
 
     bool isComplete() const { return currentTime >= duration; }
 
-    void reset() { currentTime = 0; }
+    void reset();
 
     void pause() { bIsPaused = true; }
     void unpause() { bIsPaused = false; }
