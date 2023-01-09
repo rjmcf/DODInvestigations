@@ -1,8 +1,15 @@
 #include "enemyController.hpp"
 
+#include <iterator>
+
+void EnemyController::addEnemies(std::vector<std::unique_ptr<Enemy>>&& newEnemies)
+{
+    allAliveEnemies.insert(allAliveEnemies.end(), std::make_move_iterator(newEnemies.begin()), std::make_move_iterator(newEnemies.end()));
+}
+
 void EnemyController::addEnemy(std::unique_ptr<Enemy>&& newEnemy)
 {
-    allAliveEnemies.push_back(std::move(newEnemy));
+    allAliveEnemies.emplace_back(std::move(newEnemy));
 }
 
 void EnemyController::update(int deltaTimeMs)
