@@ -9,8 +9,8 @@ class EventListener;
 class EventManager
 {
 public:
-    void listenToEvent(EventListener* eventListener, const std::string& eventName);
-    void stopListeningToEvent(EventListener* eventListener, const std::string& eventName);
+    void listenToEvent(EventListener& eventListener, const std::string& eventName);
+    void stopListeningToEvent(EventListener& eventListener, const std::string& eventName);
 
     void triggerEvent(const std::string& eventName) const;
 

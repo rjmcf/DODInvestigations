@@ -4,6 +4,7 @@
 
 class EventListener
 {
-public:
+private:
+    friend class EventManager;
     virtual void onEventTriggered(const std::string& eventName) = 0;
 };
