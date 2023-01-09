@@ -9,15 +9,25 @@ class AnimationColour : public Animation
 public:
     AnimationColour(int durationMs, const Colour& inFinalColour, ColourHaverInterface& inTarget, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
         : Animation(durationMs, std::move(inEasingFunction))
-        , initialColour(inTarget.getColour())
-        , redDifference(inFinalColour.red - initialColour.red)
-        , greenDifference(inFinalColour.green - initialColour.green)
-        , blueDifference(inFinalColour.blue - initialColour.blue)
-        , alphaDifference(inFinalColour.alpha - initialColour.alpha)
+        , finalColour(inFinalColour)
         , target(inTarget)
     {}
 
 private:
+    virtual void setInitialValues() override
+    {
+        initialColour = target.getColour();
+        redDifference = finalColour.red - initialColour.red;
+        greenDifference = finalColour.green - initialColour.green;
+        blueDifference = finalColour.blue - initialColour.blue;
+        alphaDifference = finalColour.alpha - initialColour.alpha;
+    }
+
+    virtual void reinstateInitialValues() override
+    {
+        target.setColour(initialColour);
+    }
+
     virtual void interpolate(float fraction) override
     {
         const int scaledRedDifference = static_cast<int>(redDifference * fraction);
@@ -34,11 +44,12 @@ private:
         target.setColour(currentColour);
     }
 
-    const Colour initialColour;
-    const float redDifference;
-    const float greenDifference;
-    const float blueDifference;
-    const float alphaDifference;
+    Colour initialColour;
+    const Colour finalColour;
+    float redDifference;
+    float greenDifference;
+    float blueDifference;
+    float alphaDifference;
 
     ColourHaverInterface& target;
 };

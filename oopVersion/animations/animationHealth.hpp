@@ -6,21 +6,33 @@
 class AnimationHealth : public Animation
 {
 public:
-    AnimationHealth(int durationMs, int inInitial, int inFinal, HealthHaverInterface& inTarget, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
+    AnimationHealth(int durationMs, int inFinal, HealthHaverInterface& inTarget, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
         : Animation(durationMs, std::move(inEasingFunction))
-        , initial(inInitial)
-        , difference(inFinal - inInitial)
+        , finalHealth(inFinal)
         , target(inTarget)
     {}
 
 private:
-    virtual void interpolate(float fraction) override
+    virtual void setInitialValues()
     {
-        target.setHealth(initial + (difference) * fraction);
+        initialHealth = target.getHealth();
+        difference = finalHealth - initialHealth;
+    }
+    
+    virtual void reinstateInitialValues()
+    {
+        target.setHealth(initialHealth);
     }
 
-    const int initial;
-    const int difference;
+    virtual void interpolate(float fraction) override
+    {
+        target.setHealth(initialHealth + (difference) * fraction);
+    }
+
+    const int finalHealth;
+
+    int initialHealth;
+    int difference;
 
     HealthHaverInterface& target;
 };

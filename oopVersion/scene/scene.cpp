@@ -1,5 +1,6 @@
 #include "scene.hpp"
 
+#include "oopVersion/animations/animationChain.hpp"
 #include "oopVersion/animations/animationColour.hpp"
 #include "oopVersion/animations/animationDeform.hpp"
 #include "oopVersion/animations/animationTranslate.hpp"
@@ -22,12 +23,18 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
     enemyController.addEnemy(std::move(normalEnemy3));
     
 
-    std::unique_ptr<Enemy> bossEnemy = std::make_unique<EnemyWithHealth>(45,30, 50,50, Colour{255, 0, 0, 255}, 200);
+    std::unique_ptr<Enemy> bossEnemy = std::make_unique<EnemyWithHealth>(30,30, 50,50, Colour{255, 0, 0, 255}, 200);
 
     std::unique_ptr<Animation> bossColourAnimation = std::make_unique<AnimationColour>(2000, Colour{255,0,255,255}, *bossEnemy.get(), std::make_unique<EaseIn2Out2>());
     animationController.addAnimation(std::move(bossColourAnimation));
     std::unique_ptr<Animation> bossSizeAnimation = std::make_unique<AnimationDeform>(2000, Vector{60,60}, *bossEnemy.get(), std::make_unique<EaseIn2Out2>());
     animationController.addAnimation(std::move(bossSizeAnimation));
+
+    std::vector<std::unique_ptr<Animation>> bossTranslateAnimations;
+    bossTranslateAnimations.emplace_back(new AnimationTranslate(1000, Vector{ 30,0}, std::vector<RectHaverInterface*>{bossEnemy.get()}));
+    bossTranslateAnimations.emplace_back(new AnimationTranslate(1000, Vector{-30,0}, std::vector<RectHaverInterface*>{bossEnemy.get()}));
+    std::unique_ptr<AnimationChain> bossTranslateAnimationChain = std::make_unique<AnimationChain>(std::move(bossTranslateAnimations));
+    animationController.addAnimation(std::move(bossTranslateAnimationChain));
 
     enemyController.addEnemy(std::move(bossEnemy));
 }

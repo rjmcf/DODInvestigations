@@ -16,11 +16,32 @@ public:
     {
         for (RectHaverInterface* target : inTargets)
         {
-            targets.emplace_back(TargetWithInitialPosition{target, Point{target->getRect().x, target->getRect().y}});
+            targets.emplace_back(TargetWithInitialPosition{target});
         }
     }
 
 private:
+    virtual void setInitialValues() override
+    {
+        for (TargetWithInitialPosition& target : targets)
+        {
+            SDL_Rect currentRect = target.target->getRect();
+            target.initial = Point{currentRect.x, currentRect.y};
+        }
+    }
+    
+    
+    virtual void reinstateInitialValues() override
+    {
+        for (const TargetWithInitialPosition& target : targets)
+        {
+            SDL_Rect currentRect = target.target->getRect();
+            currentRect.x = static_cast<int>(target.initial.x);
+            currentRect.y = static_cast<int>(target.initial.y);
+            target.target->setRect(currentRect);
+        }
+    }
+
     virtual void interpolate(float fraction) override
     {
         const Vector scaledDisplacement = displacement.scale(fraction);

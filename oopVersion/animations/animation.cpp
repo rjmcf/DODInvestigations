@@ -11,21 +11,27 @@ Animation::Animation(int durationMs, std::unique_ptr<EasingFunction>&& inEasingF
 
 void Animation::update(int deltaTimeMs)
 {
-    if (bIsPaused)
+    if (isPaused() || isComplete())
     {
         return;
     }
     
+    if (currentTime == 0)
+    {
+        setInitialValues();
+    }
+
     currentTime += deltaTimeMs;
     // Clamp to duration
     currentTime = std::min(currentTime, duration);
 
-    interpolate(easingFunction->ease(currentTime / duration));
+    interpolate(easingFunction->ease(currentTime / (float)duration));
     fireEventsForTime(currentTime);
 }
 
 void Animation::reset()
 { 
     currentTime = 0; 
+    reinstateInitialValues();
     resetAllEvents(); 
 }

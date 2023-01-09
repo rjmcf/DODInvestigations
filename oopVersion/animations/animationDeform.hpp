@@ -9,12 +9,25 @@ class AnimationDeform : public Animation
 public:
     AnimationDeform(int durationMs, const Vector& inFinalSize, RectHaverInterface& inTarget, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
         : Animation(durationMs, std::move(inEasingFunction))
-        , initialSize(Vector{inTarget.getRect().w, inTarget.getRect().h})
-        , difference(inFinalSize.add(initialSize.scale(-1)))
+        , finalSize(inFinalSize)
         , target(inTarget)
     {}
 
 private:
+    virtual void setInitialValues() override
+    {
+        initialSize = Vector{target.getRect().w, target.getRect().h};
+        difference = finalSize.add(initialSize.scale(-1));
+    }
+    
+    virtual void reinstateInitialValues() override
+    {
+        SDL_Rect currentRect = target.getRect();
+        currentRect.w = static_cast<int>(initialSize.x);
+        currentRect.h = static_cast<int>(initialSize.y);
+        target.setRect(currentRect);
+    }
+
     virtual void interpolate(float fraction) override
     {
         const Vector scaledDifference = difference.scale(fraction);
@@ -25,8 +38,10 @@ private:
         target.setRect(currentRect);
     }
 
-    const Vector initialSize;
-    const Vector difference;
+    const Vector finalSize;
+
+    Vector initialSize;
+    Vector difference;
 
     RectHaverInterface& target;
 };
