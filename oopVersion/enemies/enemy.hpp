@@ -9,6 +9,7 @@
 class Enemy : public RectHaverInterface, public ColourHaverInterface
 {
 public:
+    // x and y define the centre, w and h are the "radius"
     Enemy(int x, int y, int w, int h, const Colour& inColour);
 
     virtual void draw(SDL_Renderer& renderer);
