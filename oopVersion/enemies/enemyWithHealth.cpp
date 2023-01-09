@@ -10,7 +10,7 @@ void EnemyWithHealth::draw(SDL_Renderer& renderer)
 {
     Enemy::draw(renderer);
 
-    SDL_Rect healthBarRect = rect;
+    SDL_Rect healthBarRect = getDrawRect();
     healthBarRect.y -= 10;
     healthBarRect.h = 5;
 

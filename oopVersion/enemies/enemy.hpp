@@ -28,4 +28,6 @@ public:
 protected:
     SDL_Rect rect;
     Colour colour;
+
+    SDL_Rect getDrawRect() const { return SDL_Rect{rect.x-rect.w, rect.y-rect.h, 2*rect.w, 2*rect.h}; }
 };
