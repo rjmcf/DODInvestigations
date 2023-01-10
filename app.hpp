@@ -4,7 +4,7 @@
 #include "oopVersion/enemies/enemyController.hpp"
 #include "oopVersion/events/dummyEventListener.hpp"
 
-#include "SDL.h"
+#include <SDL.h>
 
 class Enemy;
 

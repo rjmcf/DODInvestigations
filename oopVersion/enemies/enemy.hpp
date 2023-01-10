@@ -4,7 +4,7 @@
 #include "interfaces/colourHaverInterface.hpp"
 #include "interfaces/rectHaverInterface.hpp"
 
-#include "SDL.h"
+#include <SDL.h>
 
 class Enemy : public RectHaverInterface, public ColourHaverInterface
 {
