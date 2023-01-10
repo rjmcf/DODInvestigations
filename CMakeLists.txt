@@ -6,10 +6,11 @@ set(SDL2_DIR "./sdl/lib/cmake/SDL2/")
 
 project(DODInvestigations)
 
-#add_subdirectory(oopVersion)
+add_subdirectory(oopVersion)
+add_subdirectory(oopVersion/scene)
 
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 
 add_executable(${PROJECT_NAME} main.cpp app.cpp)
-target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} OOPVersion Scene)

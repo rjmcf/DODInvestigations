@@ -1,6 +1,6 @@
 #include "app.hpp"
 
-//#include "oopVersion/scene/scene.hpp"
+#include "oopVersion/scene/scene.hpp"
 
 #include <iostream>
 
@@ -39,10 +39,10 @@ bool Application::setup()
         return false;
     }
 
-    /*Scene scene;
-    scene.setUp(enemyController, animationController);
+    Scene scene;
+    scene.setUp();//enemyController, animationController);
 
-    dummyEventListener.setUp();*/
+    /*dummyEventListener.setUp();*/
 
     std::cout << "Setup Complete\n";
 
