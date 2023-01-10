@@ -7,3 +7,6 @@ SRCS := *.cpp oopVersion/animations/*.cpp oopVersion/enemies/*.cpp oopVersion/sc
 
 all:
 	$(CC) $(INCS) $(LIBS) -o $(TARGET) $(SRCS) $(CFLAGS)
+
+asm:
+	$(CC) $(INCS) $(LIBS) -S -fverbose-asm -O2 $(SRCS) $(CFLAGS)
