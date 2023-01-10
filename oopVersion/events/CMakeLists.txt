@@ -1,6 +1,5 @@
+file(GLOB sources CONFIGURE_DEPENDS "*.cpp")
 add_library(
     Events
-    "${CMAKE_CURRENT_SOURCE_DIR}/dummyEventListener.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/eventManager.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/timedEventFirer.cpp"
+    ${sources}
 )
