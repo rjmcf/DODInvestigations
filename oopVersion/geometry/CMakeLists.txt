@@ -5,5 +5,3 @@ add_library(
 )
 
 set_target_properties(Geometry PROPERTIES LINKER_LANGUAGE CXX)
-
-target_include_directories(Geometry PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")

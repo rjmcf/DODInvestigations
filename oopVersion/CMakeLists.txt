@@ -4,5 +4,3 @@ add_library(
 )
 
 set_target_properties(OOPVersion PROPERTIES LINKER_LANGUAGE CXX)
-
-target_include_directories(OOPVersion PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")

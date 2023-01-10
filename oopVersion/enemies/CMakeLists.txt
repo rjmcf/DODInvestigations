@@ -7,7 +7,3 @@ add_library(
     "${CMAKE_CURRENT_SOURCE_DIR}/enemyWithHealth.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/enemyWithHealth.hpp"
 )
-
-target_include_directories(Enemies PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
-
-target_compile_definitions(Enemies PUBLIC)

@@ -5,8 +5,7 @@ set(CMAKE_C_COMPILER "C:/msys64/mingw64/bin/gcc.exe")
 
 project(DODInvestigations)
 
-set(APP_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
-set(OOP_VERSION_DIR ${APP_ROOT_DIR}/oopVersion)
+set(OOP_VERSION_DIR ${CMAKE_CURRENT_SOURCE_DIR}/oopVersion)
 
 set(SHARED_INCLUDES
                 ${OOP_VERSION_DIR}

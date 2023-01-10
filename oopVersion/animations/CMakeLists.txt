@@ -12,8 +12,3 @@ add_library(
     "${CMAKE_CURRENT_SOURCE_DIR}/animationHealth.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/animationTranslate.hpp"
 )
-
-target_include_directories(Animations PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
-
-target_compile_definitions(Animations PUBLIC)
-
