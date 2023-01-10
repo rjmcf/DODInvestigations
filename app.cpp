@@ -4,22 +4,22 @@
 
 #include <iostream>
 
-//const int WIDTH = 1600, HEIGHT = 900;
+const int WIDTH = 1600, HEIGHT = 900;
 
 Application::~Application()
 {
-    /*SDL_DestroyRenderer(renderer);
+    SDL_DestroyRenderer(renderer);
     renderer = nullptr;
 
     SDL_DestroyWindow(window);
     window = nullptr;
 
-    SDL_Quit();*/
+    SDL_Quit();
 }
 
 bool Application::setup()
 {
-    /*if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
         std::cout << "Failed to initialise SDL2: " << SDL_GetError() << std::endl;
         return false;
@@ -39,17 +39,19 @@ bool Application::setup()
         return false;
     }
 
-    Scene scene;
+    /*Scene scene;
     scene.setUp(enemyController, animationController);
 
     dummyEventListener.setUp();*/
+
+    std::cout << "Setup Complete\n";
 
     return true;
 }
 
 void Application::loop()
 {
-    /*int frameStart = 0, frameEnd = 0, deltaTime = 0;
+    int frameStart = 0, frameEnd = 0, deltaTime = 0;
     while (!bShouldQuit)
     {
         frameStart = SDL_GetTicks();
@@ -65,18 +67,23 @@ void Application::loop()
             frameEnd = SDL_GetTicks();
             deltaTime = frameEnd - frameStart;
         }
-    }*/
+    }
 }
 
 void Application::update(int deltaTimeMs)
 {
-    /*if (SDL_PollEvent(&windowEvent))
+    if (SDL_PollEvent(&windowEvent))
     {
         switch (windowEvent.type)
         {
             case SDL_QUIT:
                 bShouldQuit = true;
                 break;
+
+
+        }
+    }
+    /*
             case SDL_KEYUP:
             {
                 switch (windowEvent.key.keysym.sym)
@@ -99,10 +106,10 @@ void Application::update(int deltaTimeMs)
 
 void Application::draw()
 {
-    /*if (renderer)
+    if (renderer)
     {
         SDL_RenderClear(renderer);
-        enemyController.drawAllEnemies(*renderer);
+        //enemyController.drawAllEnemies(*renderer);
         SDL_RenderPresent(renderer);
-    }*/
+    }
 }

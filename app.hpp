@@ -3,15 +3,15 @@
 /*#include "oopVersion/animations/animationController.hpp"
 #include "oopVersion/enemies/enemyController.hpp"
 #include "oopVersion/events/dummyEventListener.hpp"
-
-#include <SDL2/SDL.h>*/
+*/
+#include "SDL.h"
 
 class Enemy;
 
 class Application
 {
 public:
-    ~Application();
+   /* ~Application();
 
     bool setup();
     void loop();
@@ -22,14 +22,14 @@ private:
     void draw();
     void drawRectangle();
 
-    /*SDL_Window* window = nullptr;
+    SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
     SDL_Event windowEvent;
 
-    EnemyController enemyController;
+    /*EnemyController enemyController;
     AnimationController animationController;
 
-    DummyEventListener dummyEventListener;
+    DummyEventListener dummyEventListener;*/
 
-    bool bShouldQuit = false;*/
+    bool bShouldQuit = false;
 };
