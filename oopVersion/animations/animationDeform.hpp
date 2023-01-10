@@ -4,7 +4,7 @@
 #include "geometry/vector.hpp"
 #include "interfaces/rectHaverInterface.hpp"
 
-#include "../../sdl/include/SDL2/SDL.h"
+#include "SDL.h"
 
 class AnimationDeform : public Animation
 {

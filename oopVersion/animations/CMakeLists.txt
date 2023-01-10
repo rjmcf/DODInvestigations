@@ -13,11 +13,6 @@ add_library(
     "${CMAKE_CURRENT_SOURCE_DIR}/animationTranslate.hpp"
 )
 
-set(SDL2_DIR "../../sdl/lib/cmake/SDL2/") 
-find_package(SDL2 REQUIRED)
-include_directories(${SDL2_INCLUDE_DIRS})
-target_link_libraries(Animations ${SDL2_LIBRARIES})
-
 target_include_directories(Animations PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 
 target_compile_definitions(Animations PUBLIC)
