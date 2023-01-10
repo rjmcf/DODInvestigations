@@ -14,6 +14,15 @@
         "cacheVariables": {
           "CMAKE_CXX_FLAGS": "-Wall -Wextra -pedantic -Wno-unused-parameter"
         }
+      },
+      {
+        "name": "optimised",
+        "generator": "mingw",
+        "binaryDir" : "${sourceDir}/build",
+        "description": "Build options for an optimised build",
+        "cacheVariables": {
+          "CMAKE_CXX_FLAGS": "-Wall -Wextra -pedantic -Wno-unused-parameter -O3"
+        }
       }
     ]
   }
