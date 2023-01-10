@@ -1,6 +1,6 @@
 #include "app.hpp"
 
-#include "oopVersion/scene/scene.hpp"
+#include "scene/scene.hpp"
 
 #include <iostream>
 

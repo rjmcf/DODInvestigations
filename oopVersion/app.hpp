@@ -1,8 +1,8 @@
 #pragma once
 
-#include "oopVersion/animations/animationController.hpp"
-#include "oopVersion/enemies/enemyController.hpp"
-#include "oopVersion/events/dummyEventListener.hpp"
+#include "animations/animationController.hpp"
+#include "enemies/enemyController.hpp"
+#include "events/dummyEventListener.hpp"
 
 #include <SDL.h>
 
