@@ -11,7 +11,7 @@ class Enemy;
 class Application
 {
 public:
-   /* ~Application();
+   ~Application();
 
     bool setup();
     void loop();

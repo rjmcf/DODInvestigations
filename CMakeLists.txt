@@ -11,13 +11,5 @@ project(DODInvestigations)
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 
-add_executable(${PROJECT_NAME} main.cpp)# app.cpp)
+add_executable(${PROJECT_NAME} main.cpp app.cpp)
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES})
-
-
-
-#target_link_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/sdl/lib/)
-#target_link_libraries(${PROJECT_NAME} PRIVATE mingw32)
-#target_link_libraries(${PROJECT_NAME} PRIVATE SDL2main) 
-#target_link_libraries(${PROJECT_NAME} PRIVATE SDL2)
-#target_link_libraries(${PROJECT_NAME} PRIVATE OOPVersion)
