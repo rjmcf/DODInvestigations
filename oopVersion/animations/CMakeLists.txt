@@ -1,14 +1,6 @@
 add_library(
     Animations
-    "${CMAKE_CURRENT_SOURCE_DIR}/animatedInterface.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/animation.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/animation.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/animationChain.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/animationChain.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/animationColour.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/animationController.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/animationController.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/animationDeform.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/animationHealth.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/animationTranslate.hpp"
 )
