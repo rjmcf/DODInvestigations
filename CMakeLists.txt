@@ -19,3 +19,5 @@ add_subdirectory(${OOP_VERSION_DIR}/animations)
 add_subdirectory(${OOP_VERSION_DIR}/enemies)
 add_subdirectory(${OOP_VERSION_DIR}/events)
 add_subdirectory(${OOP_VERSION_DIR}/scene)
+
+# Usage: cmake -S .. -G "MinGW Makefiles" --preset=default
