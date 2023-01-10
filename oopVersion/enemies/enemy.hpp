@@ -1,10 +1,10 @@
 #pragma once
 
-#include "oopVersion/colour.hpp"
-#include "oopVersion/interfaces/colourHaverInterface.hpp"
-#include "oopVersion/interfaces/rectHaverInterface.hpp"
+#include "../colour.hpp"
+#include "../interfaces/colourHaverInterface.hpp"
+#include "../interfaces/rectHaverInterface.hpp"
 
-#include <SDL2/SDL.h>
+#include "../../sdl/include/SDL2/SDL.h"
 
 class Enemy : public RectHaverInterface, public ColourHaverInterface
 {

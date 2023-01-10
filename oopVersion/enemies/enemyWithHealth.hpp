@@ -1,7 +1,7 @@
 #pragma once
 
 #include "enemy.hpp"
-#include "oopVersion/interfaces/healthHaverInterface.hpp"
+#include "../interfaces/healthHaverInterface.hpp"
 
 class EnemyWithHealth : public Enemy, public HealthHaverInterface
 {

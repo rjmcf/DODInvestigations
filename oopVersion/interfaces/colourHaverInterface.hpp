@@ -1,6 +1,6 @@
 #pragma once
 
-#include "oopVersion/colour.hpp"
+#include "../colour.hpp"
 
 class ColourHaverInterface
 {

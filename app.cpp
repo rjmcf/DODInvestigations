@@ -40,9 +40,9 @@ bool Application::setup()
     }
 
     Scene scene;
-    scene.setUp();//enemyController, animationController);
+    scene.setUp(enemyController, animationController);
 
-    /*dummyEventListener.setUp();*/
+    dummyEventListener.setUp();
 
     std::cout << "Setup Complete\n";
 
@@ -78,12 +78,7 @@ void Application::update(int deltaTimeMs)
         {
             case SDL_QUIT:
                 bShouldQuit = true;
-                break;
-
-
-        }
-    }
-    /*
+                break;    
             case SDL_KEYUP:
             {
                 switch (windowEvent.key.keysym.sym)
@@ -101,7 +96,7 @@ void Application::update(int deltaTimeMs)
     }
 
     enemyController.update(deltaTimeMs);
-    animationController.updateAllAnimations(deltaTimeMs);*/
+    animationController.updateAllAnimations(deltaTimeMs);
 }
 
 void Application::draw()
@@ -109,7 +104,7 @@ void Application::draw()
     if (renderer)
     {
         SDL_RenderClear(renderer);
-        //enemyController.drawAllEnemies(*renderer);
+        enemyController.drawAllEnemies(*renderer);
         SDL_RenderPresent(renderer);
     }
 }

@@ -1,9 +1,9 @@
 #pragma once
 
-/*#include "oopVersion/animations/animationController.hpp"
+#include "oopVersion/animations/animationController.hpp"
 #include "oopVersion/enemies/enemyController.hpp"
 #include "oopVersion/events/dummyEventListener.hpp"
-*/
+
 #include "SDL.h"
 
 class Enemy;
@@ -26,10 +26,10 @@ private:
     SDL_Renderer* renderer = nullptr;
     SDL_Event windowEvent;
 
-    /*EnemyController enemyController;
+    EnemyController enemyController;
     AnimationController animationController;
 
-    DummyEventListener dummyEventListener;*/
+    DummyEventListener dummyEventListener;
 
     bool bShouldQuit = false;
 };

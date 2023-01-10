@@ -1,7 +1,7 @@
 #include "animation.hpp"
 
 #include <algorithm>
-#include <SDL2/SDL.h>
+#include "SDL.h"
 
 Animation::Animation(int durationMs, std::unique_ptr<EasingFunction>&& inEasingFunction)
     : duration(durationMs)

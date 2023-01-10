@@ -1,17 +1,17 @@
 #include "scene.hpp"
 
-/*#include "oopVersion/animations/animationChain.hpp"
-#include "oopVersion/animations/animationColour.hpp"
-#include "oopVersion/animations/animationDeform.hpp"
-#include "oopVersion/animations/animationHealth.hpp"
-#include "oopVersion/animations/animationTranslate.hpp"
-#include "oopVersion/animations/animationController.hpp"
-#include "oopVersion/enemies/enemyController.hpp"
-#include "oopVersion/enemies/enemyWithHealth.hpp"*/
+#include "../animations/animationChain.hpp"
+#include "../animations/animationColour.hpp"
+#include "../animations/animationDeform.hpp"
+#include "../animations/animationHealth.hpp"
+#include "../animations/animationTranslate.hpp"
+#include "../animations/animationController.hpp"
+#include "../enemies/enemyController.hpp"
+#include "../enemies/enemyWithHealth.hpp"
 
-void Scene::setUp()//EnemyController& enemyController, AnimationController& animationController)
+void Scene::setUp(EnemyController& enemyController, AnimationController& animationController)
 {
-    /*// Normal Enemies
+    // Normal Enemies
     {
         std::vector<std::unique_ptr<Enemy>> normalEnemies;
         std::vector<RectHaverInterface*> normalRectHavers;
@@ -103,5 +103,5 @@ void Scene::setUp()//EnemyController& enemyController, AnimationController& anim
         }
 
         enemyController.addEnemies(std::move(bossEnemies));
-    }*/
+    }
 }
