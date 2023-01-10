@@ -1,25 +1,25 @@
 #include "app.hpp"
 
-#include "oopVersion/scene/scene.hpp"
+//#include "oopVersion/scene/scene.hpp"
 
 #include <iostream>
 
-const int WIDTH = 1600, HEIGHT = 900;
+//const int WIDTH = 1600, HEIGHT = 900;
 
 Application::~Application()
 {
-    SDL_DestroyRenderer(renderer);
+    /*SDL_DestroyRenderer(renderer);
     renderer = nullptr;
 
     SDL_DestroyWindow(window);
     window = nullptr;
 
-    SDL_Quit();
+    SDL_Quit();*/
 }
 
 bool Application::setup()
 {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    /*if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
         std::cout << "Failed to initialise SDL2: " << SDL_GetError() << std::endl;
         return false;
@@ -42,14 +42,14 @@ bool Application::setup()
     Scene scene;
     scene.setUp(enemyController, animationController);
 
-    dummyEventListener.setUp();
+    dummyEventListener.setUp();*/
 
     return true;
 }
 
 void Application::loop()
 {
-    int frameStart = 0, frameEnd = 0, deltaTime = 0;
+    /*int frameStart = 0, frameEnd = 0, deltaTime = 0;
     while (!bShouldQuit)
     {
         frameStart = SDL_GetTicks();
@@ -65,12 +65,12 @@ void Application::loop()
             frameEnd = SDL_GetTicks();
             deltaTime = frameEnd - frameStart;
         }
-    }
+    }*/
 }
 
 void Application::update(int deltaTimeMs)
 {
-    if (SDL_PollEvent(&windowEvent))
+    /*if (SDL_PollEvent(&windowEvent))
     {
         switch (windowEvent.type)
         {
@@ -94,15 +94,15 @@ void Application::update(int deltaTimeMs)
     }
 
     enemyController.update(deltaTimeMs);
-    animationController.updateAllAnimations(deltaTimeMs);
+    animationController.updateAllAnimations(deltaTimeMs);*/
 }
 
 void Application::draw()
 {
-    if (renderer)
+    /*if (renderer)
     {
         SDL_RenderClear(renderer);
         enemyController.drawAllEnemies(*renderer);
         SDL_RenderPresent(renderer);
-    }
+    }*/
 }

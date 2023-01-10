@@ -1,10 +1,10 @@
 #pragma once
 
-#include "oopVersion/animations/animationController.hpp"
+/*#include "oopVersion/animations/animationController.hpp"
 #include "oopVersion/enemies/enemyController.hpp"
 #include "oopVersion/events/dummyEventListener.hpp"
 
-#include <SDL2/SDL.h>
+#include <SDL2/SDL.h>*/
 
 class Enemy;
 
@@ -22,7 +22,7 @@ private:
     void draw();
     void drawRectangle();
 
-    SDL_Window* window = nullptr;
+    /*SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
     SDL_Event windowEvent;
 
@@ -31,5 +31,5 @@ private:
 
     DummyEventListener dummyEventListener;
 
-    bool bShouldQuit = false;
+    bool bShouldQuit = false;*/
 };
