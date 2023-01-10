@@ -32,7 +32,7 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
                     initialY + row * buffer,
                     radius,
                     radius,
-                    Colour{0,0,255}
+                    Colour{0,0,255,255}
                 );
 
                 if (colourChangeTracker % 4 == 0)
@@ -81,7 +81,7 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
                     initialY + row * buffer,
                     smallRadius,
                     smallRadius,
-                    Colour{255,0,0},
+                    Colour{255,0,0,255},
                     200
                 );
 
@@ -96,7 +96,7 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
                 bossSizeAnimations.emplace_back(new AnimationDeform(1500, Vector{smallRadius,smallRadius}, *enemy.get(), std::make_unique<EaseIn2Out2>()));
                 animationController.addAnimation(std::make_unique<AnimationChain>(std::move(bossSizeAnimations)));
 
-                animationController.addAnimation(std::make_unique<AnimationColour>(3000, Colour{255,0,255,0}, *enemy.get()));
+                animationController.addAnimation(std::make_unique<AnimationColour>(3000, Colour{255,0,255,255}, *enemy.get()));
 
                 bossEnemies.emplace_back(std::move(enemy));
             }

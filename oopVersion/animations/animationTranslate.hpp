@@ -16,7 +16,7 @@ public:
     {
         for (RectHaverInterface* target : inTargets)
         {
-            targets.emplace_back(TargetWithInitialPosition{target});
+            targets.emplace_back(TargetWithInitialPosition{target, Point()});
         }
     }
 
