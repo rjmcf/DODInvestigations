@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "cmakeMinimumRequired": {
+      "major": 3,
+      "minor": 25,
+      "patch": 1
+    },
+    "configurePresets": [
+      {
+        "name": "default",
+        "generator": "mingw",
+        "binaryDir" : "${sourceDir}/build",
+        "description": "Default build options",
+        "cacheVariables": {
+          "CMAKE_CXX_FLAGS": "-Wall -Wextra -pedantic -Wno-unused-parameter"
+        }
+      }
+    ]
+  }
