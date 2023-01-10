@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../colour.hpp"
-#include "../interfaces/colourHaverInterface.hpp"
-#include "../interfaces/rectHaverInterface.hpp"
+#include "colour.hpp"
+#include "interfaces/colourHaverInterface.hpp"
+#include "interfaces/rectHaverInterface.hpp"
 
 #include "../../sdl/include/SDL2/SDL.h"
 

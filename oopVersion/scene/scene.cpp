@@ -1,13 +1,13 @@
 #include "scene.hpp"
 
-#include "../animations/animationChain.hpp"
-#include "../animations/animationColour.hpp"
-#include "../animations/animationDeform.hpp"
-#include "../animations/animationHealth.hpp"
-#include "../animations/animationTranslate.hpp"
-#include "../animations/animationController.hpp"
-#include "../enemies/enemyController.hpp"
-#include "../enemies/enemyWithHealth.hpp"
+#include "animations/animationChain.hpp"
+#include "animations/animationColour.hpp"
+#include "animations/animationDeform.hpp"
+#include "animations/animationHealth.hpp"
+#include "animations/animationTranslate.hpp"
+#include "animations/animationController.hpp"
+#include "enemies/enemyController.hpp"
+#include "enemies/enemyWithHealth.hpp"
 
 void Scene::setUp(EnemyController& enemyController, AnimationController& animationController)
 {

@@ -1,9 +1,9 @@
 #pragma once
 
 #include "animation.hpp"
-#include "../geometry/point.hpp"
-#include "../geometry/vector.hpp"
-#include "../interfaces/rectHaverInterface.hpp"
+#include "geometry/point.hpp"
+#include "geometry/vector.hpp"
+#include "interfaces/rectHaverInterface.hpp"
 
 #include <vector>
 

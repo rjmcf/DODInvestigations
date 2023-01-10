@@ -1,8 +1,8 @@
 #pragma once
 
 #include "animation.hpp"
-#include "../geometry/vector.hpp"
-#include "../interfaces/rectHaverInterface.hpp"
+#include "geometry/vector.hpp"
+#include "interfaces/rectHaverInterface.hpp"
 
 #include "../../sdl/include/SDL2/SDL.h"
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "animation.hpp"
-#include "../interfaces/healthHaverInterface.hpp"
+#include "interfaces/healthHaverInterface.hpp"
 
 class AnimationHealth : public Animation
 {

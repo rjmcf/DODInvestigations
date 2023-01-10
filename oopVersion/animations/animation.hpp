@@ -1,8 +1,8 @@
 #pragma once
 
 #include "animatedInterface.hpp"
-#include "../easing/easingFunction.hpp"
-#include "../events/timedEventFirer.hpp"
+#include "easing/easingFunction.hpp"
+#include "events/timedEventFirer.hpp"
 
 #include <memory>
 

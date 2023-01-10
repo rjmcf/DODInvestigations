@@ -1,8 +1,8 @@
 #pragma once
 
 #include "animation.hpp"
-#include "../colour.hpp"
-#include "../interfaces/colourHaverInterface.hpp"
+#include "colour.hpp"
+#include "interfaces/colourHaverInterface.hpp"
 
 class AnimationColour : public Animation
 {
