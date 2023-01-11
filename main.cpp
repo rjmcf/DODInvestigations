@@ -4,7 +4,6 @@
 
 int main(int argc, char* argv[])
 {
-    std::cout << "Starting program\n";
     Application app;
 
     if (!app.setup())
@@ -13,9 +12,7 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    std::cout << "Start loop\n";
     app.loop();
-    std::cout << "End loop\n";
 
     return 0;
 }
