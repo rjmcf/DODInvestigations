@@ -1,5 +1,7 @@
 #include "enemyController.hpp"
 
+#include "Tracy.hpp"
+
 #include <iterator>
 
 void EnemyController::addEnemies(std::vector<std::unique_ptr<Enemy>>&& newEnemies)
@@ -14,6 +16,7 @@ void EnemyController::addEnemy(std::unique_ptr<Enemy>&& newEnemy)
 
 void EnemyController::update(int deltaTimeMs)
 {
+    ZoneScopedN("UpdateEnemies");
     for (const std::unique_ptr<Enemy>& enemyPtr : allAliveEnemies)
     {
         enemyPtr->update(deltaTimeMs);
@@ -22,6 +25,7 @@ void EnemyController::update(int deltaTimeMs)
     
 void EnemyController::drawAllEnemies(SDL_Renderer& renderer)
 {
+    ZoneScoped;
     for (const std::unique_ptr<Enemy>& enemyPtr : allAliveEnemies)
     {
         enemyPtr->draw(renderer);

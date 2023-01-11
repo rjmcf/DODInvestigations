@@ -1,5 +1,7 @@
 #include "animationController.hpp"
 
+#include "Tracy.hpp"
+
 void AnimationController::addAnimation(std::unique_ptr<AnimatedInterface>&& newAnimation)
 {
     allActiveAnimations.push_back(std::move(newAnimation));
@@ -7,6 +9,7 @@ void AnimationController::addAnimation(std::unique_ptr<AnimatedInterface>&& newA
 
 void AnimationController::updateAllAnimations(int deltaTimeMs)
 {
+    ZoneScoped;
     for (const std::unique_ptr<AnimatedInterface>& animationPtr : allActiveAnimations)
     {
         animationPtr->update(deltaTimeMs);

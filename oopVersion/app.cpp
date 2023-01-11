@@ -54,12 +54,14 @@ void Application::loop()
     int frameStart = 0, frameEnd = 0, deltaTime = 0;
     while (!bShouldQuit)
     {
+        ZoneNamedN(ZoneLoop, "Loop", true);
         frameStart = SDL_GetTicks();
         update(deltaTime);
         draw();
         frameEnd = SDL_GetTicks();
         deltaTime = frameEnd - frameStart;
 
+        ZoneNamedN(ZoneLoopDelay, "LoopDelay", true);
         // Ensure at least one ms has passed, so we don't end up with deltaTimes of 0
         if (deltaTime < 1)
         {
@@ -72,6 +74,7 @@ void Application::loop()
 
 void Application::update(int deltaTimeMs)
 {
+    ZoneScoped;
     if (SDL_PollEvent(&windowEvent))
     {
         switch (windowEvent.type)
@@ -101,10 +104,13 @@ void Application::update(int deltaTimeMs)
 
 void Application::draw()
 {
+    ZoneNamedN(ZoneDraw, "Draw", true);
     if (renderer)
     {
         SDL_RenderClear(renderer);
         enemyController.drawAllEnemies(*renderer);
+        ZoneNamedN(ZoneDrawRenderPresent, "DrawRenderPresent", true);
         SDL_RenderPresent(renderer);
+        FrameMark;
     }
 }
