@@ -50,6 +50,11 @@ private:
         const Vector scaledDisplacement = displacement.scale(fraction);
         for (const TargetWithInitialPosition& target : targets)
         {
+            if (!target.target->shouldAnimateRect())
+            {
+                continue;
+            }
+            
             const Point currentPosition = target.initial.translate(scaledDisplacement);
             SDL_Rect currentRect = target.target->getRect();
             currentRect.x = static_cast<int>(currentPosition.x);

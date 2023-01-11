@@ -33,6 +33,11 @@ private:
 
     virtual void interpolate(float fraction) override
     {
+        if (!target.shouldAnimateColour())
+        {
+            return;
+        }
+        
         const int scaledRedDifference = static_cast<int>(redDifference * fraction);
         const int scaledGreenDifference = static_cast<int>(greenDifference * fraction);
         const int scaledBlueDifference = static_cast<int>(blueDifference * fraction);

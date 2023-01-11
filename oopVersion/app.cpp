@@ -113,6 +113,9 @@ void Application::update(int deltaTimeMs)
                     case SDLK_u:
                         animationController.unpauseAllAnimations();
                         break;
+                    case SDLK_k:
+                        enemyController.killHalfEnemies();
+                        break;
                 }
                 break;
             }

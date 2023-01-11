@@ -29,7 +29,10 @@ private:
 
     virtual void interpolate(float fraction) override
     {
-        target.setHealth(initialHealth + (difference) * fraction);
+        if (target.shouldAnimateHealth())
+        {
+            target.setHealth(initialHealth + (difference) * fraction);
+        }
     }
 
     const int finalHealth;

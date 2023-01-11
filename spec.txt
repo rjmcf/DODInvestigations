@@ -1,0 +1,2 @@
+* Write an SDL program displaying a scene
+* The scene must contain two types of enemies, 

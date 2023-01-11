@@ -7,4 +7,5 @@ class ColourHaverInterface
 public:
     virtual const Colour& getColour() const = 0;
     virtual void setColour(const Colour& newColour) = 0;
+    virtual bool shouldAnimateColour() const = 0;
 };

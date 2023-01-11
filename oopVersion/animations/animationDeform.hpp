@@ -35,6 +35,11 @@ private:
 
     virtual void interpolate(float fraction) override
     {
+        if (!target.shouldAnimateRect())
+        {
+            return;
+        }
+
         const Vector scaledDifference = difference.scale(fraction);
         const Vector currentSize = initialSize.add(scaledDifference);
         SDL_Rect currentRect = target.getRect();
