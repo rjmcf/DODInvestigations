@@ -53,3 +53,27 @@ void AnimationChain::reset()
     currentAnimationIndex = 0;
     currentTimeInCurrentAnimation = 0;
 }
+
+int AnimationChain::getNumberOfTargets() const
+{
+    int totalTargets = 0;
+
+    for (const std::unique_ptr<Animation>& animation : animations)
+    {
+        totalTargets += animation->getNumberOfTargets();
+    }
+
+    return totalTargets;
+}
+
+int AnimationChain::getNumberOfAnimatedProperties() const
+{
+    int totalProperties = 0;
+
+    for (const std::unique_ptr<Animation>& animation : animations)
+    {
+        totalProperties += animation->getNumberOfAnimatedProperties();
+    }
+
+    return totalProperties;
+}

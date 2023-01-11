@@ -10,6 +10,9 @@ public:
 
     virtual void reset() = 0;
 
+    virtual int getNumberOfTargets() const = 0;
+    virtual int getNumberOfAnimatedProperties() const = 0;
+
     bool isPaused() const { return bIsPaused; }
     void pause() { bIsPaused = true; }
     void unpause() { bIsPaused = false; }

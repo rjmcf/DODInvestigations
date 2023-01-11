@@ -20,6 +20,9 @@ public:
         }
     }
 
+    virtual int getNumberOfTargets() const override { return targets.size(); }
+    virtual int getNumberOfAnimatedProperties() const override { return 2 * getNumberOfTargets(); }
+
 private:
     virtual void setInitialValues() override
     {

@@ -2,6 +2,8 @@
 
 #include "Tracy.hpp"
 
+#include <iostream>
+
 void AnimationController::addAnimation(std::unique_ptr<AnimatedInterface>&& newAnimation)
 {
     allActiveAnimations.push_back(std::move(newAnimation));
@@ -34,4 +36,21 @@ void AnimationController::unpauseAllAnimations() const
     {
         animationPtr->unpause();
     }
+}
+
+void AnimationController::reportStatistics() const
+{
+    std::cout << "Animations: " << allActiveAnimations.size() << "\n";
+
+    int totalTargets = 0;
+    int totalProperties = 0;
+
+    for (const std::unique_ptr<AnimatedInterface>& animation : allActiveAnimations)
+    {
+        totalTargets += animation->getNumberOfTargets();
+        totalProperties += animation->getNumberOfAnimatedProperties();
+    }
+
+    std::cout << "Animation Targets: " << totalTargets << "\n";
+    std::cout << "Animated Properties: " << totalProperties << std::endl;
 }

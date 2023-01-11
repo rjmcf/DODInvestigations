@@ -2,6 +2,7 @@
 
 #include "Tracy.hpp"
 
+#include <iostream>
 #include <iterator>
 
 void EnemyController::addEnemies(std::vector<std::unique_ptr<Enemy>>&& newEnemies)
@@ -30,4 +31,9 @@ void EnemyController::drawAllEnemies(SDL_Renderer& renderer) const
     {
         enemyPtr->draw(renderer);
     }
+}
+
+void EnemyController::reportEnemyNumber() const
+{
+    std::cout << "Number of Enemies: " << allAliveEnemies.size() << std::endl;
 }

@@ -13,6 +13,8 @@ public:
     void pauseAllAnimations() const;
     void unpauseAllAnimations() const;
 
+    void reportStatistics() const;
+
 private:
     std::vector<std::unique_ptr<AnimatedInterface>> allActiveAnimations;
 };

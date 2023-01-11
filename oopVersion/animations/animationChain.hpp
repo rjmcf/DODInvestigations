@@ -18,6 +18,9 @@ public:
 
     virtual void reset() override;
 
+    virtual int getNumberOfTargets() const override;
+    virtual int getNumberOfAnimatedProperties() const override;
+
 private:
     const std::vector<std::unique_ptr<Animation>> animations;
     const int numAnimations;

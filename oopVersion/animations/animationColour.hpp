@@ -13,6 +13,9 @@ public:
         , target(inTarget)
     {}
 
+    virtual int getNumberOfTargets() const override { return 1; }
+    virtual int getNumberOfAnimatedProperties() const override { return 4; }
+
 private:
     virtual void setInitialValues() override
     {
