@@ -39,11 +39,6 @@ find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES})
 
-# Link Tracy
-if(PROFILING)
-    target_link_libraries (${PROJECT_NAME} PRIVATE TracyClient )
-endif()
-
 # Set up subdirectories
 set(OOP_VERSION_DIR ${CMAKE_SOURCE_DIR}/oopVersion)
 include_directories(${OOP_VERSION_DIR})
