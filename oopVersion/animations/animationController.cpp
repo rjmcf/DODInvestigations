@@ -7,7 +7,7 @@ void AnimationController::addAnimation(std::unique_ptr<AnimatedInterface>&& newA
     allActiveAnimations.push_back(std::move(newAnimation));
 }
 
-void AnimationController::updateAllAnimations(int deltaTimeMs)
+void AnimationController::updateAllAnimations(int deltaTimeMs) const
 {
     ZoneScoped;
     for (const std::unique_ptr<AnimatedInterface>& animationPtr : allActiveAnimations)
@@ -20,7 +20,7 @@ void AnimationController::updateAllAnimations(int deltaTimeMs)
     }
 }
     
-void AnimationController::pauseAllAnimations()
+void AnimationController::pauseAllAnimations() const
 {
     for (const std::unique_ptr<AnimatedInterface>& animationPtr : allActiveAnimations)
     {
@@ -28,7 +28,7 @@ void AnimationController::pauseAllAnimations()
     }
 }
 
-void AnimationController::unpauseAllAnimations()
+void AnimationController::unpauseAllAnimations() const
 {
     for (const std::unique_ptr<AnimatedInterface>& animationPtr : allActiveAnimations)
     {

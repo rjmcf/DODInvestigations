@@ -14,7 +14,7 @@ void EnemyController::addEnemy(std::unique_ptr<Enemy>&& newEnemy)
     allAliveEnemies.emplace_back(std::move(newEnemy));
 }
 
-void EnemyController::update(int deltaTimeMs)
+void EnemyController::update(int deltaTimeMs) const
 {
     ZoneScopedN("UpdateEnemies");
     for (const std::unique_ptr<Enemy>& enemyPtr : allAliveEnemies)
@@ -23,7 +23,7 @@ void EnemyController::update(int deltaTimeMs)
     }
 }
     
-void EnemyController::drawAllEnemies(SDL_Renderer& renderer)
+void EnemyController::drawAllEnemies(SDL_Renderer& renderer) const
 {
     ZoneScoped;
     for (const std::unique_ptr<Enemy>& enemyPtr : allAliveEnemies)
