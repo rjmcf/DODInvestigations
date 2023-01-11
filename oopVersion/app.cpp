@@ -46,8 +46,6 @@ bool Application::setup()
 
     dummyEventListener.setUp();
 
-    std::cout << "Setup Complete\n";
-
     return true;
 }
 
