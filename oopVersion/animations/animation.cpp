@@ -3,8 +3,9 @@
 #include <algorithm>
 #include <SDL.h>
 
-Animation::Animation(int durationMs, std::unique_ptr<EasingFunction>&& inEasingFunction)
-    : duration(durationMs)
+Animation::Animation(int durationMs, bool bInShouldReset, std::unique_ptr<EasingFunction>&& inEasingFunction)
+    : bShouldReset(bInShouldReset)
+    , duration(durationMs)
     , currentTime(0)
     , easingFunction(inEasingFunction ? std::move(inEasingFunction) : std::make_unique<NoEase>())
 {}

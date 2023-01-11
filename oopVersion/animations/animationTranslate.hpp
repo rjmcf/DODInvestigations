@@ -10,8 +10,8 @@
 class AnimationTranslate : public Animation
 {
 public:
-    AnimationTranslate(int durationMs, const Vector& inDisplacement, const std::vector<RectHaverInterface*>& inTargets, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
-        : Animation(durationMs, std::move(inEasingFunction))
+    AnimationTranslate(int durationMs, const Vector& inDisplacement, const std::vector<RectHaverInterface*>& inTargets, bool bInShouldReset = true, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
+        : Animation(durationMs, bInShouldReset, std::move(inEasingFunction))
         , displacement(inDisplacement)
     {
         for (RectHaverInterface* target : inTargets)
@@ -20,6 +20,23 @@ public:
         }
     }
 
+    virtual bool shouldReset() const override 
+    {
+        if (!bShouldReset)
+        {
+            return false;
+        }
+
+        for (const TargetWithInitialPosition& target : targets)
+        {
+            if (target.target->shouldAnimateRect())
+            {
+                return true;
+            }
+        }
+       
+        return false;
+    }
     virtual int getNumberOfTargets() const override { return targets.size(); }
     virtual int getNumberOfAnimatedProperties() const override { return 2 * getNumberOfTargets(); }
 
@@ -38,10 +55,13 @@ private:
     {
         for (const TargetWithInitialPosition& target : targets)
         {
-            SDL_Rect currentRect = target.target->getRect();
-            currentRect.x = static_cast<int>(target.initial.x);
-            currentRect.y = static_cast<int>(target.initial.y);
-            target.target->setRect(currentRect);
+            if (target.target->shouldAnimateRect())
+            {
+                SDL_Rect currentRect = target.target->getRect();
+                currentRect.x = static_cast<int>(target.initial.x);
+                currentRect.y = static_cast<int>(target.initial.y);
+                target.target->setRect(currentRect);
+            }
         }
     }
 
@@ -54,7 +74,7 @@ private:
             {
                 continue;
             }
-            
+
             const Point currentPosition = target.initial.translate(scaledDisplacement);
             SDL_Rect currentRect = target.target->getRect();
             currentRect.x = static_cast<int>(currentPosition.x);

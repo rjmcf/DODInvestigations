@@ -16,6 +16,7 @@ public:
     virtual int getDuration() const override { return duration; }
     virtual bool isComplete() const override;
 
+    virtual bool shouldReset() const override;
     virtual void reset() override;
 
     virtual int getNumberOfTargets() const override;

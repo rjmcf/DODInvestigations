@@ -6,12 +6,13 @@
 class AnimationHealth : public Animation
 {
 public:
-    AnimationHealth(int durationMs, int inFinal, HealthHaverInterface& inTarget, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
-        : Animation(durationMs, std::move(inEasingFunction))
+    AnimationHealth(int durationMs, int inFinal, HealthHaverInterface& inTarget, bool bInShouldReset = true, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
+        : Animation(durationMs, bInShouldReset, std::move(inEasingFunction))
         , finalHealth(inFinal)
         , target(inTarget)
     {}
 
+    virtual bool shouldReset() const override { return bShouldReset && target.shouldAnimateHealth(); }
     virtual int getNumberOfTargets() const override { return 1; }
     virtual int getNumberOfAnimatedProperties() const override { return 1; }
 

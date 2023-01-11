@@ -9,12 +9,13 @@
 class AnimationDeform : public Animation
 {
 public:
-    AnimationDeform(int durationMs, const Vector& inFinalSize, RectHaverInterface& inTarget, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
-        : Animation(durationMs, std::move(inEasingFunction))
+    AnimationDeform(int durationMs, const Vector& inFinalSize, RectHaverInterface& inTarget, bool bInShouldReset = true, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
+        : Animation(durationMs, bInShouldReset, std::move(inEasingFunction))
         , finalSize(inFinalSize)
         , target(inTarget)
     {}
 
+    virtual bool shouldReset() const override { return bShouldReset && target.shouldAnimateRect(); }
     virtual int getNumberOfTargets() const override { return 1; }
     virtual int getNumberOfAnimatedProperties() const override { return 2; }
 

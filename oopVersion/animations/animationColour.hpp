@@ -7,12 +7,13 @@
 class AnimationColour : public Animation
 {
 public:
-    AnimationColour(int durationMs, const Colour& inFinalColour, ColourHaverInterface& inTarget, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
-        : Animation(durationMs, std::move(inEasingFunction))
+    AnimationColour(int durationMs, const Colour& inFinalColour, ColourHaverInterface& inTarget, bool bInShouldReset = true, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
+        : Animation(durationMs, bInShouldReset, std::move(inEasingFunction))
         , finalColour(inFinalColour)
         , target(inTarget)
     {}
 
+    virtual bool shouldReset() const override { return bShouldReset && target.shouldAnimateColour(); }
     virtual int getNumberOfTargets() const override { return 1; }
     virtual int getNumberOfAnimatedProperties() const override { return 4; }
 
@@ -37,7 +38,7 @@ private:
         {
             return;
         }
-        
+
         const int scaledRedDifference = static_cast<int>(redDifference * fraction);
         const int scaledGreenDifference = static_cast<int>(greenDifference * fraction);
         const int scaledBlueDifference = static_cast<int>(blueDifference * fraction);

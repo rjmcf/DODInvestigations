@@ -66,10 +66,10 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
         }
 
         std::vector<std::unique_ptr<Animation>> normalTranslations;
-        normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{  0,  100}, normalRectHavers, std::make_unique<EaseIn2Out2>()));
-        normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{ 150,   0}, normalRectHavers, std::make_unique<EaseIn2Out2>()));
-        normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{  0, -100}, normalRectHavers, std::make_unique<EaseIn2Out2>()));
-        normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{-150,   0}, normalRectHavers, std::make_unique<EaseIn2Out2>()));
+        normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{  0,  100}, normalRectHavers, true, std::make_unique<EaseIn2Out2>()));
+        normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{ 150,   0}, normalRectHavers, true, std::make_unique<EaseIn2Out2>()));
+        normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{  0, -100}, normalRectHavers, true, std::make_unique<EaseIn2Out2>()));
+        normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{-150,   0}, normalRectHavers, true, std::make_unique<EaseIn2Out2>()));
         animationController.addAnimation(std::make_unique<AnimationChain>(std::move(normalTranslations)));
 
         enemyController.addEnemies(std::move(normalEnemies));
@@ -108,8 +108,8 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
                     }
 
                     std::vector<std::unique_ptr<Animation>> bossSizeAnimations;
-                    bossSizeAnimations.emplace_back(new AnimationDeform(1500, Vector{bigRadius,bigRadius}, *enemy.get(), std::make_unique<EaseIn2Out2>()));
-                    bossSizeAnimations.emplace_back(new AnimationDeform(1500, Vector{smallRadius,smallRadius}, *enemy.get(), std::make_unique<EaseIn2Out2>()));
+                    bossSizeAnimations.emplace_back(new AnimationDeform(1500, Vector{bigRadius,bigRadius}, *enemy.get(), true, std::make_unique<EaseIn2Out2>()));
+                    bossSizeAnimations.emplace_back(new AnimationDeform(1500, Vector{smallRadius,smallRadius}, *enemy.get(), true, std::make_unique<EaseIn2Out2>()));
                     animationController.addAnimation(std::make_unique<AnimationChain>(std::move(bossSizeAnimations)));
 
                     animationController.addAnimation(std::make_unique<AnimationColour>(3000, Colour{255,0,255,255}, *enemy.get()));

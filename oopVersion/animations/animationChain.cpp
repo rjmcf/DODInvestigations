@@ -42,6 +42,19 @@ bool AnimationChain::isComplete() const
     return currentAnimationIndex == numAnimations;
 }
 
+bool AnimationChain::shouldReset() const 
+{
+    for (const std::unique_ptr<Animation>& animation : animations)
+    {
+        if (!animation->shouldReset())
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 void AnimationChain::reset()
 {
     // Reset in reverse order so that the "final" initial position is the first one

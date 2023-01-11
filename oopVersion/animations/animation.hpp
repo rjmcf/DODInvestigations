@@ -10,7 +10,7 @@ class Animation : public AnimatedInterface, public TimedEventFirer
 {
 public:
     // Duration in ms
-    Animation(int durationMs, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr);
+    Animation(int durationMs, bool bInShouldReset = true, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr);
 
     virtual void update(int deltaTimeMs) override;
 
@@ -18,6 +18,9 @@ public:
     virtual bool isComplete() const override { return currentTime >= duration; }
 
     virtual void reset() override;
+
+protected:
+    const bool bShouldReset = true;
 
 private:
     // Override to capture the initial values at the start of the animation

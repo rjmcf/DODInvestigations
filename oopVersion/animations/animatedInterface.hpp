@@ -8,6 +8,7 @@ public:
     virtual int getDuration() const = 0;
     virtual bool isComplete() const = 0;
 
+    virtual bool shouldReset() const = 0;
     virtual void reset() = 0;
 
     virtual int getNumberOfTargets() const = 0;
