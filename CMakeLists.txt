@@ -26,6 +26,7 @@ if(PROFILING)
         GIT_PROGRESS TRUE
     )
     FetchContent_MakeAvailable(tracy)
+    include_directories(${tracy_SOURCE_DIR}/public/tracy)
 endif()
 
 # Set up project

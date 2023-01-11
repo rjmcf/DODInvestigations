@@ -2,6 +2,8 @@
 
 #include "scene/scene.hpp"
 
+#include "Tracy.hpp"
+
 #include <iostream>
 
 const int WIDTH = 1600, HEIGHT = 900;
