@@ -11,6 +11,8 @@
 
 void Scene::setUp(EnemyController& enemyController, AnimationController& animationController)
 {
+    const int duplicates = 50;
+
     // Normal Enemies
     {
         std::vector<std::unique_ptr<Enemy>> normalEnemies;
@@ -26,27 +28,31 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
         {
             for (int row = 0; row < 25; row++)
             {
-                std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>
-                (
-                    initialX + column * buffer, 
-                    initialY + row * buffer,
-                    radius,
-                    radius,
-                    Colour{0,0,255,255}
-                );
+                for (int copyNum = 0; copyNum < duplicates; copyNum++)
+                {
+                    std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>
+                    (
+                        initialX + column * buffer, 
+                        initialY + row * buffer,
+                        radius,
+                        radius,
+                        Colour{0,0,255,255}
+                    );
 
-                if (colourChangeTracker % 4 == 0)
-                {
-                    animationController.addAnimation(std::make_unique<AnimationColour>(2000, Colour{0,255,0,255}, *enemy.get()));
+                    if (colourChangeTracker % 4 == 0)
+                    {
+                        animationController.addAnimation(std::make_unique<AnimationColour>(2000, Colour{0,255,0,255}, *enemy.get()));
+                    }
+                    else if (colourChangeTracker % 4 == 2)
+                    {
+                        animationController.addAnimation(std::make_unique<AnimationColour>(2000, Colour{0,255,255,255}, *enemy.get()));
+                    }
+
+                    normalRectHavers.push_back(enemy.get());
+                    normalEnemies.emplace_back(std::move(enemy));
                 }
-                else if (colourChangeTracker % 4 == 2)
-                {
-                    animationController.addAnimation(std::make_unique<AnimationColour>(2000, Colour{0,255,255,255}, *enemy.get()));
-                }
+
                 colourChangeTracker++;
-
-                normalRectHavers.push_back(enemy.get());
-                normalEnemies.emplace_back(std::move(enemy));
             }
         }
 
@@ -75,30 +81,34 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
         {
             for (int row = 0; row < 1; row++)
             {
-                std::unique_ptr<EnemyWithHealth> enemy = std::make_unique<EnemyWithHealth>
-                (
-                    initialX + column * buffer, 
-                    initialY + row * buffer,
-                    smallRadius,
-                    smallRadius,
-                    Colour{255,0,0,255},
-                    200
-                );
-
-                if (healthChangeTracker % 2 == 0)
+                for (int copyNum = 0; copyNum < duplicates; copyNum++)
                 {
-                    animationController.addAnimation(std::make_unique<AnimationHealth>(1500, 100, *enemy.get()));
+                    std::unique_ptr<EnemyWithHealth> enemy = std::make_unique<EnemyWithHealth>
+                    (
+                        initialX + column * buffer, 
+                        initialY + row * buffer,
+                        smallRadius,
+                        smallRadius,
+                        Colour{255,0,0,255},
+                        200
+                    );
+
+                    if (healthChangeTracker % 2 == 0)
+                    {
+                        animationController.addAnimation(std::make_unique<AnimationHealth>(1500, 100, *enemy.get()));
+                    }
+
+                    std::vector<std::unique_ptr<Animation>> bossSizeAnimations;
+                    bossSizeAnimations.emplace_back(new AnimationDeform(1500, Vector{bigRadius,bigRadius}, *enemy.get(), std::make_unique<EaseIn2Out2>()));
+                    bossSizeAnimations.emplace_back(new AnimationDeform(1500, Vector{smallRadius,smallRadius}, *enemy.get(), std::make_unique<EaseIn2Out2>()));
+                    animationController.addAnimation(std::make_unique<AnimationChain>(std::move(bossSizeAnimations)));
+
+                    animationController.addAnimation(std::make_unique<AnimationColour>(3000, Colour{255,0,255,255}, *enemy.get()));
+
+                    bossEnemies.emplace_back(std::move(enemy));
                 }
+
                 healthChangeTracker++;
-
-                std::vector<std::unique_ptr<Animation>> bossSizeAnimations;
-                bossSizeAnimations.emplace_back(new AnimationDeform(1500, Vector{bigRadius,bigRadius}, *enemy.get(), std::make_unique<EaseIn2Out2>()));
-                bossSizeAnimations.emplace_back(new AnimationDeform(1500, Vector{smallRadius,smallRadius}, *enemy.get(), std::make_unique<EaseIn2Out2>()));
-                animationController.addAnimation(std::make_unique<AnimationChain>(std::move(bossSizeAnimations)));
-
-                animationController.addAnimation(std::make_unique<AnimationColour>(3000, Colour{255,0,255,255}, *enemy.get()));
-
-                bossEnemies.emplace_back(std::move(enemy));
             }
         }
 
