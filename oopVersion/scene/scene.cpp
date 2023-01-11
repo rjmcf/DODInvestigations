@@ -104,4 +104,7 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
 
         enemyController.addEnemies(std::move(bossEnemies));
     }
+
+    enemyController.reportEnemyNumber();
+    animationController.reportStatistics();
 }
