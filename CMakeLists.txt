@@ -39,7 +39,7 @@ find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES})
 
-# Set up subdirectories
+# Set up subdirectories (Note: only need ones that contain .cpp files)
 set(OOP_VERSION_DIR ${CMAKE_SOURCE_DIR}/oopVersion)
 include_directories(${OOP_VERSION_DIR})
 target_link_libraries(${PROJECT_NAME} PRIVATE OOPVersion Scene Enemies Animations Events)
