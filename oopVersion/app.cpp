@@ -2,6 +2,7 @@
 
 #include "scene/scene.hpp"
 
+#include "TracyC.h"
 #include "Tracy.hpp"
 
 #include <iostream>
@@ -21,6 +22,9 @@ Application::~Application()
 
 bool Application::setup()
 {
+    ZoneScopedN("Application set up");
+
+    TracyCZoneN(ctx, "SDL Setup", true);
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
         std::cout << "Failed to initialise SDL2: " << SDL_GetError() << std::endl;
@@ -40,6 +44,7 @@ bool Application::setup()
         std::cout << "Could not create renderer: " << SDL_GetError() << std::endl;
         return false;
     }
+    TracyCZoneEnd(ctx);
 
     Scene scene;
     scene.setUp(enemyController, animationController);
@@ -75,6 +80,8 @@ void Application::loop()
 void Application::update(int deltaTimeMs)
 {
     ZoneScoped;
+    
+    TracyCZoneN(ctx, "Handle Input", true);
     if (SDL_PollEvent(&windowEvent))
     {
         switch (windowEvent.type)
@@ -97,6 +104,7 @@ void Application::update(int deltaTimeMs)
             }
         }
     }
+    TracyCZoneEnd(ctx);
 
     enemyController.update(deltaTimeMs);
     animationController.updateAllAnimations(deltaTimeMs);

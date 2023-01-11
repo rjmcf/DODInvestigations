@@ -9,8 +9,12 @@
 #include "enemies/enemyController.hpp"
 #include "enemies/enemyWithHealth.hpp"
 
+#include "Tracy.hpp"
+
 void Scene::setUp(EnemyController& enemyController, AnimationController& animationController)
 {
+    ZoneScopedN("Scene set up");
+
     const int duplicates = 50;
 
     // Normal Enemies
