@@ -60,6 +60,10 @@ void EnemyController::drawAllEnemies(SDL_Renderer& renderer) const
 
 void EnemyController::killHalfEnemies() const
 {
+#if PROFILING
+    ZoneScoped;
+#endif // PROFILING
+
     int aliveEnemyNum = 0;
     for (const std::unique_ptr<Enemy>& enemyPtr : allEnemies)
     {
