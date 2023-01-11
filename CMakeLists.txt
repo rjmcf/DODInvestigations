@@ -33,6 +33,10 @@ endif()
 project(DODInvestigations)
 add_executable(${PROJECT_NAME} main.cpp)
 
+# Configure header to pull variables from here into code
+configure_file(profilingConfig.h.in profilingConfig.h)
+include_directories("${PROJECT_BINARY_DIR}")
+
 # Set up SDL2
 set(SDL2_DIR "./sdl/lib/cmake/SDL2/") 
 find_package(SDL2 REQUIRED)

@@ -9,11 +9,16 @@
 #include "enemies/enemyController.hpp"
 #include "enemies/enemyWithHealth.hpp"
 
-#include "Tracy.hpp"
+#include "profilingConfig.h"
+#if PROFILING
+    #include "Tracy.hpp"
+#endif // PROFILING
 
 void Scene::setUp(EnemyController& enemyController, AnimationController& animationController)
 {
+#if PROFILING
     ZoneScopedN("Scene set up");
+#endif // PROFILING
 
     const int duplicates = 50;
 

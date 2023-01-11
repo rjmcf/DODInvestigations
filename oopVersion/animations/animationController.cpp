@@ -1,6 +1,9 @@
 #include "animationController.hpp"
 
-#include "Tracy.hpp"
+#include "profilingConfig.h"
+#if PROFILING
+    #include "Tracy.hpp"
+#endif // PROFILING
 
 #include <iostream>
 
@@ -11,7 +14,10 @@ void AnimationController::addAnimation(std::unique_ptr<AnimatedInterface>&& newA
 
 void AnimationController::updateAllAnimations(int deltaTimeMs) const
 {
+#if PROFILING
     ZoneScoped;
+#endif // PROFILING
+
     for (const std::unique_ptr<AnimatedInterface>& animationPtr : allActiveAnimations)
     {
         animationPtr->update(deltaTimeMs);

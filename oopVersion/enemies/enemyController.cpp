@@ -1,6 +1,9 @@
 #include "enemyController.hpp"
 
-#include "Tracy.hpp"
+#include "profilingConfig.h"
+#if PROFILING
+    #include "Tracy.hpp"
+#endif // PROFILING
 
 #include <iostream>
 #include <iterator>
@@ -17,7 +20,10 @@ void EnemyController::addEnemy(std::unique_ptr<Enemy>&& newEnemy)
 
 void EnemyController::update(int deltaTimeMs) const
 {
+#if PROFILING
     ZoneScopedN("UpdateEnemies");
+#endif // PROFILING
+
     for (const std::unique_ptr<Enemy>& enemyPtr : allAliveEnemies)
     {
         enemyPtr->update(deltaTimeMs);
@@ -26,7 +32,10 @@ void EnemyController::update(int deltaTimeMs) const
     
 void EnemyController::drawAllEnemies(SDL_Renderer& renderer) const
 {
+#if PROFILING
     ZoneScoped;
+#endif // PROFILING
+
     for (const std::unique_ptr<Enemy>& enemyPtr : allAliveEnemies)
     {
         enemyPtr->draw(renderer);
