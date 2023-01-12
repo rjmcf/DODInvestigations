@@ -57,7 +57,7 @@ bool Application::setup()
     Scene scene;
     scene.setUp(enemyController, animationController);
 
-    dummyEventListener.setUp();
+    bgColourEventListener.setUp(&bgColour);
 
     return true;
 }
@@ -139,6 +139,8 @@ void Application::draw()
     if (renderer)
     {
         SDL_RenderClear(renderer);
+
+        drawBackground();
         enemyController.drawAllEnemies(*renderer);
 
 #if PROFILING
@@ -151,4 +153,11 @@ void Application::draw()
         FrameMark;
 #endif // PROFILING
     }
+}
+
+void Application::drawBackground()
+{
+    SDL_SetRenderDrawColor(renderer, bgColour.red, bgColour.green, bgColour.blue, bgColour.alpha);
+    SDL_RenderFillRect(renderer, nullptr);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 }

@@ -2,14 +2,17 @@
 
 #include "eventListener.hpp"
 
+class Colour;
 class EventManager;
 
-class DummyEventListener : public EventListener
+class BgColourEventListener : public EventListener
 {
 public:
-    void setUp();
+    void setUp(Colour* inColour);
 private:
     // ~Begin EventListener
     virtual void onEventTriggered(const std::string& eventName) override;
     // ~End EventListener
+
+    Colour* bgColour = nullptr;
 };

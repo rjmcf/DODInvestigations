@@ -1,8 +1,9 @@
 #pragma once
 
 #include "animations/animationController.hpp"
+#include "colour.hpp"
 #include "enemies/enemyController.hpp"
-#include "events/dummyEventListener.hpp"
+#include "events/bgColourChangeEventListener.hpp"
 
 #include <SDL.h>
 
@@ -20,7 +21,7 @@ private:
     // Delta Time in ms
     void update(int deltaTimeMs);
     void draw();
-    void drawRectangle();
+    void drawBackground();
 
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
@@ -29,7 +30,8 @@ private:
     EnemyController enemyController;
     AnimationController animationController;
 
-    DummyEventListener dummyEventListener;
+    Colour bgColour{0,10,20,255};
+    BgColourEventListener bgColourEventListener;
 
     bool bShouldQuit = false;
 };

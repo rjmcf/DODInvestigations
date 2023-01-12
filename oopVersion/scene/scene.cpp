@@ -14,6 +14,8 @@
     #include "Tracy.hpp"
 #endif // PROFILING
 
+const std::string Scene::translationCompleteEventName = "TranslationComplete";
+
 void Scene::setUp(EnemyController& enemyController, AnimationController& animationController)
 {
 #if PROFILING
@@ -71,6 +73,12 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
         normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{ 150,   0}, normalRectHavers, true, std::make_unique<EaseIn2Out2>()));
         normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{  0, -100}, normalRectHavers, true, std::make_unique<EaseIn2Out2>()));
         normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{-150,   0}, normalRectHavers, true, std::make_unique<EaseIn2Out2>()));
+
+        for (const std::unique_ptr<Animation>& animation : normalTranslations)
+        {
+            animation->setUpEvents(std::vector<TimedEvent>{TimedEvent{1000, Scene::translationCompleteEventName}});
+        }
+
         animationController.addAnimation(std::make_unique<AnimationChain>(std::move(normalTranslations)));
 
         enemyController.addEnemies(std::move(normalEnemies));
