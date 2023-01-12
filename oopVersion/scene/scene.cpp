@@ -20,7 +20,7 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
     ZoneScopedN("Scene set up");
 #endif // PROFILING
 
-    const int duplicates = 20;
+    const int duplicates = 50;
 
     // Normal Enemies
     {
@@ -33,11 +33,11 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
         const int buffer = 2*radius + 10;
 
         int colourChangeTracker = 0;
-        for (int column = 0; column < 55; column++)
+        for (int copyNum = 0; copyNum < duplicates; copyNum++)
         {
-            for (int row = 0; row < 25; row++)
+            for (int column = 0; column < 55; column++)
             {
-                for (int copyNum = 0; copyNum < duplicates; copyNum++)
+                for (int row = 0; row < 25; row++)
                 {
                     std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>
                     (
@@ -45,7 +45,8 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
                         initialY + row * buffer,
                         radius,
                         radius,
-                        Colour{0,0,255,255}
+                        Colour{0,0,255,255},
+                        copyNum > 0 
                     );
 
                     if (colourChangeTracker % 4 == 0)
@@ -86,11 +87,11 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
         const int buffer = 2*bigRadius + 30;
 
         int healthChangeTracker = 0;
-        for (int column = 0; column < 13; column++)
+        for (int copyNum = 0; copyNum < duplicates; copyNum++)
         {
-            for (int row = 0; row < 1; row++)
+            for (int column = 0; column < 13; column++)
             {
-                for (int copyNum = 0; copyNum < duplicates; copyNum++)
+                for (int row = 0; row < 1; row++)
                 {
                     std::unique_ptr<EnemyWithHealth> enemy = std::make_unique<EnemyWithHealth>
                     (
@@ -99,7 +100,8 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
                         smallRadius,
                         smallRadius,
                         Colour{255,0,0,255},
-                        200
+                        200,
+                        copyNum > 0 
                     );
 
                     if (healthChangeTracker % 2 == 0)

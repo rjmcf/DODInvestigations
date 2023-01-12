@@ -6,7 +6,7 @@
 class EnemyWithHealth : public Enemy, public HealthHaverInterface
 {
 public:
-    EnemyWithHealth(int x, int y, int w, int h, const Colour& inColour, float inMaxHealth);
+    EnemyWithHealth(int x, int y, int w, int h, const Colour& inColour, float inMaxHealth, bool bInHidden);
 
     // ~Begin Enemy
     virtual void draw(SDL_Renderer& renderer) const override;
