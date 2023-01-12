@@ -2,12 +2,12 @@
 
 struct Vector
 {
-    int x;
-    int y;
+    float x;
+    float y;
 
     Vector scale(float scaleFactor) const
     {
-        return Vector{static_cast<int>(x * scaleFactor), static_cast<int>(y * scaleFactor)};
+        return Vector{x * scaleFactor, y * scaleFactor};
     }
 
     Vector add(const Vector& other) const

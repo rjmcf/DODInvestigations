@@ -9,11 +9,11 @@ struct Point
 
     Point translate(const Vector& vector) const
     {
-        return Point{x + vector.x, y + vector.y};
+        return Point{int(x + vector.x), int(y + vector.y)};
     }
 
     Vector to(const Point& other) const
     {
-        return Vector{other.x - x, other.y - y};
+        return Vector{float(other.x - x), float(other.y - y)};
     }
 };

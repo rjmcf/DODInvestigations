@@ -22,7 +22,7 @@ public:
 private:
     virtual void setInitialValues() override
     {
-        initialSize = Vector{target.getRect().w, target.getRect().h};
+        initialSize = Vector{float(target.getRect().w), float(target.getRect().h)};
         difference = finalSize.add(initialSize.scale(-1));
     }
     
