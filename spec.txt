@@ -1,2 +1,12 @@
 * Write an SDL program displaying a scene
-* The scene must contain two types of enemies, 
+* The scene must contain two types of enemies:
+    * small enemies are represented by a coloured square, they can change colour and move around the screen
+    * large enemies have an additional health bar, they can change colour, health, and size
+* All enemies can be killed, which changes their colour and halts their animations, hiding large enemies' health bar
+    * Pressing K kills half of the remaining alive enemies
+* All enemies have eyes that follow the mouse around the screen while alive and display as crosses when dead
+* The majority (49/50) of enemies should not render anything (to keep render costs low). They should still be involved in all calculations and processes though
+* Animations can be chained together, reset to loop, and paused and unpaused
+* Animations can be eased linearly or with an EaseIn2Out2 algorithm
+* Animations can trigger events, which can be listened to externally
+* Every time the small enemies complete a translation, the bg colour will cycle subtly
