@@ -12,7 +12,7 @@ void EnemyWithHealth::draw(SDL_Renderer& renderer) const
 
     if (isAlive())
     {
-        SDL_Rect healthBarRect = getDrawRect();
+        SDL_Rect healthBarRect = getBodyRect();
         healthBarRect.y -= 10;
         healthBarRect.h = 5;
 

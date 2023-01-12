@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cmath>
+
 struct Vector
 {
     float x;
@@ -13,5 +15,22 @@ struct Vector
     Vector add(const Vector& other) const
     {
         return Vector{x + other.x, y + other.y};
+    }
+
+    double mag() const
+    {
+        return sqrt(x*x + y*y);
+    }
+
+    void normalise()
+    {
+        double theMag = mag();
+        if (theMag < 0.1)
+        {
+            return;
+        }
+
+        x /= theMag;
+        y /= theMag;
     }
 };

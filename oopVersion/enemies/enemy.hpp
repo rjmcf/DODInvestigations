@@ -3,6 +3,7 @@
 #include "colour.hpp"
 #include "interfaces/colourHaverInterface.hpp"
 #include "interfaces/rectHaverInterface.hpp"
+#include "geometry/vector.hpp"
 
 #include <SDL.h>
 
@@ -12,8 +13,8 @@ public:
     // x and y define the centre, w and h are the "radius"
     Enemy(int x, int y, int w, int h, const Colour& inColour);
 
+    virtual void update(int deltaTimeMs);
     virtual void draw(SDL_Renderer& renderer) const;
-    virtual void update(int deltaTimeMs) {}
 
     // ~Begin RectHaverInterface
     virtual const SDL_Rect& getRect() const override { return rect; }
@@ -34,8 +35,14 @@ protected:
     SDL_Rect rect;
     Colour colour;
 
-    SDL_Rect getDrawRect() const { return SDL_Rect{rect.x-rect.w, rect.y-rect.h, 2*rect.w, 2*rect.h}; }
+    SDL_Rect getBodyRect() const { return SDL_Rect{rect.x-rect.w, rect.y-rect.h, 2*rect.w, 2*rect.h}; }
+    static SDL_Rect getScleraRect(const SDL_Rect& bodyRect);
+    static SDL_Rect getPupilRect(const SDL_Rect& scleraRect);
+
+    void drawBody(SDL_Renderer& renderer) const;
+    void drawEye(SDL_Renderer& renderer) const;
 
 private:
     bool bAlive = true;
+    Vector pupilDisplacement;
 };
