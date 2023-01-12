@@ -9,7 +9,7 @@
 #include <algorithm>
 #include <iostream>
 
-void AnimationController::addAnimation(std::unique_ptr<AnimatedInterface>&& newAnimation)
+void AnimationController::addAnimation(std::unique_ptr<AnimationInterface>&& newAnimation)
 {
     allActiveAnimations.push_back(std::move(newAnimation));
 }
@@ -20,7 +20,7 @@ void AnimationController::updateAllAnimations(int deltaTimeMs)
     ZoneScoped;
 #endif // PROFILING
 
-    for (const std::unique_ptr<AnimatedInterface>& animationPtr : allActiveAnimations) 
+    for (const std::unique_ptr<AnimationInterface>& animationPtr : allActiveAnimations) 
     {
         animationPtr->update(deltaTimeMs);
         if (animationPtr->isComplete() && animationPtr->shouldReset())
@@ -35,7 +35,7 @@ void AnimationController::updateAllAnimations(int deltaTimeMs)
     // Remove all inactive animations
     int activeAnimationsBefore = allActiveAnimations.size();
     allActiveAnimations.erase(std::remove_if(allActiveAnimations.begin(), allActiveAnimations.end(), 
-        [](const std::unique_ptr<AnimatedInterface>& animationPtr) 
+        [](const std::unique_ptr<AnimationInterface>& animationPtr) 
         { 
             return animationPtr->isComplete() && !animationPtr->shouldReset();
         }), allActiveAnimations.end());
@@ -52,7 +52,7 @@ void AnimationController::updateAllAnimations(int deltaTimeMs)
     
 void AnimationController::pauseAllAnimations() const
 {
-    for (const std::unique_ptr<AnimatedInterface>& animationPtr : allActiveAnimations)
+    for (const std::unique_ptr<AnimationInterface>& animationPtr : allActiveAnimations)
     {
         animationPtr->pause();
     }
@@ -60,7 +60,7 @@ void AnimationController::pauseAllAnimations() const
 
 void AnimationController::unpauseAllAnimations() const
 {
-    for (const std::unique_ptr<AnimatedInterface>& animationPtr : allActiveAnimations)
+    for (const std::unique_ptr<AnimationInterface>& animationPtr : allActiveAnimations)
     {
         animationPtr->unpause();
     }
@@ -73,7 +73,7 @@ void AnimationController::reportStatistics() const
     int totalTargets = 0;
     int totalProperties = 0;
 
-    for (const std::unique_ptr<AnimatedInterface>& animation : allActiveAnimations)
+    for (const std::unique_ptr<AnimationInterface>& animation : allActiveAnimations)
     {
         totalTargets += animation->getNumberOfTargets();
         totalProperties += animation->getNumberOfAnimatedProperties();

@@ -1,12 +1,12 @@
 #pragma once
 
-#include "animatedInterface.hpp"
+#include "animationInterface.hpp"
 #include "easing/easingFunction.hpp"
 #include "events/timedEventFirer.hpp"
 
 #include <memory>
 
-class Animation : public AnimatedInterface, public TimedEventFirer
+class Animation : public AnimationInterface, public TimedEventFirer
 {
 public:
     // Duration in ms

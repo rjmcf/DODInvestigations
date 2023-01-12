@@ -1,12 +1,12 @@
 #pragma once
 
-#include "animatedInterface.hpp"
+#include "animationInterface.hpp"
 #include "animation.hpp"
 
 #include <memory>
 #include <vector>
 
-class AnimationChain : public AnimatedInterface
+class AnimationChain : public AnimationInterface
 {
 public:
     AnimationChain(std::vector<std::unique_ptr<Animation>>&& inAnimations);
