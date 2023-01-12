@@ -34,6 +34,7 @@ project(DODInvestigations)
 add_executable(${PROJECT_NAME} main.cpp)
 
 # Configure header to pull variables from here into code
+set(FUNNY_NUMBER 20)
 configure_file(profilingConfig.h.in profilingConfig.h)
 include_directories("${PROJECT_BINARY_DIR}")
 

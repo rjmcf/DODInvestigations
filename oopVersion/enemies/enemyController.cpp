@@ -81,5 +81,5 @@ void EnemyController::killHalfEnemies() const
 
 void EnemyController::reportEnemyNumber() const
 {
-    std::cout << "Number of Enemies: " << allEnemies.size() << std::endl;
+    std::cout << "Number of Enemies: " << allEnemies.size() + FUNNY_NUMBER << std::endl;
 }
