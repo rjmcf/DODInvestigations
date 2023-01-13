@@ -1,0 +1,29 @@
+Order of implementation:
+    1. Enemy with empty update (position is in top left)
+    2. EnemyWithHealth draws a health bar
+    3. Health Animation, initial to final, interpolated, all animations loop
+    4. Add Easing Functions to animations
+    5. Translation, Deform, Colour Animations
+    6. Refactor to EnemyController and Scene
+    7. Refactor Animations to take difference
+    8. Refactor Translation animations to take a vector of targets
+    9. Refactor to AnimationController
+   10. Add Singleton EventManager for events framework
+   11. Make Animations fire events
+   12. Implement ChainAnimations
+   13. Move enemy position to centre
+   14. Add stats printing to all animations and enemies (and controllers)
+   15. Enable killing of enemies, which stops their animations and changes how they draw
+   16. Give enemies eyes, implement update function
+   17. Hide majority of enemies
+   18. Animate background colour
+
+
+Difficulties:
+(See commit with https://github.com/rjmcf/DODInvestigations/commit/<commit>)
+    * Adding ChainAnimations meant changing base classes: 3b4abf9e813a69f18f89aa251805e7e30f76ad6c
+    * Adding stats meant changing every class in hierarchy: a33ddd505d908c57710b5514c17e03fa83e4a233
+    * Adding killing of enemies meant changing every class in both hierarchies: 43956a33d326ac1c68f9de1433cb6c3c1f1f8705 and f04c4f9133ef9e421bd67db0ecd49fb0edbc6bb3
+
+Easy things:
+    * Adding eyes to base enemies almost automatically added them to EnemiesWithHealth
