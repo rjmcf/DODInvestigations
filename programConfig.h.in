@@ -1,3 +1,2 @@
 #cmakedefine01 PROFILING
-#cmakedefine FUNNY_NUMBER @FUNNY_NUMBER@
 #cmakedefine01 USING_OOP

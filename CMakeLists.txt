@@ -41,7 +41,6 @@ if (IMPL_VERSION STREQUAL OOP)
 endif()
 
 # Configure header to pull variables from here into code
-set(FUNNY_NUMBER 20)
 configure_file(programConfig.h.in programConfig.h)
 include_directories("${PROJECT_BINARY_DIR}")
 
