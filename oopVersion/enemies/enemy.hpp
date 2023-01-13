@@ -4,6 +4,7 @@
 #include "interfaces/colourHaverInterface.hpp"
 #include "interfaces/rectHaverInterface.hpp"
 #include "geometry/vector.hpp"
+#include "utils/drawingUtils.hpp"
 
 #include <SDL.h>
 
@@ -35,7 +36,7 @@ protected:
     SDL_Rect rect;
     Colour colour;
 
-    SDL_Rect getBodyRect() const { return SDL_Rect{rect.x-rect.w, rect.y-rect.h, 2*rect.w, 2*rect.h}; }
+    SDL_Rect getBodyRect() const { return DrawingUtils::convertCentredRectToDrawRect(rect); }
     static SDL_Rect getScleraRect(const SDL_Rect& bodyRect);
     static SDL_Rect getPupilRect(const SDL_Rect& scleraRect);
 
