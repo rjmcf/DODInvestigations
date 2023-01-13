@@ -62,10 +62,11 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
 
                     normalRectHavers.push_back(enemy.get());
                     normalEnemies.emplace_back(std::move(enemy));
-                }
 
-                colourChangeTracker++;
+                    colourChangeTracker++;
+                }
             }
+            colourChangeTracker = 0;
         }
 
         std::vector<std::unique_ptr<Animation>> normalTranslations;
@@ -125,10 +126,11 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
                     animationController.addAnimation(std::make_unique<AnimationColour>(3000, Colour{255,0,255,255}, *enemy.get()));
 
                     bossEnemies.emplace_back(std::move(enemy));
-                }
 
-                healthChangeTracker++;
+                    healthChangeTracker++;
+                }
             }
+            healthChangeTracker = 0;
         }
 
         enemyController.addEnemies(std::move(bossEnemies));
