@@ -2,6 +2,12 @@
 
 #include "utils/drawingUtils.hpp"
 
+AttachmentShield::AttachmentShield(const Vector& size)
+{
+    rect.w = size.x;
+    rect.h = size.y;
+}
+
 void AttachmentShield::update(int deltaTimeMs)
 {
     rect.x = parent->x + offset.x;

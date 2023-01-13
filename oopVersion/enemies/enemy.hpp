@@ -1,5 +1,6 @@
 #pragma once
 
+#include "attachments/attachmentBase.hpp"
 #include "colour.hpp"
 #include "interfaces/colourHaverInterface.hpp"
 #include "interfaces/rectHaverInterface.hpp"
@@ -7,6 +8,9 @@
 #include "utils/drawingUtils.hpp"
 
 #include <SDL.h>
+
+#include <vector>
+#include <memory>
 
 class Enemy : public RectHaverInterface, public ColourHaverInterface
 {
@@ -29,6 +33,8 @@ public:
     virtual bool shouldAnimateColour() const override { return isAlive(); }
     // ~End ColourHaverInterface
 
+    void attach(std::unique_ptr<AttachmentBase>&& attachment, const Vector& offset);
+
     bool isAlive() const { return bAlive; }
     void kill() { bAlive = false; }
 
@@ -49,4 +55,6 @@ private:
     bool bAlive = true;
     Vector pupilDisplacement;
     bool bHidden = false;
+
+    std::vector<std::unique_ptr<AttachmentBase>> attachments;
 };

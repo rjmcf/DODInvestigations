@@ -6,6 +6,7 @@
 #include "animations/animationHealth.hpp"
 #include "animations/animationTranslate.hpp"
 #include "animations/animationController.hpp"
+#include "enemies/attachments/attachmentShield.hpp"
 #include "enemies/enemyController.hpp"
 #include "enemies/enemyWithHealth.hpp"
 
@@ -33,8 +34,10 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
         const int initialY = 130;
         const int radius = 8;
         const int buffer = 2*radius + 10;
+        const Vector shieldSize{5,6};
+        const Vector shieldOffset{6,6};
 
-        int colourChangeTracker = 0;
+        int tracker = 0;
         for (int copyNum = 0; copyNum < duplicates; copyNum++)
         {
             for (int column = 0; column < 55; column++)
@@ -51,22 +54,28 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
                         copyNum > 0 
                     );
 
-                    if (colourChangeTracker % 4 == 0)
+                    if (tracker % 4 == 0)
                     {
                         animationController.addAnimation(std::make_unique<AnimationColour>(2000, Colour{0,255,0,255}, *enemy.get()));
                     }
-                    else if (colourChangeTracker % 4 == 2)
+                    else if (tracker % 4 == 2)
                     {
                         animationController.addAnimation(std::make_unique<AnimationColour>(2000, Colour{0,255,255,255}, *enemy.get()));
+                    }
+
+                    if (tracker % 3 == 0)
+                    {
+                        std::unique_ptr<AttachmentShield> shield = std::make_unique<AttachmentShield>(shieldSize);
+                        enemy->attach(std::move(shield), shieldOffset);
                     }
 
                     normalRectHavers.push_back(enemy.get());
                     normalEnemies.emplace_back(std::move(enemy));
 
-                    colourChangeTracker++;
+                    tracker++;
                 }
             }
-            colourChangeTracker = 0;
+            tracker = 0;
         }
 
         std::vector<std::unique_ptr<Animation>> normalTranslations;
@@ -95,7 +104,7 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
         const int bigRadius = 45;
         const int buffer = 2*bigRadius + 30;
 
-        int healthChangeTracker = 0;
+        int tracker = 0;
         for (int copyNum = 0; copyNum < duplicates; copyNum++)
         {
             for (int column = 0; column < 13; column++)
@@ -113,7 +122,7 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
                         copyNum > 0 
                     );
 
-                    if (healthChangeTracker % 2 == 0)
+                    if (tracker % 2 == 0)
                     {
                         animationController.addAnimation(std::make_unique<AnimationHealth>(1500, 100, *enemy.get()));
                     }
@@ -127,10 +136,10 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
 
                     bossEnemies.emplace_back(std::move(enemy));
 
-                    healthChangeTracker++;
+                    tracker++;
                 }
             }
-            healthChangeTracker = 0;
+            tracker = 0;
         }
 
         enemyController.addEnemies(std::move(bossEnemies));

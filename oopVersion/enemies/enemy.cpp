@@ -13,6 +13,12 @@ Enemy::Enemy(int x, int y, int w, int h, const Colour& inColour, bool bInHidden)
     , bHidden(bInHidden)
 {}
 
+void Enemy::attach(std::unique_ptr<AttachmentBase>&& attachment, const Vector& offset)
+{
+    attachment->attachTo(rect, offset);
+    attachments.emplace_back(std::move(attachment));
+}
+
 void Enemy::update(int deltaTimeMs)
 {
     if (!isAlive())
@@ -51,12 +57,21 @@ void Enemy::update(int deltaTimeMs)
 
     pupilDisplacement.x = chosenT * toMouse.x;
     pupilDisplacement.y = chosenT * toMouse.y;
+
+    for (const std::unique_ptr<AttachmentBase>& attachment : attachments)
+    {
+        attachment->update(deltaTimeMs);
+    }
 }
 
 void Enemy::draw(SDL_Renderer& renderer) const
 {
     drawBody(renderer);
     drawEye(renderer);
+    for (const std::unique_ptr<AttachmentBase>& attachment : attachments)
+    {
+        attachment->draw(renderer);
+    }
 }
 
 void Enemy::drawBody(SDL_Renderer& renderer) const

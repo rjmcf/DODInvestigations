@@ -126,8 +126,8 @@ void Application::update(int deltaTimeMs)
     TracyCZoneEnd(ctx);
 #endif // PROFILING
 
-    enemyController.update(deltaTimeMs);
     animationController.updateAllAnimations(deltaTimeMs);
+    enemyController.update(deltaTimeMs);
 }
 
 void Application::draw()
