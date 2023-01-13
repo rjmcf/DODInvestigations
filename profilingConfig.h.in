@@ -1,2 +1,0 @@
-#cmakedefine01 PROFILING
-#cmakedefine FUNNY_NUMBER @FUNNY_NUMBER@

@@ -1,6 +1,6 @@
 #include "enemyController.hpp"
 
-#include "profilingConfig.h"
+#include "programConfig.h"
 #if PROFILING
     #include "Tracy.hpp"
 #endif // PROFILING

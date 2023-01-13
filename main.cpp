@@ -1,6 +1,8 @@
-#include "oopVersion/app.hpp"
+#include "programConfig.h"
 
-#include "profilingConfig.h"
+#if USING_OOP
+    #include "oopVersion/app.hpp"
+#endif // USING_OOP
 
 #include <iostream>
 
@@ -10,6 +12,7 @@ int main(int argc, char* argv[])
     std::cout << "Profiling enabled\n";
 #endif // PROFILING
 
+#if USING_OOP
     Application app;
 
     if (!app.setup())
@@ -19,6 +22,7 @@ int main(int argc, char* argv[])
     }
 
     app.loop();
+#endif // USING_OOP
 
     return 0;
 }

@@ -9,7 +9,7 @@
 #include "enemies/enemyController.hpp"
 #include "enemies/enemyWithHealth.hpp"
 
-#include "profilingConfig.h"
+#include "programConfig.h"
 #if PROFILING
     #include "Tracy.hpp"
 #endif // PROFILING

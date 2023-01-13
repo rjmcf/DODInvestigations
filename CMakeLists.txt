@@ -33,9 +33,16 @@ endif()
 project(DODInvestigations)
 add_executable(${PROJECT_NAME} main.cpp)
 
+# Set implementation version
+set(IMPL_VERSION OOP)
+
+if (IMPL_VERSION STREQUAL OOP)
+    set(USING_OOP 1)
+endif()
+
 # Configure header to pull variables from here into code
 set(FUNNY_NUMBER 20)
-configure_file(profilingConfig.h.in profilingConfig.h)
+configure_file(programConfig.h.in programConfig.h)
 include_directories("${PROJECT_BINARY_DIR}")
 
 # Set up SDL2
@@ -44,14 +51,18 @@ find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES})
 
-# Set up subdirectories (Note: only need ones that contain .cpp files)
-set(OOP_VERSION_DIR ${CMAKE_SOURCE_DIR}/oopVersion)
-include_directories(${OOP_VERSION_DIR})
-target_link_libraries(${PROJECT_NAME} PRIVATE OOPVersion Scene Enemies Animations Events)
-add_subdirectory(${OOP_VERSION_DIR})
-add_subdirectory(${OOP_VERSION_DIR}/animations)
-add_subdirectory(${OOP_VERSION_DIR}/enemies)
-add_subdirectory(${OOP_VERSION_DIR}/events)
-add_subdirectory(${OOP_VERSION_DIR}/scene)
+# Compile correct implementation version
+if (IMPL_VERSION STREQUAL OOP)
+    # Set up OOP subdirectories (Note: only need ones that contain .cpp files)
+    set(OOP_VERSION_DIR ${CMAKE_SOURCE_DIR}/oopVersion)
+    include_directories(${OOP_VERSION_DIR})
+    target_link_libraries(${PROJECT_NAME} PRIVATE OOPVersion Scene Enemies Animations Events)
+    add_subdirectory(${OOP_VERSION_DIR})
+    add_subdirectory(${OOP_VERSION_DIR}/animations)
+    add_subdirectory(${OOP_VERSION_DIR}/enemies)
+    add_subdirectory(${OOP_VERSION_DIR}/events)
+    add_subdirectory(${OOP_VERSION_DIR}/scene)
+endif()
+
 
 # Usage: cmake -S .. -G "MinGW Makefiles" --preset=default

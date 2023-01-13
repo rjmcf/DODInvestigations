@@ -2,7 +2,7 @@
 
 #include "scene/scene.hpp"
 
-#include "profilingConfig.h"
+#include "programConfig.h"
 #if PROFILING
     #include "Tracy.hpp"
     #include "TracyC.h"
