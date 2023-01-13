@@ -1,6 +1,6 @@
 #pragma once
 
-class AnimationInterface
+class AnimationBase
 {
 public:
     virtual void update(int deltaTimeMs) = 0;
