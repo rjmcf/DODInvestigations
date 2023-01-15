@@ -23,26 +23,26 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
     ZoneScopedN("Scene set up");
 #endif // PROFILING
 
-    const int duplicates = 50;
+    const int duplicates = 35;
 
     // Normal Enemies
     {
         std::vector<std::unique_ptr<Enemy>> normalEnemies;
         std::vector<RectHaverInterface*> normalRectHavers;
 
-        const int initialX = 20;
+        const int initialX = 80;
         const int initialY = 130;
-        const int radius = 8;
-        const int buffer = 2*radius + 10;
-        const Vector shieldSize{5,6};
+        const int radius = 15;
+        const int buffer = 2*radius + 15;
+        const Vector shieldSize{10,12};
         const Vector shieldOffset{6,6};
 
         int tracker = 0;
         for (int copyNum = 0; copyNum < duplicates; copyNum++)
         {
-            for (int column = 0; column < 55; column++)
+            for (int column = 0; column < 30; column++)
             {
-                for (int row = 0; row < 25; row++)
+                for (int row = 0; row < 15; row++)
                 {
                     std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>
                     (
@@ -50,8 +50,7 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
                         initialY + row * buffer,
                         radius,
                         radius,
-                        Colour{0,0,255,255},
-                        copyNum > 0 
+                        Colour{0,0,255,255}
                     );
 
                     if (tracker % 4 == 0)
@@ -118,8 +117,7 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
                         smallRadius,
                         smallRadius,
                         Colour{255,0,0,255},
-                        200,
-                        copyNum > 0 
+                        200
                     );
 
                     if (tracker % 2 == 0)

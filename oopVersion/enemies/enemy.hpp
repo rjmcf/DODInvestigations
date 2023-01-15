@@ -16,7 +16,7 @@ class Enemy : public RectHaverInterface, public ColourHaverInterface
 {
 public:
     // x and y define the centre, w and h are the "radius"
-    Enemy(int x, int y, int w, int h, const Colour& inColour, bool bInHidden);
+    Enemy(int x, int y, int w, int h, const Colour& inColour);
 
     virtual void update(int deltaTimeMs);
     virtual void draw(SDL_Renderer& renderer) const;
@@ -49,12 +49,9 @@ protected:
     void drawBody(SDL_Renderer& renderer) const;
     void drawEye(SDL_Renderer& renderer) const;
 
-    bool isHidden() const { return bHidden; }
-
 private:
     bool bAlive = true;
     Vector pupilDisplacement;
-    bool bHidden = false;
 
     std::vector<std::unique_ptr<AttachmentBase>> attachments;
 };

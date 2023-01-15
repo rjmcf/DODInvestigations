@@ -7,10 +7,9 @@
 
 const double Pi = 3.14159265;
 
-Enemy::Enemy(int x, int y, int w, int h, const Colour& inColour, bool bInHidden)
+Enemy::Enemy(int x, int y, int w, int h, const Colour& inColour)
     : rect{x,y, w,h}
     , colour(inColour)
-    , bHidden(bInHidden)
 {}
 
 void Enemy::attach(std::unique_ptr<AttachmentBase>&& attachment, const Vector& offset)
@@ -86,10 +85,7 @@ void Enemy::drawBody(SDL_Renderer& renderer) const
     }
     SDL_Rect drawRect = getBodyRect();
 
-    if (!isHidden())
-    {
-        SDL_RenderFillRect(&renderer, &drawRect);
-    }
+    SDL_RenderFillRect(&renderer, &drawRect);
 
     SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);
 }
@@ -121,10 +117,7 @@ void Enemy::drawEye(SDL_Renderer& renderer) const
     SDL_SetRenderDrawColor(&renderer, 255, 255, 255, 255);
     SDL_Rect scleraRect = getScleraRect(getBodyRect());
 
-    if (!isHidden())
-    {
-        SDL_RenderFillRect(&renderer, &scleraRect);
-    }
+    SDL_RenderFillRect(&renderer, &scleraRect);
 
     SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);
 
@@ -134,23 +127,15 @@ void Enemy::drawEye(SDL_Renderer& renderer) const
         SDL_Rect pupilRect = getPupilRect(scleraRect);
         pupilRect.x += pupilDisplacement.x;
         pupilRect.y += pupilDisplacement.y;
-        
-        if (!isHidden())
-        {
-            SDL_RenderFillRect(&renderer, &pupilRect);
-        }
+        SDL_RenderFillRect(&renderer, &pupilRect);
     }
     else
     {
         // Draw X
         Point topLeft{scleraRect.x, scleraRect.y};
         Point bottomRight{scleraRect.x + scleraRect.w, scleraRect.y + scleraRect.h};
-
-        if (!isHidden())
-        {
-            SDL_RenderDrawLine(&renderer, topLeft.x, topLeft.y, bottomRight.x, bottomRight.y);
-            SDL_RenderDrawLine(&renderer, topLeft.x, bottomRight.y, bottomRight.x, topLeft.y);
-        }
+        SDL_RenderDrawLine(&renderer, topLeft.x, topLeft.y, bottomRight.x, bottomRight.y);
+        SDL_RenderDrawLine(&renderer, topLeft.x, bottomRight.y, bottomRight.x, topLeft.y);
     }
 
     SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);
