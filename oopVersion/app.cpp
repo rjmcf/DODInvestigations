@@ -75,6 +75,22 @@ void Application::start()
                 case SDL_QUIT:
                     bShouldQuit = true;
                     break;
+                case SDL_KEYUP:
+                {
+                    switch (windowEvent.key.keysym.sym)
+                    {
+                        case SDLK_p:
+                            bNeedPause = true;
+                            break;
+                        case SDLK_u:
+                            bNeedUnpause = true;
+                            break;
+                        case SDLK_k:
+                            bNeedKill = true;
+                            break;
+                    }
+                    break;
+                }
             }
         }
 
@@ -136,6 +152,22 @@ void Application::update(int deltaTimeMs)
 #if PROFILING
     ZoneScoped;
 #endif // PROFILING
+
+    if (bNeedPause)
+    {
+        animationController.pauseAllAnimations();
+        bNeedPause = false;
+    }
+    if (bNeedUnpause)
+    {
+        animationController.unpauseAllAnimations();
+        bNeedUnpause = false;
+    }
+    if (bNeedKill)
+    {
+        enemyController.killHalfEnemies();
+        bNeedKill = false;
+    }
 
     animationController.updateAllAnimations(deltaTimeMs);
     enemyController.update(deltaTimeMs);

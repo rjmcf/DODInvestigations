@@ -41,6 +41,9 @@ private:
     BgColourEventListener bgColourEventListener;
     SDL_Event windowEvent;
     bool bShouldQuit = false;
+    bool bNeedPause = false;
+    bool bNeedUnpause = false;
+    bool bNeedKill = false;
 
     // Drawing side
     void executeDrawCalls();
