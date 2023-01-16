@@ -68,6 +68,9 @@ void Application::start()
 
     while (!bShouldQuit)
     {
+#if PROFILING
+        TracyCZoneN(inputCtx, "Handle Input", true);
+#endif // PROFILING
         if (SDL_PollEvent(&windowEvent))
         {
             switch (windowEvent.type)
@@ -93,17 +96,28 @@ void Application::start()
                 }
             }
         }
+#if PROFILING
+        TracyCZoneEnd(inputCtx);
+#endif // PROFILING
 
+#if PROFILING
+        TracyCZoneN(waitFullCtx, "WaitForFull", true);
+#endif // PROFILING
         std::unique_lock<LockableBase(std::mutex)> lock(drawCallsMutex);
-        TracyCZoneN(ctx, "WaitForFull", true);
         condDrawCallsFull.wait(lock, [this](){ return !drawCalls.empty(); });
-        TracyCZoneEnd(ctx);
+#if PROFILING
+        TracyCZoneEnd(waitFullCtx);
+#endif // PROFILING
 
         SDL_SetRenderDrawColor(renderer, 0,0,0,255);
         SDL_RenderClear(renderer);
-        TracyCZoneN(ctx1, "ExecuteDraw", true);
+#if PROFILING
+        TracyCZoneN(executeDrawCtx, "ExecuteDraw", true);
+#endif // PROFILING
         executeDrawCalls();
-        TracyCZoneEnd(ctx1);
+#if PROFILING
+        TracyCZoneEnd(executeDrawCtx);
+#endif // PROFILING
 
         lock.unlock();
         condDrawCallsEmpty.notify_one();
@@ -132,10 +146,14 @@ void Application::loop()
 #endif // PROFILING
         frameStart = SDL_GetTicks();
 
-        std::unique_lock<LockableBase(std::mutex)> lock(drawCallsMutex);
+#if PROFILING
         TracyCZoneN(ctx, "WaitForEmpty", true);
+#endif // PROFILING
+        std::unique_lock<LockableBase(std::mutex)> lock(drawCallsMutex);
         condDrawCallsEmpty.wait(lock, [this](){ return drawCalls.empty(); });
+#if PROFILING
         TracyCZoneEnd(ctx);
+#endif // PROFILING
 
         update(deltaTime);
         populateDrawCalls();
@@ -175,10 +193,6 @@ void Application::update(int deltaTimeMs)
 
 void Application::populateDrawCalls()
 {
-#if PROFILING
-    ZoneNamedN(ZoneDraw, "Draw", true);
-#endif // PROFILING
-
     if (renderer)
     {
         drawCalls.emplace_back(std::make_unique<DrawCallBackground>(bgColour));
