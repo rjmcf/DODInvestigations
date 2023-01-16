@@ -13,7 +13,7 @@ void EnemyBatch::draw(std::vector<std::unique_ptr<const DrawCall>>& drawCalls) c
     std::vector<std::unique_ptr<const DrawCall>> fakeDraws;
     for (unsigned int i = 0; i < allEnemies.size(); i++)
     {
-        if (i % 3 == 0)
+        if (i % 10 == 0)
         {
             allEnemies[i]->draw(drawCalls);
         }

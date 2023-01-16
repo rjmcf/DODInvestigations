@@ -24,7 +24,7 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
     ZoneScopedN("Scene set up");
 #endif // PROFILING
 
-    const int duplicates = 50;
+    const int duplicates = 200;
 
     // Normal Enemies
     {
