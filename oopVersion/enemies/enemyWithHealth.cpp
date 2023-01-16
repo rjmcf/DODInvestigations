@@ -6,9 +6,9 @@ EnemyWithHealth::EnemyWithHealth(int x, int y, int w, int h, const Colour& inCol
     , currentHealth(inMaxHealth)
 {}
 
-void EnemyWithHealth::draw(SDL_Renderer& renderer) const
+void EnemyWithHealth::draw(std::vector<std::unique_ptr<const DrawCall>>& drawCalls) const
 {
-    Enemy::draw(renderer);
+    Enemy::draw(drawCalls);
 
     if (isAlive())
     {
@@ -16,14 +16,10 @@ void EnemyWithHealth::draw(SDL_Renderer& renderer) const
         healthBarRect.y -= 10;
         healthBarRect.h = 5;
 
-        SDL_SetRenderDrawColor(&renderer, 0, 255, 0, colour.alpha);
-
-        SDL_RenderDrawRect(&renderer, &healthBarRect);
+        drawCalls.emplace_back(std::make_unique<DrawCallRectOutline>(healthBarRect, Colour{0, 255, 0, 255}));
 
         healthBarRect.w *= currentHealth / maxHealth;
-
-        SDL_RenderFillRect(&renderer, &healthBarRect);
-
-        SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);
+        
+        drawCalls.emplace_back(std::make_unique<DrawCallFilledRect>(healthBarRect, Colour{0, 255, 0, 255}));
     }
 }

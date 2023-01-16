@@ -14,10 +14,7 @@ void AttachmentShield::update(int deltaTimeMs)
     rect.y = parent->y + offset.y;
 }
 
-void AttachmentShield::draw(SDL_Renderer& renderer)
+void AttachmentShield::draw(std::vector<std::unique_ptr<const DrawCall>>& drawCalls)
 {
-    SDL_Rect drawRect = DrawingUtils::convertCentredRectToDrawRect(rect);
-    SDL_SetRenderDrawColor(&renderer, 192, 192, 192, 255);
-    SDL_RenderFillRect(&renderer, &drawRect);
-    SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);
+    drawCalls.emplace_back(std::make_unique<DrawCallFilledRect>(DrawingUtils::convertCentredRectToDrawRect(rect), Colour{192, 192, 192, 255}));
 }

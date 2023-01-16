@@ -2,6 +2,7 @@
 
 #include "animations/animationController.hpp"
 #include "colour.hpp"
+#include "drawCall.hpp"
 #include "enemies/enemyController.hpp"
 #include "events/bgColourChangeEventListener.hpp"
 
@@ -21,7 +22,8 @@ private:
     // Delta Time in ms
     void update(int deltaTimeMs);
     void draw();
-    void drawBackground();
+    void drawBackground(std::vector<std::unique_ptr<const DrawCall>>& drawCalls);
+    void executeDrawCalls();
 
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
@@ -32,6 +34,8 @@ private:
 
     Colour bgColour{0,10,20,255};
     BgColourEventListener bgColourEventListener;
+
+    std::vector<std::unique_ptr<const DrawCall>> drawCalls;
 
     bool bShouldQuit = false;
 };

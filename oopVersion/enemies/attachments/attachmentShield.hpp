@@ -1,8 +1,10 @@
 #pragma once
 
 #include "attachmentBase.hpp"
+#include "drawCall.hpp"
 
 #include <SDL.h>
+#include <vector>
 
 class AttachmentShield : public AttachmentBase
 {
@@ -11,7 +13,7 @@ public:
 
     // ~Begin AttachmentBase
     virtual void update(int deltaTimeMs) override;
-    virtual void draw(SDL_Renderer& renderer) override;
+    virtual void draw(std::vector<std::unique_ptr<const DrawCall>>& drawCalls) override;
     // ~End AttachmentBase
 
 private:

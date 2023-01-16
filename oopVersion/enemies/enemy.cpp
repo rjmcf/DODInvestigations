@@ -63,31 +63,19 @@ void Enemy::update(int deltaTimeMs)
     }
 }
 
-void Enemy::draw(SDL_Renderer& renderer) const
+void Enemy::draw(std::vector<std::unique_ptr<const DrawCall>>& drawCalls) const
 {
-    drawBody(renderer);
-    drawEye(renderer);
+    drawBody(drawCalls);
+    drawEye(drawCalls);
     for (const std::unique_ptr<AttachmentBase>& attachment : attachments)
     {
-        attachment->draw(renderer);
+        attachment->draw(drawCalls);
     }
 }
 
-void Enemy::drawBody(SDL_Renderer& renderer) const
+void Enemy::drawBody(std::vector<std::unique_ptr<const DrawCall>>& drawCalls) const
 {
-    if (bAlive)
-    {
-        SDL_SetRenderDrawColor(&renderer, colour.red, colour.green, colour.blue, colour.alpha);
-    }
-    else
-    {
-        SDL_SetRenderDrawColor(&renderer, 100, 150, 100, 255);
-    }
-    SDL_Rect drawRect = getBodyRect();
-
-    SDL_RenderFillRect(&renderer, &drawRect);
-
-    SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);
+    drawCalls.emplace_back(std::make_unique<const DrawCallFilledRect>(getBodyRect(), bAlive ? colour : Colour{100, 150, 100, 255}));
 }
 
 SDL_Rect Enemy::getScleraRect(const SDL_Rect& bodyRect)
@@ -112,14 +100,10 @@ SDL_Rect Enemy::getPupilRect(const SDL_Rect& scleraRect)
     return pupilRect;
 }
 
-void Enemy::drawEye(SDL_Renderer& renderer) const
+void Enemy::drawEye(std::vector<std::unique_ptr<const DrawCall>>& drawCalls) const
 {
-    SDL_SetRenderDrawColor(&renderer, 255, 255, 255, 255);
-    SDL_Rect scleraRect = getScleraRect(getBodyRect());
-
-    SDL_RenderFillRect(&renderer, &scleraRect);
-
-    SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);
+    const SDL_Rect scleraRect(getScleraRect(getBodyRect()));
+    drawCalls.emplace_back(std::make_unique<DrawCallFilledRect>(scleraRect, Colour{255,255,255,255}));
 
     if (isAlive())
     {
@@ -127,16 +111,16 @@ void Enemy::drawEye(SDL_Renderer& renderer) const
         SDL_Rect pupilRect = getPupilRect(scleraRect);
         pupilRect.x += pupilDisplacement.x;
         pupilRect.y += pupilDisplacement.y;
-        SDL_RenderFillRect(&renderer, &pupilRect);
+        drawCalls.emplace_back(std::make_unique<DrawCallFilledRect>(pupilRect, Colour{0,0,0,255}));
     }
     else
     {
         // Draw X
         Point topLeft{scleraRect.x, scleraRect.y};
+        Point topRight{scleraRect.x + scleraRect.w, scleraRect.y};
+        Point bottomLeft{scleraRect.x, scleraRect.y + scleraRect.h};
         Point bottomRight{scleraRect.x + scleraRect.w, scleraRect.y + scleraRect.h};
-        SDL_RenderDrawLine(&renderer, topLeft.x, topLeft.y, bottomRight.x, bottomRight.y);
-        SDL_RenderDrawLine(&renderer, topLeft.x, bottomRight.y, bottomRight.x, topLeft.y);
+        drawCalls.emplace_back(std::make_unique<DrawCallLine>(topLeft, bottomRight, Colour{0,0,0,255}));
+        drawCalls.emplace_back(std::make_unique<DrawCallLine>(topRight, bottomLeft, Colour{0,0,0,255}));
     }
-
-    SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);
 }

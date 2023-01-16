@@ -30,7 +30,7 @@ void EnemyController::update(int deltaTimeMs) const
     }
 }
     
-void EnemyController::drawAllEnemies(SDL_Renderer& renderer) const
+void EnemyController::drawAllEnemies(std::vector<std::unique_ptr<const DrawCall>>& drawCalls) const
 {
 #if PROFILING
     ZoneScoped;
@@ -48,13 +48,13 @@ void EnemyController::drawAllEnemies(SDL_Renderer& renderer) const
         }
         else
         {
-            enemyPtr->draw(renderer);
+            enemyPtr->draw(drawCalls);
         }
     }
 
     for (const Enemy* enemy : aliveEnemies)
     {
-        enemy->draw(renderer);
+        enemy->draw(drawCalls);
     }
 }
 

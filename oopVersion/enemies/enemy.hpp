@@ -2,6 +2,7 @@
 
 #include "attachments/attachmentBase.hpp"
 #include "colour.hpp"
+#include "drawCall.hpp"
 #include "interfaces/colourHaverInterface.hpp"
 #include "interfaces/rectHaverInterface.hpp"
 #include "geometry/vector.hpp"
@@ -19,7 +20,7 @@ public:
     Enemy(int x, int y, int w, int h, const Colour& inColour);
 
     virtual void update(int deltaTimeMs);
-    virtual void draw(SDL_Renderer& renderer) const;
+    virtual void draw(std::vector<std::unique_ptr<const DrawCall>>& drawCalls) const;
 
     // ~Begin RectHaverInterface
     virtual const SDL_Rect& getRect() const override { return rect; }
@@ -46,8 +47,8 @@ protected:
     static SDL_Rect getScleraRect(const SDL_Rect& bodyRect);
     static SDL_Rect getPupilRect(const SDL_Rect& scleraRect);
 
-    void drawBody(SDL_Renderer& renderer) const;
-    void drawEye(SDL_Renderer& renderer) const;
+    void drawBody(std::vector<std::unique_ptr<const DrawCall>>& drawCalls) const;
+    void drawEye(std::vector<std::unique_ptr<const DrawCall>>& drawCalls) const;
 
 private:
     bool bAlive = true;

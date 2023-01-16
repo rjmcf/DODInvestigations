@@ -1,15 +1,18 @@
 #pragma once
 
+#include "drawCall.hpp"
 #include "geometry/vector.hpp"
 
+#include <memory>
+#include <vector>
+
 class SDL_Rect;
-class SDL_Renderer;
 
 class AttachmentBase
 {
 public:
     virtual void update(int deltaTimeMs) = 0;
-    virtual void draw(SDL_Renderer& renderer) = 0;
+    virtual void draw(std::vector<std::unique_ptr<const DrawCall>>& drawCalls) = 0;
 
     void attachTo(const SDL_Rect& inParent, const Vector& inOffset)
     {

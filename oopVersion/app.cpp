@@ -140,8 +140,10 @@ void Application::draw()
     {
         SDL_RenderClear(renderer);
 
-        drawBackground();
-        enemyController.drawAllEnemies(*renderer);
+        drawBackground(drawCalls);
+        enemyController.drawAllEnemies(drawCalls);
+
+        executeDrawCalls();
 
 #if PROFILING
         ZoneNamedN(ZoneDrawRenderPresent, "DrawRenderPresent", true);
@@ -155,9 +157,18 @@ void Application::draw()
     }
 }
 
-void Application::drawBackground()
+void Application::drawBackground(std::vector<std::unique_ptr<const DrawCall>>& drawCalls)
 {
-    SDL_SetRenderDrawColor(renderer, bgColour.red, bgColour.green, bgColour.blue, bgColour.alpha);
-    SDL_RenderFillRect(renderer, nullptr);
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    drawCalls.emplace_back(std::make_unique<DrawCallBackground>(bgColour));
+}
+
+
+void Application::executeDrawCalls()
+{
+    for (const std::unique_ptr<const DrawCall>& drawCall : drawCalls)
+    {
+        drawCall->draw(*renderer);
+    }
+
+    drawCalls.clear();
 }

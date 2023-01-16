@@ -9,7 +9,7 @@ public:
     EnemyWithHealth(int x, int y, int w, int h, const Colour& inColour, float inMaxHealth);
 
     // ~Begin Enemy
-    virtual void draw(SDL_Renderer& renderer) const override;
+    virtual void draw(std::vector<std::unique_ptr<const DrawCall>>& drawCalls) const override;
     // ~End Enemy
 
     // ~Begin HealthHaverInterface
