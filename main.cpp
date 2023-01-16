@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    app.loop();
+    app.start();
 #endif // USING_OOP
 
     return 0;

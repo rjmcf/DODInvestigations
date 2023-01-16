@@ -6,7 +6,13 @@
 #include "enemies/enemyController.hpp"
 #include "events/bgColourChangeEventListener.hpp"
 
+#include "Tracy.hpp"
+
 #include <SDL.h>
+
+#include <condition_variable>
+#include <mutex>
+#include <thread>
 
 class Enemy;
 
@@ -16,26 +22,28 @@ public:
    ~Application();
 
     bool setup();
-    void loop();
+    void start();
 
 private:
-    // Delta Time in ms
+    std::thread logic_thread;
+    std::condition_variable_any condDrawCallsFull;
+    std::condition_variable_any condDrawCallsEmpty;
+    std::vector<std::unique_ptr<const DrawCall>> drawCalls;
+    TracyLockable(std::mutex, drawCallsMutex);
+
+    // Logic side
+    void loop();
     void update(int deltaTimeMs);
-    void draw();
-    void drawBackground(std::vector<std::unique_ptr<const DrawCall>>& drawCalls);
-    void executeDrawCalls();
-
-    SDL_Window* window = nullptr;
-    SDL_Renderer* renderer = nullptr;
-    SDL_Event windowEvent;
-
+    void populateDrawCalls();
     EnemyController enemyController;
     AnimationController animationController;
-
     Colour bgColour{0,10,20,255};
     BgColourEventListener bgColourEventListener;
-
-    std::vector<std::unique_ptr<const DrawCall>> drawCalls;
-
+    SDL_Event windowEvent;
     bool bShouldQuit = false;
+
+    // Drawing side
+    void executeDrawCalls();
+    SDL_Window* window = nullptr;
+    SDL_Renderer* renderer = nullptr;
 };

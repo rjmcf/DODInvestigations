@@ -62,88 +62,35 @@ bool Application::setup()
     return true;
 }
 
-void Application::loop()
+void Application::start()
 {
-    int frameStart = 0, frameEnd = 0, deltaTime = 0;
+    logic_thread = std::thread(&Application::loop, this);
+
     while (!bShouldQuit)
     {
-#if PROFILING
-        ZoneNamedN(ZoneLoop, "Loop", true);
-#endif // PROFILING
-        frameStart = SDL_GetTicks();
-        update(deltaTime);
-        draw();
-        frameEnd = SDL_GetTicks();
-        deltaTime = frameEnd - frameStart;
-
-#if PROFILING
-        ZoneNamedN(ZoneLoopDelay, "LoopDelay", true);
-#endif // PROFILING
-        // Ensure at least one ms has passed, so we don't end up with deltaTimes of 0
-        if (deltaTime < 1)
+        if (SDL_PollEvent(&windowEvent))
         {
-            SDL_Delay(1);
-            frameEnd = SDL_GetTicks();
-            deltaTime = frameEnd - frameStart;
-        }
-    }
-}
-
-void Application::update(int deltaTimeMs)
-{
-#if PROFILING
-    ZoneScoped;
-    TracyCZoneN(ctx, "Handle Input", true);
-#endif // PROFILING
-
-    if (SDL_PollEvent(&windowEvent))
-    {
-        switch (windowEvent.type)
-        {
-            case SDL_QUIT:
-                bShouldQuit = true;
-                break;    
-            case SDL_KEYUP:
+            switch (windowEvent.type)
             {
-                switch (windowEvent.key.keysym.sym)
-                {
-                    case SDLK_p:
-                        animationController.pauseAllAnimations();
-                        break;
-                    case SDLK_u:
-                        animationController.unpauseAllAnimations();
-                        break;
-                    case SDLK_k:
-                        enemyController.killHalfEnemies();
-                        break;
-                }
-                break;
+                case SDL_QUIT:
+                    bShouldQuit = true;
+                    break;
             }
         }
-    }
 
-#if PROFILING
-    TracyCZoneEnd(ctx);
-#endif // PROFILING
+        std::unique_lock<LockableBase(std::mutex)> lock(drawCallsMutex);
+        TracyCZoneN(ctx, "WaitForFull", true);
+        condDrawCallsFull.wait(lock, [this](){ return !drawCalls.empty(); });
+        TracyCZoneEnd(ctx);
 
-    animationController.updateAllAnimations(deltaTimeMs);
-    enemyController.update(deltaTimeMs);
-}
-
-void Application::draw()
-{
-#if PROFILING
-    ZoneNamedN(ZoneDraw, "Draw", true);
-#endif // PROFILING
-
-    if (renderer)
-    {
+        SDL_SetRenderDrawColor(renderer, 0,0,0,255);
         SDL_RenderClear(renderer);
-
-        drawBackground(drawCalls);
-        enemyController.drawAllEnemies(drawCalls);
-
+        TracyCZoneN(ctx1, "ExecuteDraw", true);
         executeDrawCalls();
+        TracyCZoneEnd(ctx1);
+
+        lock.unlock();
+        condDrawCallsEmpty.notify_one();
 
 #if PROFILING
         ZoneNamedN(ZoneDrawRenderPresent, "DrawRenderPresent", true);
@@ -155,13 +102,58 @@ void Application::draw()
         FrameMark;
 #endif // PROFILING
     }
+
+    logic_thread.join();
 }
 
-void Application::drawBackground(std::vector<std::unique_ptr<const DrawCall>>& drawCalls)
+void Application::loop()
 {
-    drawCalls.emplace_back(std::make_unique<DrawCallBackground>(bgColour));
+    int frameStart = 0, frameEnd = 0, deltaTime = 0;
+    while (!bShouldQuit)
+    {
+#if PROFILING
+        ZoneNamedN(ZoneLoop, "Loop", true);
+#endif // PROFILING
+        frameStart = SDL_GetTicks();
+
+        std::unique_lock<LockableBase(std::mutex)> lock(drawCallsMutex);
+        TracyCZoneN(ctx, "WaitForEmpty", true);
+        condDrawCallsEmpty.wait(lock, [this](){ return drawCalls.empty(); });
+        TracyCZoneEnd(ctx);
+
+        update(deltaTime);
+        populateDrawCalls();
+        frameEnd = SDL_GetTicks();
+        deltaTime = frameEnd - frameStart;
+
+        lock.unlock();
+        condDrawCallsFull.notify_one();
+    }
 }
 
+void Application::update(int deltaTimeMs)
+{
+#if PROFILING
+    ZoneScoped;
+#endif // PROFILING
+
+    animationController.updateAllAnimations(deltaTimeMs);
+    enemyController.update(deltaTimeMs);
+}
+
+void Application::populateDrawCalls()
+{
+#if PROFILING
+    ZoneNamedN(ZoneDraw, "Draw", true);
+#endif // PROFILING
+
+    if (renderer)
+    {
+        drawCalls.emplace_back(std::make_unique<DrawCallBackground>(bgColour));
+
+        enemyController.drawAllEnemies(drawCalls);
+    }
+}
 
 void Application::executeDrawCalls()
 {
