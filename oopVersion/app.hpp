@@ -6,7 +6,10 @@
 #include "enemies/enemyController.hpp"
 #include "events/bgColourChangeEventListener.hpp"
 
-#include "Tracy.hpp"
+#include "programConfig.h"
+#if PROFILING
+    #include "Tracy.hpp"
+#endif // PROFILING
 
 #include <SDL.h>
 
@@ -29,7 +32,12 @@ private:
     std::condition_variable_any condDrawCallsFull;
     std::condition_variable_any condDrawCallsEmpty;
     std::vector<std::unique_ptr<const DrawCall>> drawCalls;
+    
+#if PROFILING
     TracyLockable(std::mutex, drawCallsMutex);
+#else
+    std::mutex drawCallsMutex;
+#endif // PROFILING
 
     // Logic side
     void loop();

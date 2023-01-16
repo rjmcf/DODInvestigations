@@ -102,8 +102,10 @@ void Application::start()
 
 #if PROFILING
         TracyCZoneN(waitFullCtx, "WaitForFull", true);
-#endif // PROFILING
         std::unique_lock<LockableBase(std::mutex)> lock(drawCallsMutex);
+#else
+        std::unique_lock lock(drawCallsMutex);
+#endif // PROFILING
         condDrawCallsFull.wait(lock, [this](){ return !drawCalls.empty(); });
 #if PROFILING
         TracyCZoneEnd(waitFullCtx);
@@ -148,8 +150,10 @@ void Application::loop()
 
 #if PROFILING
         TracyCZoneN(ctx, "WaitForEmpty", true);
-#endif // PROFILING
         std::unique_lock<LockableBase(std::mutex)> lock(drawCallsMutex);
+#else
+        std::unique_lock lock(drawCallsMutex);
+#endif // PROFILING
         condDrawCallsEmpty.wait(lock, [this](){ return drawCalls.empty(); });
 #if PROFILING
         TracyCZoneEnd(ctx);
