@@ -8,14 +8,9 @@
 #include <iostream>
 #include <iterator>
 
-void EnemyController::addEnemies(std::vector<std::unique_ptr<Enemy>>&& newEnemies)
+void EnemyController::addEnemies(std::vector<EnemyBatch>&& newEnemyBatches)
 {
-    allEnemies.insert(allEnemies.end(), std::make_move_iterator(newEnemies.begin()), std::make_move_iterator(newEnemies.end()));
-}
-
-void EnemyController::addEnemy(std::unique_ptr<Enemy>&& newEnemy)
-{
-    allEnemies.emplace_back(std::move(newEnemy));
+    allEnemyBatches.insert(allEnemyBatches.end(), std::make_move_iterator(newEnemyBatches.begin()), std::make_move_iterator(newEnemyBatches.end()));
 }
 
 void EnemyController::update(int deltaTimeMs) const
@@ -24,9 +19,9 @@ void EnemyController::update(int deltaTimeMs) const
     ZoneScopedN("UpdateEnemies");
 #endif // PROFILING
 
-    for (const std::unique_ptr<Enemy>& enemyPtr : allEnemies)
+    for (const EnemyBatch& enemyBatch : allEnemyBatches)
     {
-        enemyPtr->update(deltaTimeMs);
+        enemyBatch.update(deltaTimeMs);
     }
 }
     
@@ -36,42 +31,42 @@ void EnemyController::drawAllEnemies(std::vector<std::unique_ptr<const DrawCall>
     ZoneScoped;
 #endif // PROFILING
 
-    std::vector<Enemy*> aliveEnemies;
-    aliveEnemies.reserve(allEnemies.size());
+    std::vector<const EnemyBatch*> aliveEnemies;
+    aliveEnemies.reserve(allEnemyBatches.size());
 
     // Draw dead enemies first, so alive ones appear on top
-    for (const std::unique_ptr<Enemy>& enemyPtr : allEnemies)
+    for (const EnemyBatch& enemyBatch : allEnemyBatches)
     {
-        if (enemyPtr->isAlive())
+        if (enemyBatch.isAlive())
         {
-            aliveEnemies.push_back(enemyPtr.get());
+            aliveEnemies.push_back(&enemyBatch);
         }
         else
         {
-            enemyPtr->draw(drawCalls);
+            enemyBatch.draw(drawCalls);
         }
     }
 
-    for (const Enemy* enemy : aliveEnemies)
+    for (const EnemyBatch* enemyBatch : aliveEnemies)
     {
-        enemy->draw(drawCalls);
+        enemyBatch->draw(drawCalls);
     }
 }
 
-void EnemyController::killHalfEnemies() const
+void EnemyController::killHalfEnemies()
 {
 #if PROFILING
     ZoneScoped;
 #endif // PROFILING
 
     int aliveEnemyNum = 0;
-    for (const std::unique_ptr<Enemy>& enemyPtr : allEnemies)
+    for (EnemyBatch& enemyBatch : allEnemyBatches)
     {
-        if (enemyPtr->isAlive())
+        if (enemyBatch.isAlive())
         {
             if (aliveEnemyNum % 2 == 0)
             {
-                enemyPtr->kill();
+                enemyBatch.kill();
             }
 
             aliveEnemyNum++;
@@ -81,5 +76,13 @@ void EnemyController::killHalfEnemies() const
 
 void EnemyController::reportEnemyNumber() const
 {
-    std::cout << "Number of Enemies: " << allEnemies.size() << std::endl;
+    std::cout << "Number of EnemyBatches: " << allEnemyBatches.size() << std::endl;
+    
+    int totalEnemies = 0;
+    for (const EnemyBatch& enemyBatch : allEnemyBatches)
+    {
+        totalEnemies += enemyBatch.getNumEnemies();
+    }
+
+    std::cout << "Number of Enemies: " << totalEnemies << std::endl;
 }

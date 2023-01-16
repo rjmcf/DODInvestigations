@@ -1,7 +1,7 @@
 #pragma once
 
 #include "drawCall.hpp"
-#include "enemy.hpp"
+#include "enemyBatch.hpp"
 
 #include <memory>
 #include <vector>
@@ -9,14 +9,13 @@
 class EnemyController
 {
 public:
-    void addEnemies(std::vector<std::unique_ptr<Enemy>>&& newEnemies);
-    void addEnemy(std::unique_ptr<Enemy>&& newEnemy);
+    void addEnemies(std::vector<EnemyBatch>&& newEnemyBatches);
     void update(int deltaTimeMs) const;
     void drawAllEnemies(std::vector<std::unique_ptr<const DrawCall>>& drawCalls) const;
-    void killHalfEnemies() const;
+    void killHalfEnemies();
 
     void reportEnemyNumber() const;
 
 private:
-    std::vector<std::unique_ptr<Enemy>> allEnemies;
+    std::vector<EnemyBatch> allEnemyBatches;
 };

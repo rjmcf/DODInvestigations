@@ -7,6 +7,7 @@
 #include "animations/animationTranslate.hpp"
 #include "animations/animationController.hpp"
 #include "enemies/attachments/attachmentShield.hpp"
+#include "enemies/enemyBatch.hpp"
 #include "enemies/enemyController.hpp"
 #include "enemies/enemyWithHealth.hpp"
 
@@ -23,11 +24,11 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
     ZoneScopedN("Scene set up");
 #endif // PROFILING
 
-    const int duplicates = 35;
+    const int duplicates = 50;
 
     // Normal Enemies
     {
-        std::vector<std::unique_ptr<Enemy>> normalEnemies;
+        std::vector<EnemyBatch> normalEnemyBatches;
         std::vector<RectHaverInterface*> normalRectHavers;
 
         const int initialX = 80;
@@ -38,11 +39,12 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
         const Vector shieldOffset{6,6};
 
         int tracker = 0;
-        for (int copyNum = 0; copyNum < duplicates; copyNum++)
+        for (int column = 0; column < 30; column++)
         {
-            for (int column = 0; column < 30; column++)
+            for (int row = 0; row < 15; row++)
             {
-                for (int row = 0; row < 15; row++)
+                std::vector<std::unique_ptr<Enemy>> enemiesInBatch;
+                for (int copyNum = 0; copyNum < duplicates; copyNum++)
                 {
                     std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>
                     (
@@ -69,12 +71,14 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
                     }
 
                     normalRectHavers.push_back(enemy.get());
-                    normalEnemies.emplace_back(std::move(enemy));
-
-                    tracker++;
+                    enemiesInBatch.emplace_back(std::move(enemy));
                 }
+
+                EnemyBatch batch;
+                batch.setEnemies(std::move(enemiesInBatch));
+                normalEnemyBatches.emplace_back(std::move(batch));
+                tracker++;
             }
-            tracker = 0;
         }
 
         std::vector<std::unique_ptr<Animation>> normalTranslations;
@@ -90,12 +94,12 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
 
         animationController.addAnimation(std::make_unique<AnimationChain>(std::move(normalTranslations)));
 
-        enemyController.addEnemies(std::move(normalEnemies));
+        enemyController.addEnemies(std::move(normalEnemyBatches));
     }
 
     // Boss Enemies
     {
-        std::vector<std::unique_ptr<Enemy>> bossEnemies;
+        std::vector<EnemyBatch> bossEnemyBatches;
 
         const int initialX = 80;
         const int initialY = 60;
@@ -104,11 +108,12 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
         const int buffer = 2*bigRadius + 30;
 
         int tracker = 0;
-        for (int copyNum = 0; copyNum < duplicates; copyNum++)
+        for (int column = 0; column < 13; column++)
         {
-            for (int column = 0; column < 13; column++)
+            for (int row = 0; row < 1; row++)
             {
-                for (int row = 0; row < 1; row++)
+                std::vector<std::unique_ptr<Enemy>> enemiesInBatch;
+                for (int copyNum = 0; copyNum < duplicates; copyNum++)
                 {
                     std::unique_ptr<EnemyWithHealth> enemy = std::make_unique<EnemyWithHealth>
                     (
@@ -132,15 +137,18 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
 
                     animationController.addAnimation(std::make_unique<AnimationColour>(3000, Colour{255,0,255,255}, *enemy.get()));
 
-                    bossEnemies.emplace_back(std::move(enemy));
-
-                    tracker++;
+                    enemiesInBatch.emplace_back(std::move(enemy));
                 }
+
+                EnemyBatch batch;
+                batch.setEnemies(std::move(enemiesInBatch));
+                bossEnemyBatches.emplace_back(std::move(batch));
+
+                tracker++;
             }
-            tracker = 0;
         }
 
-        enemyController.addEnemies(std::move(bossEnemies));
+        enemyController.addEnemies(std::move(bossEnemyBatches));
     }
 
     enemyController.reportEnemyNumber();
