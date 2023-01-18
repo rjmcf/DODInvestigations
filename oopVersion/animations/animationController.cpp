@@ -11,7 +11,14 @@
 
 void AnimationController::addAnimation(std::unique_ptr<AnimationBase>&& newAnimation)
 {
-    allActiveAnimations.push_back(std::move(newAnimation));
+    if (bUpdating)
+    {
+        animationsPendingAdd.emplace_back(std::move(newAnimation));
+    }
+    else
+    {
+        allActiveAnimations.emplace_back(std::move(newAnimation));
+    }
 }
 
 void AnimationController::updateAllAnimations(int deltaTimeMs)
@@ -20,6 +27,7 @@ void AnimationController::updateAllAnimations(int deltaTimeMs)
     ZoneScoped;
 #endif // PROFILING
 
+    bUpdating = true;
     for (const std::unique_ptr<AnimationBase>& animationPtr : allActiveAnimations) 
     {
         animationPtr->update(deltaTimeMs);
@@ -28,26 +36,27 @@ void AnimationController::updateAllAnimations(int deltaTimeMs)
             animationPtr->reset();
         }
     }
+    bUpdating = false;
+
+    // Add all animations pending add
+    for (std::unique_ptr<AnimationBase>& animationPtr : animationsPendingAdd) 
+    {
+        allActiveAnimations.emplace_back(std::move(animationPtr));
+    }
+    animationsPendingAdd.clear();
 
 #if PROFILING
     TracyCZoneN(ctx, "Remove anims", true);
 #endif // PROFILING
     // Remove all inactive animations
-    int activeAnimationsBefore = allActiveAnimations.size();
     allActiveAnimations.erase(std::remove_if(allActiveAnimations.begin(), allActiveAnimations.end(), 
         [](const std::unique_ptr<AnimationBase>& animationPtr) 
         { 
             return animationPtr->isComplete() && !animationPtr->shouldReset();
         }), allActiveAnimations.end());
-    int activeAnimationsAfter = allActiveAnimations.size();
 #if PROFILING
     TracyCZoneEnd(ctx);  
 #endif // PROFILING
-
-    if (activeAnimationsAfter != activeAnimationsBefore)
-    {
-        std::cout << "Animations before: " << activeAnimationsBefore << ", after: " << activeAnimationsAfter << "\n";
-    }
 }
     
 void AnimationController::pauseAllAnimations() const

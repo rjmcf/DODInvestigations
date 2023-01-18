@@ -71,13 +71,13 @@ void Scene::setUp()
                         animationController.addAnimation(std::make_unique<AnimationColour>(2000, Colour{0,255,255,255}, *enemy.get()));
                     }
 
-                    if (tracker % 3 == 2)
+                    if (tracker % 6 == 2)
                     {
                         std::unique_ptr<AttachmentShield> shield = std::make_unique<AttachmentShield>(shieldSize);
                         enemy->attach(std::move(shield), shieldOffset);
                     }
 
-                    if (tracker % 6 == 2)
+                    if (tracker % 3 == 2)
                     {
                         std::unique_ptr<AttachmentSpear> spear = std::make_unique<AttachmentSpear>();
                         spears.emplace_back(spear.get());
@@ -104,7 +104,11 @@ void Scene::setUp()
         std::vector<std::unique_ptr<AnimationBase>> baseAnimations;
         for (std::unique_ptr<Animation>& animation : normalTranslations)
         {
-            animation->setUpEvents(std::vector<TimedEvent>{TimedEvent{1000, Scene::translationCompleteEventName}});
+            animation->setUpEvents(std::vector<TimedEvent>
+            {
+                TimedEvent{ 600, Scene::enemyAttackEventName}, 
+                TimedEvent{1000, Scene::translationCompleteEventName}
+            });
             baseAnimations.emplace_back(std::move(animation));
         }
 

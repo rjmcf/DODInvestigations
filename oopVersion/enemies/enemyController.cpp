@@ -2,6 +2,9 @@
 
 #include "animations/animationController.hpp"
 #include "attachments/attachmentSpear.hpp"
+#include "events/eventManager.hpp"
+#include "scene/scene.hpp"
+#include "utils/globals.hpp"
 
 #include "programConfig.h"
 #if PROFILING
@@ -14,6 +17,12 @@
 void EnemyController::addEnemies(std::vector<EnemyBatch>&& newEnemyBatches)
 {
     allEnemyBatches.insert(allEnemyBatches.end(), std::make_move_iterator(newEnemyBatches.begin()), std::make_move_iterator(newEnemyBatches.end()));
+}
+
+void EnemyController::addSpears(std::vector<AttachmentSpear*>&& newSpears)
+{ 
+    allSpears = std::move(newSpears);
+    Globals::getEventManager().listenToEvent(*this, Scene::enemyAttackEventName);
 }
 
 void EnemyController::update(int deltaTimeMs) const
@@ -77,11 +86,23 @@ void EnemyController::killHalfEnemies()
     }
 }
 
-void EnemyController::enemyAttack(AnimationController& animationController) const
+void EnemyController::enemyAttack() const
 {
+    AnimationController& animationController = Globals::getAnimationController();
     for (AttachmentSpear* spear : allSpears)
     {
-        animationController.addAnimation(spear->attack());
+        if (spear)
+        {
+            animationController.addAnimation(spear->attack());
+        }
+    }
+}
+
+void EnemyController::onEventTriggered(const std::string& eventName)
+{
+    if (eventName == Scene::enemyAttackEventName)
+    {
+        enemyAttack();
     }
 }
 

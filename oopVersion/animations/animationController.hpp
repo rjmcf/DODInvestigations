@@ -17,4 +17,6 @@ public:
 
 private:
     std::vector<std::unique_ptr<AnimationBase>> allActiveAnimations;
+    std::vector<std::unique_ptr<AnimationBase>> animationsPendingAdd;
+    bool bUpdating = false;
 };

@@ -54,7 +54,6 @@ private:
     bool bNeedPause = false;
     bool bNeedUnpause = false;
     bool bNeedKill = false;
-    bool bNeedAttack = false;
 
     // Drawing side
     void executeDrawCalls();
