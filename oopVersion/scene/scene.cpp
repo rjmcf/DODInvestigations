@@ -7,6 +7,7 @@
 #include "animations/animationTranslate.hpp"
 #include "animations/animationController.hpp"
 #include "enemies/attachments/attachmentShield.hpp"
+#include "enemies/attachments/attachmentSpear.hpp"
 #include "enemies/enemyBatch.hpp"
 #include "enemies/enemyController.hpp"
 #include "enemies/enemyWithHealth.hpp"
@@ -37,6 +38,7 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
         const int buffer = 2*radius + 15;
         const Vector shieldSize{10,12};
         const Vector shieldOffset{6,6};
+        const Vector spearOffset{-18,15};
 
         int tracker = 0;
         for (int column = 0; column < 30; column++)
@@ -64,10 +66,16 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
                         animationController.addAnimation(std::make_unique<AnimationColour>(2000, Colour{0,255,255,255}, *enemy.get()));
                     }
 
-                    if (tracker % 3 == 0)
+                    if (tracker % 3 == 2)
                     {
                         std::unique_ptr<AttachmentShield> shield = std::make_unique<AttachmentShield>(shieldSize);
                         enemy->attach(std::move(shield), shieldOffset);
+                    }
+
+                    if (tracker % 6 == 2)
+                    {
+                        std::unique_ptr<AttachmentSpear> spear = std::make_unique<AttachmentSpear>();
+                        enemy->attach(std::move(spear), spearOffset);
                     }
 
                     normalRectHavers.push_back(enemy.get());
