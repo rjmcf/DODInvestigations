@@ -1,5 +1,8 @@
 #include "enemyController.hpp"
 
+#include "animations/animationController.hpp"
+#include "attachments/attachmentSpear.hpp"
+
 #include "programConfig.h"
 #if PROFILING
     #include "Tracy.hpp"
@@ -71,6 +74,14 @@ void EnemyController::killHalfEnemies()
 
             aliveEnemyNum++;
         }
+    }
+}
+
+void EnemyController::enemyAttack(AnimationController& animationController) const
+{
+    for (AttachmentSpear* spear : allSpears)
+    {
+        animationController.addAnimation(spear->attack());
     }
 }
 

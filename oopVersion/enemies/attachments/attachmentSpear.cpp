@@ -1,7 +1,7 @@
 #include "attachmentSpear.hpp"
 
 #include "animations/animationChain.hpp"
-#include "animations/animationTranslate.hpp"
+#include "animations/animationModifyVector.hpp"
 #include "utils/drawingUtils.hpp"
 
 AttachmentSpear::AttachmentSpear()
@@ -30,3 +30,14 @@ void AttachmentSpear::draw(std::vector<std::unique_ptr<const DrawCall>>& drawCal
     drawCalls.emplace_back(std::make_unique<DrawCallFilledRect>(shaftDrawRect, Colour{102, 51, 0, 255}));
 }
 
+std::unique_ptr<AnimationBase> AttachmentSpear::attack()
+{
+    std::vector<std::unique_ptr<AnimationBase>> animations;
+    
+    std::unique_ptr<AnimationModifyVector> moveDown = std::make_unique<AnimationModifyVector>(100, Vector{0, 15}, *this, false);
+    animations.emplace_back(std::move(moveDown));
+    std::unique_ptr<AnimationModifyVector> moveUp   = std::make_unique<AnimationModifyVector>(400, Vector{0,-15}, *this, false);
+    animations.emplace_back(std::move(moveUp));
+
+    return std::make_unique<AnimationChain>(std::move(animations));
+}

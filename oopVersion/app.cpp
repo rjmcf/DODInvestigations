@@ -91,6 +91,9 @@ void Application::start()
                         case SDLK_k:
                             bNeedKill = true;
                             break;
+                        case SDLK_a:
+                            bNeedAttack = true;
+                            break;
                     }
                     break;
                 }
@@ -189,6 +192,11 @@ void Application::update(int deltaTimeMs)
     {
         enemyController.killHalfEnemies();
         bNeedKill = false;
+    }
+    if (bNeedAttack)
+    {
+        enemyController.enemyAttack(animationController);
+        bNeedAttack = false;
     }
 
     animationController.updateAllAnimations(deltaTimeMs);

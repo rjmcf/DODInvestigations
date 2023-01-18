@@ -32,7 +32,7 @@ private:
     std::condition_variable_any condDrawCallsFull;
     std::condition_variable_any condDrawCallsEmpty;
     std::vector<std::unique_ptr<const DrawCall>> drawCalls;
-    
+
 #if PROFILING
     TracyLockable(std::mutex, drawCallsMutex);
 #else
@@ -52,6 +52,7 @@ private:
     bool bNeedPause = false;
     bool bNeedUnpause = false;
     bool bNeedKill = false;
+    bool bNeedAttack = false;
 
     // Drawing side
     void executeDrawCalls();
