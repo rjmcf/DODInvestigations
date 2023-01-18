@@ -91,13 +91,20 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
             }
         }
 
-        std::vector<std::unique_ptr<AnimationBase>> normalTranslations;
+        std::vector<std::unique_ptr<Animation>> normalTranslations;
         normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{  0,  100}, normalRectHavers, true, std::make_unique<EaseIn2Out2>()));
         normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{ 150,   0}, normalRectHavers, true, std::make_unique<EaseIn2Out2>()));
         normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{  0, -100}, normalRectHavers, true, std::make_unique<EaseIn2Out2>()));
         normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{-150,   0}, normalRectHavers, true, std::make_unique<EaseIn2Out2>()));
 
-        animationController.addAnimation(std::make_unique<AnimationChain>(std::move(normalTranslations)));
+        std::vector<std::unique_ptr<AnimationBase>> baseAnimations;
+        for (std::unique_ptr<Animation>& animation : normalTranslations)
+        {
+            animation->setUpEvents(std::vector<TimedEvent>{TimedEvent{1000, Scene::translationCompleteEventName}});
+            baseAnimations.emplace_back(std::move(animation));
+        }
+
+        animationController.addAnimation(std::make_unique<AnimationChain>(std::move(baseAnimations)));
 
         enemyController.addEnemies(std::move(normalEnemyBatches));
         enemyController.addSpears(std::move(spears));
