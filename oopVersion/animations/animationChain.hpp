@@ -9,7 +9,7 @@
 class AnimationChain : public AnimationBase
 {
 public:
-    AnimationChain(std::vector<std::unique_ptr<Animation>>&& inAnimations);
+    AnimationChain(std::vector<std::unique_ptr<AnimationBase>>&& inAnimations);
 
     virtual void update(int deltaTimeMs) override;
 
@@ -23,7 +23,7 @@ public:
     virtual int getNumberOfAnimatedProperties() const override;
 
 private:
-    const std::vector<std::unique_ptr<Animation>> animations;
+    const std::vector<std::unique_ptr<AnimationBase>> animations;
     const int numAnimations;
 
     int duration;

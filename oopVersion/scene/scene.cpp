@@ -81,16 +81,11 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
             }
         }
 
-        std::vector<std::unique_ptr<Animation>> normalTranslations;
+        std::vector<std::unique_ptr<AnimationBase>> normalTranslations;
         normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{  0,  100}, normalRectHavers, true, std::make_unique<EaseIn2Out2>()));
         normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{ 150,   0}, normalRectHavers, true, std::make_unique<EaseIn2Out2>()));
         normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{  0, -100}, normalRectHavers, true, std::make_unique<EaseIn2Out2>()));
         normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{-150,   0}, normalRectHavers, true, std::make_unique<EaseIn2Out2>()));
-
-        for (const std::unique_ptr<Animation>& animation : normalTranslations)
-        {
-            animation->setUpEvents(std::vector<TimedEvent>{TimedEvent{1000, Scene::translationCompleteEventName}});
-        }
 
         animationController.addAnimation(std::make_unique<AnimationChain>(std::move(normalTranslations)));
 
@@ -130,7 +125,7 @@ void Scene::setUp(EnemyController& enemyController, AnimationController& animati
                         animationController.addAnimation(std::make_unique<AnimationHealth>(1500, 100, *enemy.get()));
                     }
 
-                    std::vector<std::unique_ptr<Animation>> bossSizeAnimations;
+                    std::vector<std::unique_ptr<AnimationBase>> bossSizeAnimations;
                     bossSizeAnimations.emplace_back(new AnimationDeform(1500, Vector{bigRadius,bigRadius}, *enemy.get(), true, std::make_unique<EaseIn2Out2>()));
                     bossSizeAnimations.emplace_back(new AnimationDeform(1500, Vector{smallRadius,smallRadius}, *enemy.get(), true, std::make_unique<EaseIn2Out2>()));
                     animationController.addAnimation(std::make_unique<AnimationChain>(std::move(bossSizeAnimations)));

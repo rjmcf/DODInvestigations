@@ -1,11 +1,11 @@
 #include "animationChain.hpp"
 
-AnimationChain::AnimationChain(std::vector<std::unique_ptr<Animation>>&& inAnimations)
+AnimationChain::AnimationChain(std::vector<std::unique_ptr<AnimationBase>>&& inAnimations)
     : animations(std::move(inAnimations))
     , numAnimations(animations.size())
 {
     duration = 0;
-    for (const std::unique_ptr<Animation>& animation : animations)
+    for (const std::unique_ptr<AnimationBase>& animation : animations)
     {
         duration += animation->getDuration();
     }
@@ -19,7 +19,7 @@ void AnimationChain::update(int deltaTimeMs)
     }
 
     currentTimeInCurrentAnimation += deltaTimeMs;
-    const std::unique_ptr<Animation>* currentAnimation = &animations[currentAnimationIndex];
+    const std::unique_ptr<AnimationBase>* currentAnimation = &animations[currentAnimationIndex];
     (*currentAnimation)->update(deltaTimeMs);
 
     if ((*currentAnimation)->isComplete())
@@ -44,7 +44,7 @@ bool AnimationChain::isComplete() const
 
 bool AnimationChain::shouldReset() const 
 {
-    for (const std::unique_ptr<Animation>& animation : animations)
+    for (const std::unique_ptr<AnimationBase>& animation : animations)
     {
         if (!animation->shouldReset())
         {
@@ -71,7 +71,7 @@ int AnimationChain::getNumberOfTargets() const
 {
     int totalTargets = 0;
 
-    for (const std::unique_ptr<Animation>& animation : animations)
+    for (const std::unique_ptr<AnimationBase>& animation : animations)
     {
         totalTargets += animation->getNumberOfTargets();
     }
@@ -83,7 +83,7 @@ int AnimationChain::getNumberOfAnimatedProperties() const
 {
     int totalProperties = 0;
 
-    for (const std::unique_ptr<Animation>& animation : animations)
+    for (const std::unique_ptr<AnimationBase>& animation : animations)
     {
         totalProperties += animation->getNumberOfAnimatedProperties();
     }
