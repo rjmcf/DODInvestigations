@@ -7,9 +7,9 @@
 class AnimationModifyVector : public Animation
 {
 public:
-    AnimationModifyVector(int durationMs, const Vector& inFinal, VectorHaverInterface& inTarget, bool bInShouldReset = true, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
+    AnimationModifyVector(int durationMs, const Vector& inDifference, VectorHaverInterface& inTarget, bool bInShouldReset = true, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
         : Animation(durationMs, bInShouldReset, std::move(inEasingFunction))
-        , finalVector(inFinal)
+        , difference(inDifference)
         , target(inTarget)
     {}
 
@@ -21,7 +21,6 @@ private:
     virtual void setInitialValues()
     {
         initialVector = target.getVector();
-        difference = finalVector.add(initialVector.scale(-1));
     }
     
     virtual void reinstateInitialValues()
@@ -37,10 +36,9 @@ private:
         }
     }
 
-    const Vector finalVector;
+    const Vector difference;
 
     Vector initialVector;
-    Vector difference;
 
     VectorHaverInterface& target;
 };
