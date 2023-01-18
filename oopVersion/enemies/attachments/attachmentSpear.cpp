@@ -34,7 +34,9 @@ std::unique_ptr<AnimationBase> AttachmentSpear::attack()
 {
     std::vector<std::unique_ptr<AnimationBase>> animations;
     
-    std::unique_ptr<AnimationModifyVector> moveDown = std::make_unique<AnimationModifyVector>(100, Vector{0, 15}, *this, false);
+    std::unique_ptr<AnimationModifyVector> prepare  = std::make_unique<AnimationModifyVector>(200, Vector{0, -5}, *this, false);
+    animations.emplace_back(std::move(prepare));
+    std::unique_ptr<AnimationModifyVector> moveDown = std::make_unique<AnimationModifyVector>(100, Vector{0, 20}, *this, false);
     animations.emplace_back(std::move(moveDown));
     std::unique_ptr<AnimationModifyVector> moveUp   = std::make_unique<AnimationModifyVector>(400, Vector{0,-15}, *this, false);
     animations.emplace_back(std::move(moveUp));
