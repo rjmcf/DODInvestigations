@@ -3,11 +3,12 @@
 #include "colour.hpp"
 #include "eventManager.hpp"
 #include "scene/scene.hpp"
+#include "utils/globals.hpp"
 
 void BgColourEventListener::setUp(Colour* inColour)
 {
     bgColour = inColour;
-    EventManager::getInstance().listenToEvent(*this, Scene::translationCompleteEventName);
+    Globals::getEventManager().listenToEvent(*this, Scene::translationCompleteEventName);
 }
 
 void BgColourEventListener::onEventTriggered(const std::string& eventName)

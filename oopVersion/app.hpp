@@ -5,6 +5,7 @@
 #include "drawCall.hpp"
 #include "enemies/enemyController.hpp"
 #include "events/bgColourChangeEventListener.hpp"
+#include "events/eventManager.hpp"
 
 #include "programConfig.h"
 #if PROFILING
@@ -43,8 +44,9 @@ private:
     void loop();
     void update(int deltaTimeMs);
     void populateDrawCalls();
-    EnemyController enemyController;
     AnimationController animationController;
+    EnemyController enemyController;
+    EventManager eventManager;
     Colour bgColour{0,10,20,255};
     BgColourEventListener bgColourEventListener;
     SDL_Event windowEvent;

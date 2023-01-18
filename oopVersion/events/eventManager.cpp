@@ -4,8 +4,6 @@
 
 #include <algorithm>
 
-EventManager EventManager::instance;
-
 void EventManager::listenToEvent(EventListener& eventListener, const std::string& eventName)
 {
     std::vector<EventListener*>& registeredListeners = eventListeners.insert({eventName, {}}).first->second;

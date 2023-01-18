@@ -2,13 +2,11 @@
 
 #include <string>
 
-class AnimationController;
-class EnemyController;
-
 class Scene
 {
 public:
-    void setUp(EnemyController& enemyController, AnimationController& AnimationController);
+    void setUp();
 
     static const std::string translationCompleteEventName;
+    static const std::string enemyAttackEventName;
 };

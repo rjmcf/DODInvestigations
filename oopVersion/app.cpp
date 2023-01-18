@@ -1,6 +1,7 @@
 #include "app.hpp"
 
 #include "scene/scene.hpp"
+#include "utils/globals.hpp"
 
 #include "programConfig.h"
 #if PROFILING
@@ -54,8 +55,12 @@ bool Application::setup()
     TracyCZoneEnd(ctx);
 #endif // PROFILING
 
+    Globals::animationController = &animationController;
+    Globals::enemyController = &enemyController;
+    Globals::eventManager = &eventManager;
+
     Scene scene;
-    scene.setUp(enemyController, animationController);
+    scene.setUp();
 
     bgColourEventListener.setUp(&bgColour);
 

@@ -1,5 +1,7 @@
 #include "timedEventFirer.hpp"
 
+#include "utils/globals.hpp"
+
 void TimedEventFirer::setUpEvents(std::vector<TimedEvent>&& inEvents)
 {
     timedEvents.clear();
@@ -26,7 +28,7 @@ void TimedEventFirer::fireEventsForTime(int timeMs)
 
         if (timeMs >= event.event.timeToFireMs)
         {
-            EventManager::getInstance().triggerEvent(event.event.eventToFire);
+            Globals::getEventManager().triggerEvent(event.event.eventToFire);
             event.bFired = true;
         }
     }

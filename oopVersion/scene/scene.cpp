@@ -11,6 +11,7 @@
 #include "enemies/enemyBatch.hpp"
 #include "enemies/enemyController.hpp"
 #include "enemies/enemyWithHealth.hpp"
+#include "utils/globals.hpp"
 
 #include "programConfig.h"
 #if PROFILING
@@ -18,14 +19,17 @@
 #endif // PROFILING
 
 const std::string Scene::translationCompleteEventName = "TranslationComplete";
+const std::string Scene::enemyAttackEventName = "EnemyAttack";
 
-void Scene::setUp(EnemyController& enemyController, AnimationController& animationController)
+void Scene::setUp()
 {
 #if PROFILING
     ZoneScopedN("Scene set up");
 #endif // PROFILING
 
     const int duplicates = 200;
+    AnimationController& animationController = Globals::getAnimationController();
+    EnemyController& enemyController = Globals::getEnemyController();
 
     // Normal Enemies
     {
