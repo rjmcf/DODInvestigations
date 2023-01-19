@@ -3,7 +3,7 @@
 #include "animationLibraryEntry.hpp"
 #include "animations/animationController.hpp"
 #include "enemies/attachments/attachmentSpear.hpp"
-#include "utils/globals.hpp"
+#include "utils/world.hpp"
 
 #include <iostream>
 
@@ -31,8 +31,7 @@ void AnimationLibrary::startNamedAnimationFor(AnimatedObject& object, const std:
 {
     if (std::unique_ptr<AnimationBase> foundAnim = getNamedAnimationFor(object, animName))
     {
-        AnimationController& animController = Globals::getAnimationController();
-        animController.addAnimation(std::move(foundAnim));
+        World::getAnimationController().addAnimation(std::move(foundAnim));
     }
     else
     {

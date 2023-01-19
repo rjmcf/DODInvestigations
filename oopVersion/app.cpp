@@ -2,7 +2,7 @@
 
 #include "animations/animationLibrary/animationLibrary.hpp"
 #include "scene/scene.hpp"
-#include "utils/globals.hpp"
+#include "utils/world.hpp"
 
 #include "programConfig.h"
 #if PROFILING
@@ -16,6 +16,8 @@ const int WIDTH = 1600, HEIGHT = 900;
 
 Application::~Application()
 {
+    World::tearDown();
+
     SDL_DestroyRenderer(renderer);
     renderer = nullptr;
 
@@ -56,9 +58,7 @@ bool Application::setup()
     TracyCZoneEnd(ctx);
 #endif // PROFILING
 
-    Globals::animationController = &animationController;
-    Globals::enemyController = &enemyController;
-    Globals::eventManager = &eventManager;
+    World::setUp();
 
     AnimationLibrary::initialise();
 
@@ -185,22 +185,22 @@ void Application::update(int deltaTimeMs)
 
     if (bNeedPause)
     {
-        animationController.pauseAllAnimations();
+        World::getAnimationController().pauseAllAnimations();
         bNeedPause = false;
     }
     if (bNeedUnpause)
     {
-        animationController.unpauseAllAnimations();
+        World::getAnimationController().unpauseAllAnimations();
         bNeedUnpause = false;
     }
     if (bNeedKill)
     {
-        enemyController.killHalfEnemies();
+        World::getEnemyController().killHalfEnemies();
         bNeedKill = false;
     }
 
-    animationController.updateAllAnimations(deltaTimeMs);
-    enemyController.update(deltaTimeMs);
+    World::getAnimationController().updateAllAnimations(deltaTimeMs);
+    World::getEnemyController().update(deltaTimeMs);
 }
 
 void Application::populateDrawCalls()
@@ -209,7 +209,7 @@ void Application::populateDrawCalls()
     {
         drawCalls.emplace_back(std::make_unique<DrawCallBackground>(bgColour));
 
-        enemyController.drawAllEnemies(drawCalls);
+        World::getEnemyController().drawAllEnemies(drawCalls);
     }
 }
 

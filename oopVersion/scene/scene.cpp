@@ -11,7 +11,7 @@
 #include "enemies/enemyBatch.hpp"
 #include "enemies/enemyController.hpp"
 #include "enemies/enemyWithHealth.hpp"
-#include "utils/globals.hpp"
+#include "utils/world.hpp"
 
 #include "programConfig.h"
 #if PROFILING
@@ -28,8 +28,8 @@ void Scene::setUp()
 #endif // PROFILING
 
     const int duplicates = 200;
-    AnimationController& animationController = Globals::getAnimationController();
-    EnemyController& enemyController = Globals::getEnemyController();
+    AnimationController& animationController = World::getAnimationController();
+    EnemyController& enemyController = World::getEnemyController();
 
     // Normal Enemies
     {

@@ -44,9 +44,6 @@ private:
     void loop();
     void update(int deltaTimeMs);
     void populateDrawCalls();
-    AnimationController animationController;
-    EnemyController enemyController;
-    EventManager eventManager;
     Colour bgColour{0,10,20,255};
     BgColourEventListener bgColourEventListener;
     SDL_Event windowEvent;

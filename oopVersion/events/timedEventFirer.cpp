@@ -1,6 +1,6 @@
 #include "timedEventFirer.hpp"
 
-#include "utils/globals.hpp"
+#include "utils/world.hpp"
 
 void TimedEventFirer::setUpEvents(std::vector<TimedEvent>&& inEvents)
 {
@@ -28,7 +28,7 @@ void TimedEventFirer::fireEventsForTime(int timeMs)
 
         if (timeMs >= event.event.timeToFireMs)
         {
-            Globals::getEventManager().triggerEvent(event.event.eventToFire);
+            World::getEventManager().triggerEvent(event.event.eventToFire);
             event.bFired = true;
         }
     }
