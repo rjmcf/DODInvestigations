@@ -60,8 +60,6 @@ bool Application::setup()
 
     World::setUp();
 
-    AnimationLibrary::initialise();
-
     Scene scene;
     scene.setUp();
 

@@ -1,6 +1,7 @@
 #include "animationLibraryEntry.hpp"
 
 #include "animatedObject.hpp"
+#include "animationId.hpp"
 #include "animationLibrary.hpp"
 #include "animations/animationChain.hpp"
 #include "animations/animationModifyVector.hpp"
@@ -8,7 +9,7 @@
 
 #include <iostream>
 
-std::unique_ptr<AnimationBase> AnimationLibraryEntry_Spear::getNamedAnimation(AnimatedObject& object, const std::string& animName)
+std::unique_ptr<AnimationBase> AnimationLibraryEntry_Spear::getNamedAnimation(AnimatedObject& object, const AnimationId& animationId)
 {
     if (object.getAnimatedObjectId() != AttachmentSpear::name)
     {
@@ -18,20 +19,25 @@ std::unique_ptr<AnimationBase> AnimationLibraryEntry_Spear::getNamedAnimation(An
 
     AttachmentSpear& spear = static_cast<AttachmentSpear&>(object);
 
-    if (animName == AnimationLibrary::attackAnimName)
+    switch (animationId)
     {
-        std::vector<std::unique_ptr<AnimationBase>> animations;
-        
-        std::unique_ptr<AnimationModifyVector> prepare  = std::make_unique<AnimationModifyVector>(200, Vector{0, -5}, spear, false);
-        animations.emplace_back(std::move(prepare));
-        std::unique_ptr<AnimationModifyVector> moveDown = std::make_unique<AnimationModifyVector>(100, Vector{0, 20}, spear, false);
-        animations.emplace_back(std::move(moveDown));
-        std::unique_ptr<AnimationModifyVector> moveUp   = std::make_unique<AnimationModifyVector>(400, Vector{0,-15}, spear, false);
-        animations.emplace_back(std::move(moveUp));
+        case AnimationId::Attack:
+        {
+            std::vector<std::unique_ptr<AnimationBase>> animations;
+            
+            std::unique_ptr<AnimationModifyVector> prepare  = std::make_unique<AnimationModifyVector>(200, Vector{0, -5}, spear, false);
+            animations.emplace_back(std::move(prepare));
+            std::unique_ptr<AnimationModifyVector> moveDown = std::make_unique<AnimationModifyVector>(100, Vector{0, 20}, spear, false);
+            animations.emplace_back(std::move(moveDown));
+            std::unique_ptr<AnimationModifyVector> moveUp   = std::make_unique<AnimationModifyVector>(400, Vector{0,-15}, spear, false);
+            animations.emplace_back(std::move(moveUp));
 
-        return std::make_unique<AnimationChain>(std::move(animations));
+            return std::make_unique<AnimationChain>(std::move(animations));
+        }
+        default:
+        {
+            std::cerr << "AnimationLibraryEntry_Spear does not define an animation for id " << int(animationId) << "\n";
+            return nullptr;
+        }
     }
-
-    std::cerr << "AnimationLibraryEntry_Spear does not define an animation for " << animName << "\n";
-    return nullptr;
 }

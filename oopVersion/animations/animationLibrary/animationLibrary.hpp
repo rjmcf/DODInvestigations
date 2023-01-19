@@ -1,22 +1,23 @@
 #pragma once
 
+#include "animationLibraryEntry.hpp"
+
 #include <map>
 #include <memory>
 #include <string>
 
 class AnimatedObject;
 class AnimationBase;
-class AnimationLibraryEntry;
+enum class AnimationId;
 
 class AnimationLibrary
 {
 public:
-    static void initialise();
-    static std::unique_ptr<AnimationBase> getNamedAnimationFor(AnimatedObject& object, const std::string& animName);
-    static void startNamedAnimationFor(AnimatedObject& object, const std::string& animName);
+    AnimationLibrary();
 
-    static std::string attackAnimName;
+    std::unique_ptr<AnimationBase> getNamedAnimationFor(AnimatedObject& object, const AnimationId& animationId);
+    void startNamedAnimationFor(AnimatedObject& object, const AnimationId& animationId);
 
 private:
-    static std::map<std::string, std::unique_ptr<AnimationLibraryEntry>> library;
+    std::map<std::string, std::unique_ptr<AnimationLibraryEntry>> library;
 };

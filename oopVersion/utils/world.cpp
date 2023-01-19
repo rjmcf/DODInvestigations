@@ -1,6 +1,7 @@
 #include "world.hpp"
 
 #include "animations/animationController.hpp"
+#include "animations/animationLibrary/animationLibrary.hpp"
 #include "enemies/enemyController.hpp"
 #include "events/eventManager.hpp"
 
@@ -13,6 +14,7 @@ void World::setUp()
     instance = std::unique_ptr<World>(new World());
 
     instance->animationController = std::make_unique<AnimationController>();
+    instance->animationLibrary = std::make_unique<AnimationLibrary>();
     instance->enemyController = std::make_unique<EnemyController>();
     instance->eventManager = std::make_unique<EventManager>();
 }

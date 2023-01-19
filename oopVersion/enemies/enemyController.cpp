@@ -1,6 +1,7 @@
 #include "enemyController.hpp"
 
 #include "animations/animationController.hpp"
+#include "animations/animationLibrary/animationId.hpp"
 #include "animations/animationLibrary/animationLibrary.hpp"
 #include "attachments/attachmentSpear.hpp"
 #include "events/eventManager.hpp"
@@ -91,7 +92,7 @@ void EnemyController::enemyAttack() const
 {
     for (AttachmentSpear* spear : allSpears)
     {
-        AnimationLibrary::startNamedAnimationFor(*spear, AnimationLibrary::attackAnimName);
+        World::getAnimationLibrary().startNamedAnimationFor(*spear, AnimationId::Attack);
     }
 }
 

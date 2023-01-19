@@ -5,15 +5,16 @@
 
 class AnimatedObject;
 class AnimationBase;
+enum class AnimationId;
 
 class AnimationLibraryEntry
 {
 public:
-    virtual std::unique_ptr<AnimationBase> getNamedAnimation(AnimatedObject& object, const std::string& animName) = 0;
+    virtual std::unique_ptr<AnimationBase> getNamedAnimation(AnimatedObject& object, const AnimationId& animationId) = 0;
 };
 
 class AnimationLibraryEntry_Spear : public AnimationLibraryEntry
 {
 public:
-    virtual std::unique_ptr<AnimationBase> getNamedAnimation(AnimatedObject& object, const std::string& animName) override;
+    virtual std::unique_ptr<AnimationBase> getNamedAnimation(AnimatedObject& object, const AnimationId& animationId) override;
 };

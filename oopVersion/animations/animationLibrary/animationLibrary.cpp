@@ -1,21 +1,18 @@
 #include "animationLibrary.hpp"
 
-#include "animationLibraryEntry.hpp"
+#include "animationId.hpp"
 #include "animations/animationController.hpp"
 #include "enemies/attachments/attachmentSpear.hpp"
 #include "utils/world.hpp"
 
 #include <iostream>
 
-std::map<std::string, std::unique_ptr<AnimationLibraryEntry>> AnimationLibrary::library;
-std::string AnimationLibrary::attackAnimName = "Attack";
-
-void AnimationLibrary::initialise()
+AnimationLibrary::AnimationLibrary()
 {
     library.emplace(AttachmentSpear::name, std::make_unique<AnimationLibraryEntry_Spear>());
 }
 
-std::unique_ptr<AnimationBase> AnimationLibrary::getNamedAnimationFor(AnimatedObject& object, const std::string& animName)
+std::unique_ptr<AnimationBase> AnimationLibrary::getNamedAnimationFor(AnimatedObject& object, const AnimationId& animationId)
 {
     auto it = library.find(object.getAnimatedObjectId());
     if (it == library.end())
@@ -24,17 +21,17 @@ std::unique_ptr<AnimationBase> AnimationLibrary::getNamedAnimationFor(AnimatedOb
         return nullptr;
     }
 
-    return it->second->getNamedAnimation(object, animName);
+    return it->second->getNamedAnimation(object, animationId);
 }
 
-void AnimationLibrary::startNamedAnimationFor(AnimatedObject& object, const std::string& animName)
+void AnimationLibrary::startNamedAnimationFor(AnimatedObject& object, const AnimationId& animationId)
 {
-    if (std::unique_ptr<AnimationBase> foundAnim = getNamedAnimationFor(object, animName))
+    if (std::unique_ptr<AnimationBase> foundAnim = getNamedAnimationFor(object, animationId))
     {
         World::getAnimationController().addAnimation(std::move(foundAnim));
     }
     else
     {
-        std::cerr << "Could not start animation: " << animName << " for " << object.getAnimatedObjectId() << "\n";
+        std::cerr << "Could not start animation with id: " << int(animationId) << " for " << object.getAnimatedObjectId() << "\n";
     }
 }
