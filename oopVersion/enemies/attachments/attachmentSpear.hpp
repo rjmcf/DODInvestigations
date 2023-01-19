@@ -2,12 +2,13 @@
 
 #include "attachmentBase.hpp"
 
-#include "animations/animationBase.hpp"
+#include "animations/animationLibrary/animatedObject.hpp"
 #include "interfaces/vectorHaverInterface.hpp"
 
 #include <memory>
+#include <string>
 
-class AttachmentSpear : public AttachmentBase, public VectorHaverInterface
+class AttachmentSpear : public AttachmentBase, public VectorHaverInterface, public AnimatedObject
 {
 public:
     AttachmentSpear();
@@ -23,7 +24,7 @@ public:
     virtual bool shouldAnimateVector() const override { return true; }
     // ~End VectorHaverInterface
 
-    std::unique_ptr<AnimationBase> attack();
+    static std::string name;
 
 private:
     SDL_Rect spearHead;

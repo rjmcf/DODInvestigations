@@ -1,6 +1,7 @@
 #include "enemyController.hpp"
 
 #include "animations/animationController.hpp"
+#include "animations/animationLibrary/animationLibrary.hpp"
 #include "attachments/attachmentSpear.hpp"
 #include "events/eventManager.hpp"
 #include "scene/scene.hpp"
@@ -88,13 +89,9 @@ void EnemyController::killHalfEnemies()
 
 void EnemyController::enemyAttack() const
 {
-    AnimationController& animationController = Globals::getAnimationController();
     for (AttachmentSpear* spear : allSpears)
     {
-        if (spear)
-        {
-            animationController.addAnimation(spear->attack());
-        }
+        AnimationLibrary::startNamedAnimationFor(*spear, AnimationLibrary::attackAnimName);
     }
 }
 

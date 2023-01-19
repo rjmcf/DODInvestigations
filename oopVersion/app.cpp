@@ -1,5 +1,6 @@
 #include "app.hpp"
 
+#include "animations/animationLibrary/animationLibrary.hpp"
 #include "scene/scene.hpp"
 #include "utils/globals.hpp"
 
@@ -58,6 +59,8 @@ bool Application::setup()
     Globals::animationController = &animationController;
     Globals::enemyController = &enemyController;
     Globals::eventManager = &eventManager;
+
+    AnimationLibrary::initialise();
 
     Scene scene;
     scene.setUp();
