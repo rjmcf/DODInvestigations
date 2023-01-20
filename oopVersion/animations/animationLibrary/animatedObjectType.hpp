@@ -2,6 +2,7 @@
 
 enum class AnimatedObjectType
 {
+    Knife,
     Shield,
     Spear
 };

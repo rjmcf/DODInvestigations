@@ -9,7 +9,8 @@
 
 AnimationLibrary::AnimationLibrary()
 {
-    library.emplace(AnimatedObjectType::Spear, std::make_unique<AnimationLibraryEntry_Spear>());
+    library.emplace(AnimatedObjectType::Knife,  std::make_unique<AnimationLibraryEntry_Knife>());
+    library.emplace(AnimatedObjectType::Spear,  std::make_unique<AnimationLibraryEntry_Spear>());
     library.emplace(AnimatedObjectType::Shield, std::make_unique<AnimationLibraryEntry_Shield>());
 }
 

@@ -38,3 +38,12 @@ public:
 private:
     virtual AnimatedObjectType getExpectedObjectType() const override;
 };
+
+class AnimationLibraryEntry_Knife : public AnimationLibraryEntry
+{
+public:
+    virtual std::vector<std::unique_ptr<AnimationBase>> getAnimationsForName(AnimatedObject& object, const AnimationId& animationId) override;
+
+private:
+    virtual AnimatedObjectType getExpectedObjectType() const override;
+};

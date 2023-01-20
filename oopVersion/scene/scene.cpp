@@ -6,6 +6,7 @@
 #include "animations/animationHealth.hpp"
 #include "animations/animationTranslate.hpp"
 #include "animations/animationController.hpp"
+#include "enemies/attachments/attachmentKnife.hpp"
 #include "enemies/attachments/attachmentShield.hpp"
 #include "enemies/attachments/attachmentSpear.hpp"
 #include "enemies/enemyBatch.hpp"
@@ -37,9 +38,10 @@ void Scene::setUp()
         const int initialY = 130;
         const int radius = 15;
         const int buffer = 2*radius + 15;
+        const Vector knifeOffset{16,12};
         const Vector shieldSize{10,12};
         const Vector shieldOffset{6,6};
-        const Vector spearOffset{-18,15};
+        const Vector spearOffset{-17,15};
 
         int tracker = 0;
         for (int column = 0; column < 30; column++)
@@ -71,6 +73,12 @@ void Scene::setUp()
                     {
                         std::unique_ptr<AttachmentShield> shield = std::make_unique<AttachmentShield>(shieldSize);
                         enemy->attach(std::move(shield), shieldOffset);
+                    }
+
+                    if (tracker % 6 == 4 || tracker % 6 == 5)
+                    {
+                        std::unique_ptr<AttachmentKnife> knife = std::make_unique<AttachmentKnife>();
+                        enemy->attach(std::move(knife), knifeOffset);
                     }
 
                     if (tracker % 3 == 2)

@@ -25,6 +25,7 @@ bool AnimationLibraryEntry::checkObjectIsValid(const AnimatedObject& object)
     return true;
 }
 
+// Spear
 AnimatedObjectType AnimationLibraryEntry_Spear::getExpectedObjectType() const
 {
     return AnimatedObjectType::Spear;
@@ -61,6 +62,7 @@ std::vector<std::unique_ptr<AnimationBase>> AnimationLibraryEntry_Spear::getAnim
     }
 }
 
+// Shield
 AnimatedObjectType AnimationLibraryEntry_Shield::getExpectedObjectType() const
 {
     return AnimatedObjectType::Shield;
@@ -101,6 +103,45 @@ std::vector<std::unique_ptr<AnimationBase>> AnimationLibraryEntry_Shield::getAni
             results.emplace_back(std::make_unique<AnimationChain>(std::move(sizeAnimations)));
             results.emplace_back(std::make_unique<AnimationChain>(std::move(positionAnimations)));
             return results;
+        }
+        default:
+            return {};
+    }
+}
+
+// Knife
+AnimatedObjectType AnimationLibraryEntry_Knife::getExpectedObjectType() const
+{
+    return AnimatedObjectType::Knife;
+}
+
+std::vector<std::unique_ptr<AnimationBase>> AnimationLibraryEntry_Knife::getAnimationsForName(AnimatedObject& object, const AnimationId& animationId)
+{
+    if (!checkObjectIsValid(object))
+    {
+        return {};
+    }
+
+    VectorHaverInterface& knife = dynamic_cast<VectorHaverInterface&>(object);
+
+    switch (animationId)
+    {
+        case AnimationId::Attack:
+        {
+            std::vector<std::unique_ptr<AnimationBase>> animations;
+            
+            std::unique_ptr<AnimationModifyVector> moveDown1 = std::make_unique<AnimationModifyVector>(150, Vector{0, 15}, knife, false);
+            animations.emplace_back(std::move(moveDown1));
+            std::unique_ptr<AnimationModifyVector> moveUp1   = std::make_unique<AnimationModifyVector>(150, Vector{0,-15}, knife, false);
+            animations.emplace_back(std::move(moveUp1));
+            std::unique_ptr<AnimationModifyVector> moveDown2 = std::make_unique<AnimationModifyVector>(150, Vector{0, 15}, knife, false);
+            animations.emplace_back(std::move(moveDown2));
+            std::unique_ptr<AnimationModifyVector> moveUp2   = std::make_unique<AnimationModifyVector>(150, Vector{0,-15}, knife, false);
+            animations.emplace_back(std::move(moveUp2));
+
+            std::vector<std::unique_ptr<AnimationBase>> result;
+            result.emplace_back(std::make_unique<AnimationChain>(std::move(animations)));
+            return result;
         }
         default:
             return {};
