@@ -10,6 +10,7 @@ class EventManager;
 class World
 {
 public:
+    ~World();
     static void setUp();
     static void tearDown();
 

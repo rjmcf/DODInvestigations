@@ -1,12 +1,18 @@
 #include "attachmentKnife.hpp"
 
+#include "animations/animatedObjectType.hpp"
+#include "drawCall.hpp"
 #include "utils/drawingUtils.hpp"
 
 AttachmentKnife::AttachmentKnife()
-    : AnimatedObject(AnimatedObjectType::Knife)
 {
     knifeBlade.w = 3;
     knifeBlade.h = 6;
+}
+
+AnimatedObjectType AttachmentKnife::getAnimatedObjectType() const
+{
+    return AnimatedObjectType::Knife;
 }
 
 void AttachmentKnife::update(int deltaTimeMs)

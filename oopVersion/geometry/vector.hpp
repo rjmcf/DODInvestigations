@@ -17,14 +17,14 @@ struct Vector
         return Vector{x + other.x, y + other.y};
     }
 
-    double mag() const
+    float mag() const
     {
         return sqrt(x*x + y*y);
     }
 
     void normalise()
     {
-        double theMag = mag();
+        float theMag = mag();
         if (theMag < 0.1)
         {
             return;

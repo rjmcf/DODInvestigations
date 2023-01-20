@@ -1,17 +1,19 @@
 #pragma once
 
+#include "animations/animatedObject.hpp"
 #include "attachmentBase.hpp"
-
-#include "animations/animationLibrary/animatedObject.hpp"
 #include "interfaces/vectorHaverInterface.hpp"
 
-#include <memory>
-#include <string>
+#include <SDL.h>
 
-class AttachmentKnife : public AttachmentBase, public VectorHaverInterface, public AnimatedObject
+class AttachmentKnife : public AnimatedObject, public AttachmentBase, public VectorHaverInterface
 {
 public:
     AttachmentKnife();
+
+    // ~Begin AnimatedObject
+    virtual AnimatedObjectType getAnimatedObjectType() const override;
+    // ~End AnimatedObject
 
     // ~Begin AttachmentBase
     virtual void update(int deltaTimeMs) override;

@@ -1,15 +1,16 @@
 #include "animationLibraryEntry.hpp"
 
 #include "animatedObject.hpp"
+#include "animatedObjectType.hpp"
 #include "animationId.hpp"
-#include "animationLibrary.hpp"
 #include "animations/animationChain.hpp"
 #include "animations/animationDeform.hpp"
 #include "animations/animationModifyVector.hpp"
 #include "animations/animationTranslate.hpp"
-#include "geometry/vector.hpp"
 #include "interfaces/rectHaverInterface.hpp"
 #include "interfaces/vectorHaverInterface.hpp"
+
+#include <SDL.h>
 
 #include <iostream>
 

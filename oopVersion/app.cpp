@@ -1,6 +1,7 @@
 #include "app.hpp"
 
-#include "animations/animationLibrary/animationLibrary.hpp"
+#include "animations/animationController.hpp"
+#include "enemies/enemyController.hpp"
 #include "scene/scene.hpp"
 #include "utils/world.hpp"
 

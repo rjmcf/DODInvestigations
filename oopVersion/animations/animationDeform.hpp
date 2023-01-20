@@ -1,53 +1,28 @@
 #pragma once
 
 #include "animation.hpp"
-#include "geometry/vector.hpp"
-#include "interfaces/rectHaverInterface.hpp"
 
-#include <SDL.h>
+#include "geometry/vector.hpp"
+
+class RectHaverInterface;
 
 class AnimationDeform : public Animation
 {
 public:
-    AnimationDeform(int durationMs, const Vector& inFinalSize, RectHaverInterface& inTarget, bool bInShouldReset = true, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
-        : Animation(durationMs, bInShouldReset, std::move(inEasingFunction))
-        , finalSize(inFinalSize)
-        , target(inTarget)
-    {}
+    AnimationDeform(int durationMs, const Vector& inFinalSize, RectHaverInterface& inTarget, bool bInShouldReset = true, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr);
 
-    virtual bool shouldReset() const override { return bShouldReset && target.shouldAnimateRect(); }
+    // ~Begin Animation
+    virtual bool shouldReset() const override;
     virtual int getNumberOfTargets() const override { return 1; }
     virtual int getNumberOfAnimatedProperties() const override { return 2; }
+    // ~End Animation
 
 private:
-    virtual void setInitialValues() override
-    {
-        initialSize = Vector{float(target.getRect().w), float(target.getRect().h)};
-        difference = finalSize.add(initialSize.scale(-1));
-    }
-    
-    virtual void reinstateInitialValues() override
-    {
-        SDL_Rect currentRect = target.getRect();
-        currentRect.w = static_cast<int>(initialSize.x);
-        currentRect.h = static_cast<int>(initialSize.y);
-        target.setRect(currentRect);
-    }
-
-    virtual void interpolate(float fraction) override
-    {
-        if (!target.shouldAnimateRect())
-        {
-            return;
-        }
-
-        const Vector scaledDifference = difference.scale(fraction);
-        const Vector currentSize = initialSize.add(scaledDifference);
-        SDL_Rect currentRect = target.getRect();
-        currentRect.w = static_cast<int>(currentSize.x);
-        currentRect.h = static_cast<int>(currentSize.y);
-        target.setRect(currentRect);
-    }
+    // ~Begin Animation
+    virtual void setInitialValues() override;
+    virtual void reinstateInitialValues() override;
+    virtual void interpolate(float fraction) override;
+    // ~End Animation
 
     const Vector finalSize;
 

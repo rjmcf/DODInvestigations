@@ -1,5 +1,7 @@
 #include "enemyWithHealth.hpp"
 
+#include "drawCall.hpp"
+
 EnemyWithHealth::EnemyWithHealth(int x, int y, int w, int h, const Colour& inColour, float inMaxHealth)
     : Enemy(x,y, w,h, inColour)
     , maxHealth(inMaxHealth)

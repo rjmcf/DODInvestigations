@@ -1,9 +1,7 @@
 #pragma once
 
-#include "eventManager.hpp"
 #include "eventType.hpp"
 
-#include <string>
 #include <vector>
 
 struct TimedEvent

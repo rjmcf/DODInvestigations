@@ -1,8 +1,9 @@
 #pragma once
 
 #include "animationBase.hpp"
-#include "easing/easingFunction.hpp"
 #include "events/timedEventFirer.hpp"
+
+#include "easing/easingFunction.hpp"
 
 #include <memory>
 
@@ -11,13 +12,14 @@ class Animation : public AnimationBase, public TimedEventFirer
 public:
     // Duration in ms
     Animation(int durationMs, bool bInShouldReset = true, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr);
+    virtual ~Animation();
 
+    // ~Begin AnimationBase
     virtual void update(int deltaTimeMs) override;
-
     virtual int getDuration() const override { return duration; }
     virtual bool isComplete() const override { return currentTime >= duration; }
-
     virtual void reset() override;
+    // ~End AnimationBase
 
 protected:
     const bool bShouldReset = true;

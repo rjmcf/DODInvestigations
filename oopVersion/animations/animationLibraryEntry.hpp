@@ -1,7 +1,6 @@
 #pragma once
 
 #include <memory>
-#include <string>
 #include <vector>
 
 class AnimatedObject;
@@ -12,6 +11,7 @@ enum class AnimatedObjectType;
 class AnimationLibraryEntry
 {
 public:
+    virtual ~AnimationLibraryEntry() = default;
     virtual std::vector<std::unique_ptr<AnimationBase>> getAnimationsForName(AnimatedObject& object, const AnimationId& animationId) = 0;
 
 protected:
@@ -23,27 +23,33 @@ private:
 
 class AnimationLibraryEntry_Spear : public AnimationLibraryEntry
 {
+    // ~Begin AnimationLibraryEntry
 public:
     virtual std::vector<std::unique_ptr<AnimationBase>> getAnimationsForName(AnimatedObject& object, const AnimationId& animationId) override;
 
 private:
     virtual AnimatedObjectType getExpectedObjectType() const override;
+    // ~End AnimationLibraryEntry
 };
 
 class AnimationLibraryEntry_Shield : public AnimationLibraryEntry
 {
+    // ~Begin AnimationLibraryEntry
 public:
     virtual std::vector<std::unique_ptr<AnimationBase>> getAnimationsForName(AnimatedObject& object, const AnimationId& animationId) override;
 
 private:
     virtual AnimatedObjectType getExpectedObjectType() const override;
+    // ~End AnimationLibraryEntry
 };
 
 class AnimationLibraryEntry_Knife : public AnimationLibraryEntry
 {
+    // ~Begin AnimationLibraryEntry
 public:
     virtual std::vector<std::unique_ptr<AnimationBase>> getAnimationsForName(AnimatedObject& object, const AnimationId& animationId) override;
 
 private:
     virtual AnimatedObjectType getExpectedObjectType() const override;
+    // ~End AnimationLibraryEntry
 };

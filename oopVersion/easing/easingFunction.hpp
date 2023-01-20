@@ -3,6 +3,7 @@
 class EasingFunction
 {
 public:
+    virtual ~EasingFunction() = default;
     virtual float ease(float t) = 0;
 };
 

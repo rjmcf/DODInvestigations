@@ -1,13 +1,15 @@
 #include "world.hpp"
 
 #include "animations/animationController.hpp"
-#include "animations/animationLibrary/animationLibrary.hpp"
+#include "animations/animationLibrary.hpp"
 #include "enemies/enemyController.hpp"
 #include "events/eventManager.hpp"
 
 #include <iostream>
 
 std::unique_ptr<World> World::instance;
+
+World::~World() = default;
 
 void World::setUp()
 {

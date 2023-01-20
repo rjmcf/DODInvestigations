@@ -1,11 +1,8 @@
 #pragma once
 
-#include "animations/animationController.hpp"
 #include "colour.hpp"
 #include "drawCall.hpp"
-#include "enemies/enemyController.hpp"
 #include "events/bgColourChangeEventListener.hpp"
-#include "events/eventManager.hpp"
 
 #include "programConfig.h"
 #if PROFILING
@@ -17,13 +14,14 @@
 #include <condition_variable>
 #include <mutex>
 #include <thread>
+#include <vector>
 
 class Enemy;
 
 class Application
 {
 public:
-   ~Application();
+    ~Application();
 
     bool setup();
     void start();

@@ -1,20 +1,22 @@
 #pragma once
 
 #include "animatedObjectType.hpp"
-#include "animationLibraryEntry.hpp"
+
+#include "animations/animationBase.hpp"
 
 #include <map>
 #include <memory>
-#include <string>
+#include <vector>
 
 class AnimatedObject;
-class AnimationBase;
+class AnimationLibraryEntry;
 enum class AnimationId;
 
 class AnimationLibrary
 {
 public:
     AnimationLibrary();
+    ~AnimationLibrary();
 
     std::vector<std::unique_ptr<AnimationBase>> getAnimationsForName(AnimatedObject& object, const AnimationId& animationId);
     void startNamedAnimationFor(AnimatedObject& object, const AnimationId& animationId);

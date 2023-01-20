@@ -2,7 +2,6 @@
 
 #include "colour.hpp"
 #include "eventManager.hpp"
-#include "scene/scene.hpp"
 #include "utils/world.hpp"
 
 void BgColourEventListener::setUp(Colour* inColour)

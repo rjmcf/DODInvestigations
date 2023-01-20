@@ -1,7 +1,5 @@
 #pragma once
 
-#include <string>
-
 enum class EventType;
 
 class EventListener

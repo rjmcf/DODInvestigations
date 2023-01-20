@@ -1,10 +1,9 @@
 #pragma once
 
-#include "drawCall.hpp"
-#include "enemyBatch.hpp"
 #include "events/eventListener.hpp"
 
-#include <memory>
+#include "enemyBatch.hpp"
+
 #include <vector>
 
 class AttachmentSpear;

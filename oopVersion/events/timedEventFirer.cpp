@@ -1,5 +1,6 @@
 #include "timedEventFirer.hpp"
 
+#include "eventManager.hpp"
 #include "utils/world.hpp"
 
 void TimedEventFirer::setUpEvents(std::vector<TimedEvent>&& inEvents)

@@ -1,5 +1,21 @@
 #include "enemyBatch.hpp"
 
+#include "drawCall.hpp"
+#include "enemy.hpp"
+
+EnemyBatch::EnemyBatch(EnemyBatch&& other)
+{
+    allEnemies = std::move(other.allEnemies);
+    bIsAlive = other.bIsAlive;
+}
+
+EnemyBatch::~EnemyBatch() = default;
+
+void EnemyBatch::setEnemies(std::vector<std::unique_ptr<Enemy>>&& inEnemies)
+{
+    allEnemies = std::move(inEnemies);
+}
+
 void EnemyBatch::update(int deltaTimeMs) const
 {
     for (const std::unique_ptr<Enemy>& enemyPtr : allEnemies)

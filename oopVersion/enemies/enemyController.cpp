@@ -1,9 +1,10 @@
 #include "enemyController.hpp"
 
 #include "animations/animationController.hpp"
-#include "animations/animationLibrary/animationId.hpp"
-#include "animations/animationLibrary/animationLibrary.hpp"
+#include "animations/animationId.hpp"
+#include "animations/animationLibrary.hpp"
 #include "attachments/attachmentSpear.hpp"
+#include "drawCall.hpp"
 #include "events/eventManager.hpp"
 #include "scene/scene.hpp"
 #include "utils/world.hpp"
@@ -23,7 +24,10 @@ EnemyController::EnemyController(EventManager& eventManager)
 
 void EnemyController::addEnemies(std::vector<EnemyBatch>&& newEnemyBatches)
 {
-    allEnemyBatches.insert(allEnemyBatches.end(), std::make_move_iterator(newEnemyBatches.begin()), std::make_move_iterator(newEnemyBatches.end()));
+    for (EnemyBatch& batch : newEnemyBatches)
+    {
+        allEnemyBatches.emplace_back(std::move(batch));
+    }
 }
 
 void EnemyController::update(int deltaTimeMs) const

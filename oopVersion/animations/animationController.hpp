@@ -1,16 +1,17 @@
 #pragma once
 
-#include "animationBase.hpp"
-
 #include <memory>
 #include <vector>
 
 class AnimatedObject;
+class AnimationBase;
 enum class AnimationId;
 
 class AnimationController
 {
 public:
+    ~AnimationController();
+    
     void addAnimation(std::unique_ptr<AnimationBase>&& newAnimation);
     void addAnimations(std::vector<std::unique_ptr<AnimationBase>>&& newAnimations);
     void updateAllAnimations(int deltaTimeMs);

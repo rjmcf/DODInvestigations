@@ -3,6 +3,8 @@
 class AnimationBase
 {
 public:
+    virtual ~AnimationBase() = default;
+    
     virtual void update(int deltaTimeMs) = 0;
 
     virtual int getDuration() const = 0;

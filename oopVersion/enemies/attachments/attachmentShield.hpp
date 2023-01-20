@@ -1,17 +1,19 @@
 #pragma once
 
-#include "animations/animationLibrary/animatedObject.hpp"
+#include "animations/animatedObject.hpp"
 #include "attachmentBase.hpp"
-#include "drawCall.hpp"
 #include "interfaces/rectHaverInterface.hpp"
 
 #include <SDL.h>
-#include <vector>
 
-class AttachmentShield : public AttachmentBase, public RectHaverInterface, public AnimatedObject
+class AttachmentShield : public AnimatedObject, public AttachmentBase, public RectHaverInterface
 {
 public:
     AttachmentShield(const Vector& size);
+
+    // ~Begin AnimatedObject
+    virtual AnimatedObjectType getAnimatedObjectType() const override;
+    // ~End AnimatedObject
 
     // ~Begin AttachmentBase
     virtual void update(int deltaTimeMs) override;

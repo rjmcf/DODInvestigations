@@ -1,6 +1,7 @@
 #include "animationController.hpp"
 
-#include "animationLibrary/animationLibrary.hpp"
+#include "animationBase.hpp"
+#include "animationLibrary.hpp"
 #include "utils/world.hpp"
 
 #include "programConfig.h"
@@ -13,6 +14,9 @@
 #include <iostream>
 
 class AnimatedObject;
+
+AnimationController::~AnimationController()
+{}
 
 void AnimationController::addAnimation(std::unique_ptr<AnimationBase>&& newAnimation)
 {

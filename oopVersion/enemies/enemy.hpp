@@ -1,23 +1,25 @@
 #pragma once
 
-#include "attachments/attachmentBase.hpp"
-#include "colour.hpp"
-#include "drawCall.hpp"
 #include "interfaces/colourHaverInterface.hpp"
 #include "interfaces/rectHaverInterface.hpp"
+
+#include "colour.hpp"
 #include "geometry/vector.hpp"
-#include "utils/drawingUtils.hpp"
 
 #include <SDL.h>
 
 #include <vector>
 #include <memory>
 
+class AttachmentBase;
+class DrawCall;
+
 class Enemy : public RectHaverInterface, public ColourHaverInterface
 {
 public:
     // x and y define the centre, w and h are the "radius"
     Enemy(int x, int y, int w, int h, const Colour& inColour);
+    virtual ~Enemy();
 
     virtual void update(int deltaTimeMs);
     virtual void draw(std::vector<std::unique_ptr<const DrawCall>>& drawCalls) const;
@@ -43,7 +45,7 @@ protected:
     SDL_Rect rect;
     Colour colour;
 
-    SDL_Rect getBodyRect() const { return DrawingUtils::convertCentredRectToDrawRect(rect); }
+    SDL_Rect getBodyRect() const;
     static SDL_Rect getScleraRect(const SDL_Rect& bodyRect);
     static SDL_Rect getPupilRect(const SDL_Rect& scleraRect);
 

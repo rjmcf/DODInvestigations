@@ -1,40 +1,26 @@
 #pragma once
 
 #include "animation.hpp"
-#include "interfaces/healthHaverInterface.hpp"
+
+class HealthHaverInterface;
 
 class AnimationHealth : public Animation
 {
 public:
-    AnimationHealth(int durationMs, int inFinal, HealthHaverInterface& inTarget, bool bInShouldReset = true, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
-        : Animation(durationMs, bInShouldReset, std::move(inEasingFunction))
-        , finalHealth(inFinal)
-        , target(inTarget)
-    {}
+    AnimationHealth(int durationMs, int inFinal, HealthHaverInterface& inTarget, bool bInShouldReset = true, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr);
 
-    virtual bool shouldReset() const override { return bShouldReset && target.shouldAnimateHealth(); }
+    // ~Begin Animation
+    virtual bool shouldReset() const override;
     virtual int getNumberOfTargets() const override { return 1; }
     virtual int getNumberOfAnimatedProperties() const override { return 1; }
+    // ~End Animation
 
 private:
-    virtual void setInitialValues()
-    {
-        initialHealth = target.getHealth();
-        difference = finalHealth - initialHealth;
-    }
-    
-    virtual void reinstateInitialValues()
-    {
-        target.setHealth(initialHealth);
-    }
-
-    virtual void interpolate(float fraction) override
-    {
-        if (target.shouldAnimateHealth())
-        {
-            target.setHealth(initialHealth + (difference) * fraction);
-        }
-    }
+    // ~Begin Animation
+    virtual void setInitialValues() override;
+    virtual void reinstateInitialValues() override;
+    virtual void interpolate(float fraction) override;
+    // ~End Animation
 
     const int finalHealth;
 

@@ -1,12 +1,18 @@
 #include "attachmentShield.hpp"
 
+#include "animations/animatedObjectType.hpp"
+#include "drawCall.hpp"
 #include "utils/drawingUtils.hpp"
 
 AttachmentShield::AttachmentShield(const Vector& size)
-    : AnimatedObject(AnimatedObjectType::Shield)
 {
     rect.w = size.x;
     rect.h = size.y;
+}
+
+AnimatedObjectType AttachmentShield::getAnimatedObjectType() const
+{
+    return AnimatedObjectType::Shield;
 }
 
 void AttachmentShield::update(int deltaTimeMs)

@@ -1,6 +1,9 @@
 #include "enemy.hpp"
 
+#include "attachments/attachmentBase.hpp"
+#include "drawCall.hpp"
 #include "geometry/point.hpp"
+#include "utils/drawingUtils.hpp"
 
 #include <cmath>
 #include <initializer_list>
@@ -11,6 +14,8 @@ Enemy::Enemy(int x, int y, int w, int h, const Colour& inColour)
     : rect{x,y, w,h}
     , colour(inColour)
 {}
+
+Enemy::~Enemy() = default;
 
 void Enemy::attach(std::unique_ptr<AttachmentBase>&& attachment, const Vector& offset)
 {
@@ -76,6 +81,11 @@ void Enemy::draw(std::vector<std::unique_ptr<const DrawCall>>& drawCalls) const
 void Enemy::drawBody(std::vector<std::unique_ptr<const DrawCall>>& drawCalls) const
 {
     drawCalls.emplace_back(std::make_unique<const DrawCallFilledRect>(getBodyRect(), bAlive ? colour : Colour{100, 150, 100, 255}));
+}
+
+SDL_Rect Enemy::getBodyRect() const 
+{ 
+    return DrawingUtils::convertCentredRectToDrawRect(rect); 
 }
 
 SDL_Rect Enemy::getScleraRect(const SDL_Rect& bodyRect)

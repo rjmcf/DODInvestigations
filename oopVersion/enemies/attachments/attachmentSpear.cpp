@@ -1,14 +1,18 @@
 #include "attachmentSpear.hpp"
 
-#include "animations/animationChain.hpp"
-#include "animations/animationModifyVector.hpp"
+#include "animations/animatedObjectType.hpp"
+#include "drawCall.hpp"
 #include "utils/drawingUtils.hpp"
 
 AttachmentSpear::AttachmentSpear()
-    : AnimatedObject(AnimatedObjectType::Spear)
 {
     spearHead.w = 5;
     spearHead.h = 5;
+}
+
+AnimatedObjectType AttachmentSpear::getAnimatedObjectType() const
+{
+    return AnimatedObjectType::Spear;
 }
 
 void AttachmentSpear::update(int deltaTimeMs)

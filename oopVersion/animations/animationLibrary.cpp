@@ -1,8 +1,9 @@
 #include "animationLibrary.hpp"
 
+#include "animatedObject.hpp"
 #include "animationId.hpp"
+#include "animationLibraryEntry.hpp"
 #include "animations/animationController.hpp"
-#include "enemies/attachments/attachmentSpear.hpp"
 #include "utils/world.hpp"
 
 #include <iostream>
@@ -13,6 +14,8 @@ AnimationLibrary::AnimationLibrary()
     library.emplace(AnimatedObjectType::Spear,  std::make_unique<AnimationLibraryEntry_Spear>());
     library.emplace(AnimatedObjectType::Shield, std::make_unique<AnimationLibraryEntry_Shield>());
 }
+
+AnimationLibrary::~AnimationLibrary() = default;
 
 std::vector<std::unique_ptr<AnimationBase>> AnimationLibrary::getAnimationsForName(AnimatedObject& object, const AnimationId& animationId)
 {

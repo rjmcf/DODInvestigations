@@ -1,7 +1,6 @@
 #include "animation.hpp"
 
-#include <algorithm>
-#include <SDL.h>
+#include "easing/easingFunction.hpp"
 
 Animation::Animation(int durationMs, bool bInShouldReset, std::unique_ptr<EasingFunction>&& inEasingFunction)
     : bShouldReset(bInShouldReset)
@@ -9,6 +8,8 @@ Animation::Animation(int durationMs, bool bInShouldReset, std::unique_ptr<Easing
     , currentTime(0)
     , easingFunction(inEasingFunction ? std::move(inEasingFunction) : std::make_unique<NoEase>())
 {}
+
+Animation::~Animation() = default;
 
 void Animation::update(int deltaTimeMs)
 {

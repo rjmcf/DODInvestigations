@@ -11,6 +11,7 @@ public:
     DrawCall(const Colour& inColour)
         : colour(inColour)
     {}
+    virtual ~DrawCall() = default;
 
     virtual void draw(SDL_Renderer& renderer) const = 0;
 

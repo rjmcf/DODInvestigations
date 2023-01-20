@@ -3,7 +3,6 @@
 #include "eventType.hpp"
 
 #include <map>
-#include <string>
 #include <vector>
 
 class EventListener;
