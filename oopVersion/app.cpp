@@ -36,21 +36,21 @@ bool Application::setup()
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
-        std::cout << "Failed to initialise SDL2: " << SDL_GetError() << std::endl;
+        std::cerr << "Failed to initialise SDL2: " << SDL_GetError() << std::endl;
         return false;
     }
 
     window = SDL_CreateWindow("Hello SDL World", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI);
     if (!window)
     {
-        std::cout << "Could not create window: " << SDL_GetError() << std::endl;
+        std::cerr << "Could not create window: " << SDL_GetError() << std::endl;
         return false;
     }
 
     renderer = SDL_CreateRenderer(window, -1, 0);
     if (!renderer)
     {
-        std::cout << "Could not create renderer: " << SDL_GetError() << std::endl;
+        std::cerr << "Could not create renderer: " << SDL_GetError() << std::endl;
         return false;
     }
 

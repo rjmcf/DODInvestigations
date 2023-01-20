@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 
     if (!app.setup())
     {
-        std::cout << "Setup failed\n";
+        std::cerr << "Setup failed\n";
         return 1;
     }
 
