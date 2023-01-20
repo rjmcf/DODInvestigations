@@ -26,6 +26,18 @@ void AnimationController::addAnimation(std::unique_ptr<AnimationBase>&& newAnima
     }
 }
 
+void AnimationController::addAnimations(std::vector<std::unique_ptr<AnimationBase>>&& newAnimations)
+{
+    if (bUpdating)
+    {
+        animationsPendingAdd.insert(animationsPendingAdd.end(), std::make_move_iterator(newAnimations.begin()), std::make_move_iterator(newAnimations.end()));
+    }
+    else
+    {
+        allActiveAnimations.insert(allActiveAnimations.end(), std::make_move_iterator(newAnimations.begin()), std::make_move_iterator(newAnimations.end()));
+    }
+}
+
 void AnimationController::updateAllAnimations(int deltaTimeMs)
 {
 #if PROFILING

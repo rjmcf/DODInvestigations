@@ -12,6 +12,7 @@ class AnimationController
 {
 public:
     void addAnimation(std::unique_ptr<AnimationBase>&& newAnimation);
+    void addAnimations(std::vector<std::unique_ptr<AnimationBase>>&& newAnimations);
     void updateAllAnimations(int deltaTimeMs);
     void pauseAllAnimations() const;
     void unpauseAllAnimations() const;

@@ -16,7 +16,7 @@ class AnimationLibrary
 public:
     AnimationLibrary();
 
-    std::unique_ptr<AnimationBase> getNamedAnimationFor(AnimatedObject& object, const AnimationId& animationId);
+    std::vector<std::unique_ptr<AnimationBase>> getAnimationsForName(AnimatedObject& object, const AnimationId& animationId);
     void startNamedAnimationFor(AnimatedObject& object, const AnimationId& animationId);
 
 private:

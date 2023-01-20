@@ -5,20 +5,36 @@
 #include "animationLibrary.hpp"
 #include "animations/animationChain.hpp"
 #include "animations/animationModifyVector.hpp"
-#include "enemies/attachments/attachmentSpear.hpp"
+#include "interfaces/rectHaverInterface.hpp"
+#include "interfaces/vectorHaverInterface.hpp"
 
 #include <iostream>
 
-std::unique_ptr<AnimationBase> AnimationLibraryEntry_Spear::getNamedAnimation(AnimatedObject& object, const AnimationId& animationId)
+bool AnimationLibraryEntry::checkObjectIsValid(const AnimatedObject& object)
 {
-    if (object.getAnimatedObjectType() != AnimatedObjectType::Spear)
+    if (object.getAnimatedObjectType() != getExpectedObjectType())
     {
-        std::cerr << "AnimationLibraryEntry_Spear can only be used with Spears (" << int(AnimatedObjectType::Spear) << "), "
+        std::cerr << "This AnimationLibraryEntry can only be used with objects of type" << int(getExpectedObjectType()) << "), "
                   << "got type: " << int(object.getAnimatedObjectType()) << "instead\n";
-        return nullptr;
+        return false;
     }
 
-    AttachmentSpear& spear = static_cast<AttachmentSpear&>(object);
+    return true;
+}
+
+AnimatedObjectType AnimationLibraryEntry_Spear::getExpectedObjectType() const
+{
+    return AnimatedObjectType::Spear;
+}
+
+std::vector<std::unique_ptr<AnimationBase>> AnimationLibraryEntry_Spear::getAnimationsForName(AnimatedObject& object, const AnimationId& animationId)
+{
+    if (!checkObjectIsValid(object))
+    {
+        return {};
+    }
+
+    VectorHaverInterface& spear = dynamic_cast<VectorHaverInterface&>(object);
 
     switch (animationId)
     {
@@ -33,9 +49,11 @@ std::unique_ptr<AnimationBase> AnimationLibraryEntry_Spear::getNamedAnimation(An
             std::unique_ptr<AnimationModifyVector> moveUp   = std::make_unique<AnimationModifyVector>(400, Vector{0,-15}, spear, false);
             animations.emplace_back(std::move(moveUp));
 
-            return std::make_unique<AnimationChain>(std::move(animations));
+            std::vector<std::unique_ptr<AnimationBase>> result;
+            result.emplace_back(std::make_unique<AnimationChain>(std::move(animations)));
+            return result;
         }
         default:
-            return nullptr;
+            return {};
     }
 }
