@@ -10,6 +10,13 @@
 class AnimationTranslate : public Animation
 {
 public:
+    AnimationTranslate(int durationMs, const Vector& inDisplacement, RectHaverInterface& inTarget, bool bInShouldReset = true, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
+        : Animation(durationMs, bInShouldReset, std::move(inEasingFunction))
+        , displacement(inDisplacement)
+    {
+        targets.emplace_back(TargetWithInitialPosition{&inTarget, Point()});
+    }
+
     AnimationTranslate(int durationMs, const Vector& inDisplacement, const std::vector<RectHaverInterface*>& inTargets, bool bInShouldReset = true, std::unique_ptr<EasingFunction>&& inEasingFunction = nullptr)
         : Animation(durationMs, bInShouldReset, std::move(inEasingFunction))
         , displacement(inDisplacement)
