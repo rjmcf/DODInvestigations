@@ -3,6 +3,7 @@
 #include "utils/drawingUtils.hpp"
 
 AttachmentShield::AttachmentShield(const Vector& size)
+    : AnimatedObject(AnimatedObjectType::Shield)
 {
     rect.w = size.x;
     rect.h = size.y;

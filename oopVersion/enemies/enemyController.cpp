@@ -18,7 +18,7 @@
 
 EnemyController::EnemyController(EventManager& eventManager)
 {
-    eventManager.listenToEvent(*this, EventType::EnemyAttack);
+    eventManager.listenToEvents(*this, {EventType::EnemyAttack, EventType::EnemyDefend});
 }
 
 void EnemyController::addEnemies(std::vector<EnemyBatch>&& newEnemyBatches)
@@ -87,16 +87,24 @@ void EnemyController::killHalfEnemies()
     }
 }
 
-void EnemyController::enemyAttack() const
-{
-    World::getAnimationController().startAnimation(AnimationId::Attack);
-}
-
 void EnemyController::onEventTriggered(const EventType& event)
 {
-    if (event == EventType::EnemyAttack)
+    switch (event)
     {
-        enemyAttack();
+        case EventType::EnemyAttack:
+        {
+            World::getAnimationController().startAnimation(AnimationId::Attack);
+            break;
+        }
+        case EventType::EnemyDefend:
+        {
+            World::getAnimationController().startAnimation(AnimationId::Defend);
+            break;
+        }
+        default:
+        {
+            break;
+        }
     }
 }
 

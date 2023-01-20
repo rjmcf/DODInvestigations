@@ -28,5 +28,13 @@ public:
 
 private:
     virtual AnimatedObjectType getExpectedObjectType() const override;
-    
+};
+
+class AnimationLibraryEntry_Shield : public AnimationLibraryEntry
+{
+public:
+    virtual std::vector<std::unique_ptr<AnimationBase>> getAnimationsForName(AnimatedObject& object, const AnimationId& animationId) override;
+
+private:
+    virtual AnimatedObjectType getExpectedObjectType() const override;
 };

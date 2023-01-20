@@ -19,7 +19,6 @@ public:
     void update(int deltaTimeMs) const;
     void drawAllEnemies(std::vector<std::unique_ptr<const DrawCall>>& drawCalls) const;
     void killHalfEnemies();
-    void enemyAttack() const;
 
     void reportEnemyNumber() const;
 

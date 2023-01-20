@@ -10,6 +10,7 @@
 AnimationLibrary::AnimationLibrary()
 {
     library.emplace(AnimatedObjectType::Spear, std::make_unique<AnimationLibraryEntry_Spear>());
+    library.emplace(AnimatedObjectType::Shield, std::make_unique<AnimationLibraryEntry_Shield>());
 }
 
 std::vector<std::unique_ptr<AnimationBase>> AnimationLibrary::getAnimationsForName(AnimatedObject& object, const AnimationId& animationId)

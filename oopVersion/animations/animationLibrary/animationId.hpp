@@ -2,5 +2,6 @@
 
 enum class AnimationId
 {
-    Attack
+    Attack,
+    Defend
 };

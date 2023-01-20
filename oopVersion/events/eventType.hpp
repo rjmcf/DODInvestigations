@@ -2,6 +2,7 @@
 
 enum class EventType
 {
-    EnemyMoveComplete,
-    EnemyAttack
+    EnemyAttack,
+    EnemyDefend,
+    EnemyMoveComplete
 };

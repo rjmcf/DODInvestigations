@@ -90,22 +90,42 @@ void Scene::setUp()
             }
         }
 
-        std::vector<std::unique_ptr<Animation>> normalTranslations;
-        normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{  0,  100}, normalRectHavers, true, std::make_unique<EaseIn2Out2>()));
-        normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{ 150,   0}, normalRectHavers, true, std::make_unique<EaseIn2Out2>()));
-        normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{  0, -100}, normalRectHavers, true, std::make_unique<EaseIn2Out2>()));
-        normalTranslations.emplace_back(new AnimationTranslate(1000, Vector{-150,   0}, normalRectHavers, true, std::make_unique<EaseIn2Out2>()));
+        const int translationTime = 1000;
+        const int doAnimationTime = 600;
+        const int distanceDown = 100;
+        const int distanceRight = 150;
+        std::unique_ptr<AnimationTranslate> moveDown  = std::make_unique<AnimationTranslate>(translationTime, Vector{0, distanceDown},   normalRectHavers, true, std::make_unique<EaseIn2Out2>());
+        std::unique_ptr<AnimationTranslate> moveRight = std::make_unique<AnimationTranslate>(translationTime, Vector{distanceRight, 0},  normalRectHavers, true, std::make_unique<EaseIn2Out2>());
+        std::unique_ptr<AnimationTranslate> moveUp    = std::make_unique<AnimationTranslate>(translationTime, Vector{0, -distanceDown},  normalRectHavers, true, std::make_unique<EaseIn2Out2>());
+        std::unique_ptr<AnimationTranslate> moveLeft  = std::make_unique<AnimationTranslate>(translationTime, Vector{-distanceRight, 0}, normalRectHavers, true, std::make_unique<EaseIn2Out2>());
+
+        moveDown->setUpEvents(std::vector<TimedEvent>
+        {
+            TimedEvent{doAnimationTime, EventType::EnemyAttack}, 
+            TimedEvent{translationTime, EventType::EnemyMoveComplete}
+        });
+        moveRight->setUpEvents(std::vector<TimedEvent>
+        {
+            TimedEvent{doAnimationTime, EventType::EnemyAttack}, 
+            TimedEvent{translationTime, EventType::EnemyMoveComplete}
+        });
+
+        moveUp->setUpEvents(std::vector<TimedEvent>
+        {
+            TimedEvent{doAnimationTime, EventType::EnemyDefend}, 
+            TimedEvent{translationTime, EventType::EnemyMoveComplete}
+        });
+        moveLeft->setUpEvents(std::vector<TimedEvent>
+        {
+            TimedEvent{doAnimationTime, EventType::EnemyDefend}, 
+            TimedEvent{translationTime, EventType::EnemyMoveComplete}
+        });
 
         std::vector<std::unique_ptr<AnimationBase>> baseAnimations;
-        for (std::unique_ptr<Animation>& animation : normalTranslations)
-        {
-            animation->setUpEvents(std::vector<TimedEvent>
-            {
-                TimedEvent{ 600, EventType::EnemyAttack}, 
-                TimedEvent{1000, EventType::EnemyMoveComplete}
-            });
-            baseAnimations.emplace_back(std::move(animation));
-        }
+        baseAnimations.emplace_back(std::move(moveDown));
+        baseAnimations.emplace_back(std::move(moveRight));
+        baseAnimations.emplace_back(std::move(moveUp));
+        baseAnimations.emplace_back(std::move(moveLeft));
 
         animationController.addAnimation(std::make_unique<AnimationChain>(std::move(baseAnimations)));
 
