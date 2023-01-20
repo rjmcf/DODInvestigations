@@ -15,8 +15,9 @@ void World::setUp()
 
     instance->animationController = std::make_unique<AnimationController>();
     instance->animationLibrary = std::make_unique<AnimationLibrary>();
-    instance->enemyController = std::make_unique<EnemyController>();
     instance->eventManager = std::make_unique<EventManager>();
+    
+    instance->enemyController = std::make_unique<EnemyController>(*instance->eventManager.get());
 }
 
 void World::tearDown()

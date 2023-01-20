@@ -30,8 +30,4 @@ void AnimationLibrary::startNamedAnimationFor(AnimatedObject& object, const Anim
     {
         World::getAnimationController().addAnimation(std::move(foundAnim));
     }
-    else
-    {
-        std::cerr << "Could not start animation with id: " << int(animationId) << " for " << object.getAnimatedObjectId() << "\n";
-    }
 }

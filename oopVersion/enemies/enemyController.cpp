@@ -16,15 +16,14 @@
 #include <iostream>
 #include <iterator>
 
+EnemyController::EnemyController(EventManager& eventManager)
+{
+    eventManager.listenToEvent(*this, EventType::EnemyAttack);
+}
+
 void EnemyController::addEnemies(std::vector<EnemyBatch>&& newEnemyBatches)
 {
     allEnemyBatches.insert(allEnemyBatches.end(), std::make_move_iterator(newEnemyBatches.begin()), std::make_move_iterator(newEnemyBatches.end()));
-}
-
-void EnemyController::addSpears(std::vector<AttachmentSpear*>&& newSpears)
-{ 
-    allSpears = std::move(newSpears);
-    World::getEventManager().listenToEvent(*this, Scene::enemyAttackEventName);
 }
 
 void EnemyController::update(int deltaTimeMs) const
@@ -90,10 +89,7 @@ void EnemyController::killHalfEnemies()
 
 void EnemyController::enemyAttack() const
 {
-    for (AttachmentSpear* spear : allSpears)
-    {
-        World::getAnimationLibrary().startNamedAnimationFor(*spear, AnimationId::Attack);
-    }
+    World::getAnimationController().startAnimation(AnimationId::Attack);
 }
 
 void EnemyController::onEventTriggered(const EventType& event)

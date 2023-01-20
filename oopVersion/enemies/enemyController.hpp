@@ -8,12 +8,14 @@
 #include <vector>
 
 class AttachmentSpear;
+class EventManager;
 
 class EnemyController : public EventListener
 {
 public:
+    EnemyController(EventManager& eventManager);
+
     void addEnemies(std::vector<EnemyBatch>&& newEnemyBatches);
-    void addSpears(std::vector<AttachmentSpear*>&& newSpears);
     void update(int deltaTimeMs) const;
     void drawAllEnemies(std::vector<std::unique_ptr<const DrawCall>>& drawCalls) const;
     void killHalfEnemies();
@@ -27,5 +29,4 @@ private:
     // ~End EventListener
 
     std::vector<EnemyBatch> allEnemyBatches;
-    std::vector<AttachmentSpear*> allSpears;
 };

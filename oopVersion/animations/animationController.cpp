@@ -1,5 +1,8 @@
 #include "animationController.hpp"
 
+#include "animationLibrary/animationLibrary.hpp"
+#include "utils/world.hpp"
+
 #include "programConfig.h"
 #if PROFILING
     #include "Tracy.hpp"
@@ -8,6 +11,8 @@
 
 #include <algorithm>
 #include <iostream>
+
+class AnimatedObject;
 
 void AnimationController::addAnimation(std::unique_ptr<AnimationBase>&& newAnimation)
 {
@@ -72,6 +77,15 @@ void AnimationController::unpauseAllAnimations() const
     for (const std::unique_ptr<AnimationBase>& animationPtr : allActiveAnimations)
     {
         animationPtr->unpause();
+    }
+}
+
+void AnimationController::startAnimation(const AnimationId& id)
+{
+    AnimationLibrary& library = World::getAnimationLibrary();
+    for (AnimatedObject* object : registeredAnimatedObjects)
+    {
+        library.startNamedAnimationFor(*object, id);
     }
 }
 

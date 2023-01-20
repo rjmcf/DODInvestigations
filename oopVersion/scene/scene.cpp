@@ -32,7 +32,6 @@ void Scene::setUp()
     {
         std::vector<EnemyBatch> normalEnemyBatches;
         std::vector<RectHaverInterface*> normalRectHavers;
-        std::vector<AttachmentSpear*> spears;
 
         const int initialX = 80;
         const int initialY = 130;
@@ -77,7 +76,6 @@ void Scene::setUp()
                     if (tracker % 3 == 2)
                     {
                         std::unique_ptr<AttachmentSpear> spear = std::make_unique<AttachmentSpear>();
-                        spears.emplace_back(spear.get());
                         enemy->attach(std::move(spear), spearOffset);
                     }
 
@@ -112,7 +110,6 @@ void Scene::setUp()
         animationController.addAnimation(std::make_unique<AnimationChain>(std::move(baseAnimations)));
 
         enemyController.addEnemies(std::move(normalEnemyBatches));
-        enemyController.addSpears(std::move(spears));
     }
 
     // Boss Enemies

@@ -36,9 +36,6 @@ std::unique_ptr<AnimationBase> AnimationLibraryEntry_Spear::getNamedAnimation(An
             return std::make_unique<AnimationChain>(std::move(animations));
         }
         default:
-        {
-            std::cerr << "AnimationLibraryEntry_Spear does not define an animation for id " << int(animationId) << "\n";
             return nullptr;
-        }
     }
 }
