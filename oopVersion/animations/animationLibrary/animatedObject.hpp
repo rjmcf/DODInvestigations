@@ -15,7 +15,8 @@ public:
         World::getAnimationController().registerAnimatedObject(*this);
     }
 
-    const AnimatedObjectType& getAnimatedObjectType() const { return type; }
+    // Hack to get dynamic_cast to compile
+    virtual const AnimatedObjectType& getAnimatedObjectType() const { return type; }
 
 private:
     AnimatedObjectType type;
