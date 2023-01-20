@@ -11,9 +11,10 @@
 
 std::unique_ptr<AnimationBase> AnimationLibraryEntry_Spear::getNamedAnimation(AnimatedObject& object, const AnimationId& animationId)
 {
-    if (object.getAnimatedObjectId() != AttachmentSpear::name)
+    if (object.getAnimatedObjectType() != AnimatedObjectType::Spear)
     {
-        std::cerr << "AnimationLibraryEntry_Spear can only be used with Spears, got " << object.getAnimatedObjectId() << "instead\n";
+        std::cerr << "AnimationLibraryEntry_Spear can only be used with Spears (" << int(AnimatedObjectType::Spear) << "), "
+                  << "got type: " << int(object.getAnimatedObjectType()) << "instead\n";
         return nullptr;
     }
 

@@ -24,8 +24,6 @@ public:
     virtual bool shouldAnimateVector() const override { return true; }
     // ~End VectorHaverInterface
 
-    static std::string name;
-
 private:
     SDL_Rect spearHead;
 };

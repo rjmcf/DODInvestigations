@@ -1,6 +1,7 @@
 #pragma once
 
 #include "eventManager.hpp"
+#include "eventType.hpp"
 
 #include <string>
 #include <vector>
@@ -8,7 +9,7 @@
 struct TimedEvent
 {
     int timeToFireMs = -1;
-    std::string eventToFire;
+    EventType eventToFire;
 };
 
 class TimedEventFirer

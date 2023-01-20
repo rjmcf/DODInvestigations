@@ -4,10 +4,8 @@
 #include "animations/animationModifyVector.hpp"
 #include "utils/drawingUtils.hpp"
 
-std::string AttachmentSpear::name = "Spear";
-
 AttachmentSpear::AttachmentSpear()
-    : AnimatedObject(name)
+    : AnimatedObject(AnimatedObjectType::Spear)
 {
     spearHead.w = 5;
     spearHead.h = 5;

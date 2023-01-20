@@ -11,7 +11,7 @@ public:
     void setUp(Colour* inColour);
 private:
     // ~Begin EventListener
-    virtual void onEventTriggered(const std::string& eventName) override;
+    virtual void onEventTriggered(const EventType& event) override;
     // ~End EventListener
 
     Colour* bgColour = nullptr;

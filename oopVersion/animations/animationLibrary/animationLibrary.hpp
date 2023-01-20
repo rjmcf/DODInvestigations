@@ -1,5 +1,6 @@
 #pragma once
 
+#include "animatedObjectType.hpp"
 #include "animationLibraryEntry.hpp"
 
 #include <map>
@@ -19,5 +20,5 @@ public:
     void startNamedAnimationFor(AnimatedObject& object, const AnimationId& animationId);
 
 private:
-    std::map<std::string, std::unique_ptr<AnimationLibraryEntry>> library;
+    std::map<AnimatedObjectType, std::unique_ptr<AnimationLibraryEntry>> library;
 };

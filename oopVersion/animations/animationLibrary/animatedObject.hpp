@@ -1,20 +1,20 @@
 #pragma once
 
+#include "animatedObjectType.hpp"
+#include "utils/world.hpp"
+
 #include <string>
 
 class AnimatedObject
 {
 public:
-    AnimatedObject(std::string&& inId)
-        : id(std::move(inId))
-    {}
+    AnimatedObject(const AnimatedObjectType& inType)
+        : type(inType)
+    {
+    }
 
-    AnimatedObject(const std::string& inId)
-        : id(inId)
-    {}
-
-    const std::string& getAnimatedObjectId() const { return id; }
+    const AnimatedObjectType& getAnimatedObjectType() const { return type; }
 
 private:
-    std::string id;
+    AnimatedObjectType type;
 };

@@ -2,9 +2,11 @@
 
 #include <string>
 
+enum class EventType;
+
 class EventListener
 {
 private:
     friend class EventManager;
-    virtual void onEventTriggered(const std::string& eventName) = 0;
+    virtual void onEventTriggered(const EventType& eventType) = 0;
 };

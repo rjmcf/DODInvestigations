@@ -8,12 +8,12 @@
 void BgColourEventListener::setUp(Colour* inColour)
 {
     bgColour = inColour;
-    World::getEventManager().listenToEvent(*this, Scene::translationCompleteEventName);
+    World::getEventManager().listenToEvent(*this, EventType::EnemyMoveComplete);
 }
 
-void BgColourEventListener::onEventTriggered(const std::string& eventName)
+void BgColourEventListener::onEventTriggered(const EventType& event)
 {
-    if (eventName == Scene::translationCompleteEventName)
+    if (event == EventType::EnemyMoveComplete)
     {
         if (bgColour)
         {

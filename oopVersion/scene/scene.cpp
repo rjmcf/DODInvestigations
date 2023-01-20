@@ -18,9 +18,6 @@
     #include "Tracy.hpp"
 #endif // PROFILING
 
-const std::string Scene::translationCompleteEventName = "TranslationComplete";
-const std::string Scene::enemyAttackEventName = "EnemyAttack";
-
 void Scene::setUp()
 {
 #if PROFILING
@@ -106,8 +103,8 @@ void Scene::setUp()
         {
             animation->setUpEvents(std::vector<TimedEvent>
             {
-                TimedEvent{ 600, Scene::enemyAttackEventName}, 
-                TimedEvent{1000, Scene::translationCompleteEventName}
+                TimedEvent{ 600, EventType::EnemyAttack}, 
+                TimedEvent{1000, EventType::EnemyMoveComplete}
             });
             baseAnimations.emplace_back(std::move(animation));
         }

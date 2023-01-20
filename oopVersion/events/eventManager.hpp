@@ -1,5 +1,7 @@
 #pragma once
 
+#include "eventType.hpp"
+
 #include <map>
 #include <string>
 #include <vector>
@@ -9,11 +11,11 @@ class EventListener;
 class EventManager
 {
 public:
-    void listenToEvent(EventListener& eventListener, const std::string& eventName);
-    void stopListeningToEvent(EventListener& eventListener, const std::string& eventName);
+    void listenToEvent(EventListener& eventListener, const EventType& event);
+    void stopListeningToEvent(EventListener& eventListener, const EventType& event);
 
-    void triggerEvent(const std::string& eventName) const;
+    void triggerEvent(const EventType& event) const;
 
 private:
-    std::map<std::string, std::vector<EventListener*>> eventListeners;
+    std::map<EventType, std::vector<EventListener*>> eventListeners;
 };

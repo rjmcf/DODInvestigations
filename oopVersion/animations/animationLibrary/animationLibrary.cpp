@@ -9,15 +9,15 @@
 
 AnimationLibrary::AnimationLibrary()
 {
-    library.emplace(AttachmentSpear::name, std::make_unique<AnimationLibraryEntry_Spear>());
+    library.emplace(AnimatedObjectType::Spear, std::make_unique<AnimationLibraryEntry_Spear>());
 }
 
 std::unique_ptr<AnimationBase> AnimationLibrary::getNamedAnimationFor(AnimatedObject& object, const AnimationId& animationId)
 {
-    auto it = library.find(object.getAnimatedObjectId());
+    auto it = library.find(object.getAnimatedObjectType());
     if (it == library.end())
     {
-        std::cerr << "No animations registered for " << object.getAnimatedObjectId() << "\n";
+        std::cerr << "No animations registered for animatedObjectType: " << int(object.getAnimatedObjectType()) << "\n";
         return nullptr;
     }
 

@@ -96,9 +96,9 @@ void EnemyController::enemyAttack() const
     }
 }
 
-void EnemyController::onEventTriggered(const std::string& eventName)
+void EnemyController::onEventTriggered(const EventType& event)
 {
-    if (eventName == Scene::enemyAttackEventName)
+    if (event == EventType::EnemyAttack)
     {
         enemyAttack();
     }
