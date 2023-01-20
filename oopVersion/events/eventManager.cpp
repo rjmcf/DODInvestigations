@@ -10,6 +10,14 @@ void EventManager::listenToEvent(EventListener& eventListener, const EventType& 
     registeredListeners.push_back(&eventListener);
 }
 
+void EventManager::listenToEvents(EventListener& eventListener, std::vector<EventType>&& events)
+{
+    for (const EventType& event : events)
+    {
+        listenToEvent(eventListener, event);
+    }
+}
+
 void EventManager::stopListeningToEvent(EventListener& eventListener, const EventType& event)
 {
     auto pairIterator = eventListeners.find(event);
