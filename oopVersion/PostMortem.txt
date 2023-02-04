@@ -1,22 +1,35 @@
 Order of implementation:
-    1. Enemy with empty update (position is in top left)
-    2. EnemyWithHealth draws a health bar
-    3. Health Animation, initial to final, interpolated, all animations loop
-    4. Add Easing Functions to animations
-    5. Translation, Deform, Colour Animations
-    6. Refactor to EnemyController and Scene
-    7. Refactor Animations to take difference
-    8. Refactor Translation animations to take a vector of targets
-    9. Refactor to AnimationController
-   10. Add Singleton EventManager for events framework
-   11. Make Animations fire events
-   12. Implement ChainAnimations
-   13. Move enemy position to centre
-   14. Add stats printing to all animations and enemies (and controllers)
-   15. Enable killing of enemies, which stops their animations and changes how they draw
-   16. Give enemies eyes, implement update function
-   17. Hide majority of enemies
-   18. Animate background colour
+     1. Enemy with empty update (position is in top left)
+     2. EnemyWithHealth draws a health bar
+     3. Health Animation, initial to final, interpolated, all animations loop
+     4. Add Easing Functions to animations
+     5. Translation, Deform, Colour Animations
+     6. Refactor to EnemyController and Scene
+     7. Refactor Animations to take difference
+     8. Refactor Translation animations to take a vector of targets
+     9. Refactor to AnimationController
+    10. Add Singleton EventManager for events framework
+    11. Make Animations fire events
+    12. Implement ChainAnimations
+    13. Move enemy position to centre
+    14. Add stats printing to all animations and enemies (and controllers)
+    15. Enable killing of enemies, which stops their animations and changes how they draw
+    16. Give enemies eyes, implement update function
+    17. Animate background colour
+    18. Implement enemy attachments - unanimated Shield
+    19. Refactor to DrawCall framework, multithread rendering
+    20. Implement enemy batches
+    21. Add spears
+    22. Add spear animation (initiated by calling method on Spear object)
+    23. Implement Animation Library
+        * AnimationID identifies types of animations (e.g. Attack, Defend)
+        * AnimatedObjectType identifies types of objects that can be animated (e.g. Shields, Spears)
+        * AnimationLibraryEntry implements animations associated with desired AnimationIds for each AnimatedObjectType
+        * AnimationLibrary lets you start an animation with a particular id on a particular object
+        * AnimationController lets you start an animation with a particular id on all animated objects 
+    24. Add Shield animations
+    25. Add animated Knives
+
 
 
 Difficulties:
@@ -24,6 +37,7 @@ Difficulties:
     * Adding ChainAnimations meant changing base classes: 3b4abf9e813a69f18f89aa251805e7e30f76ad6c
     * Adding stats meant changing every class in hierarchy: a33ddd505d908c57710b5514c17e03fa83e4a233
     * Adding killing of enemies meant changing every class in both hierarchies: 43956a33d326ac1c68f9de1433cb6c3c1f1f8705 and f04c4f9133ef9e421bd67db0ecd49fb0edbc6bb3
+    * Need for dynamic_cast to move between hierarchies, seems to be required for LSP: 2965d0eabb10751a15b9f9b1a16e778403779894
 
 Easy things:
     * Adding eyes to base enemies almost automatically added them to EnemiesWithHealth
