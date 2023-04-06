@@ -1,7 +1,8 @@
 # Preamble
 cmake_minimum_required(VERSION 3.25.1)
-set(CMAKE_CXX_COMPILER "C:/msys64/mingw64/bin/g++.exe")
-set(CMAKE_C_COMPILER "C:/msys64/mingw64/bin/gcc.exe")
+set(CMAKE_CXX_COMPILER "C:/msys64/mingw64/bin/g++.exe" CACHE FILEPATH "cpp compiler" FORCE)
+set(CMAKE_C_COMPILER "C:/msys64/mingw64/bin/gcc.exe" CACHE FILEPATH "c compiler" FORCE)
+set(CMAKE_BUILD_TYPE Debug)
 
 # Handy for debugging
 macro(print_all_variables)

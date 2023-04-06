@@ -1,5 +1,5 @@
 {
-    "version": 1,
+    "version": 7,
     "cmakeMinimumRequired": {
       "major": 3,
       "minor": 25,
@@ -7,17 +7,17 @@
     },
     "configurePresets": [
       {
-        "name": "default",
-        "generator": "mingw",
+        "name": "debug-build",
+        "generator": "MinGW Makefiles",
         "binaryDir" : "${sourceDir}/build",
-        "description": "Default build options",
+        "description": "Default debug build options",
         "cacheVariables": {
           "CMAKE_CXX_FLAGS": "-Wall -Wextra -pedantic -Wno-unused-parameter -mconsole"
         }
       },
       {
         "name": "optimised",
-        "generator": "mingw",
+        "generator": "MinGW Makefiles",
         "binaryDir" : "${sourceDir}/build",
         "description": "Build options for an optimised build",
         "cacheVariables": {
